@@ -1,0 +1,2 @@
+# xcolor
+Javascript color class
