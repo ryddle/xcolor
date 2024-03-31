@@ -118,7 +118,7 @@ These methods are used to convert between different color formats without creati
 - `triadicPalette(baseColor)`: Generates a triadic palette.
 - `tetradicPalette(baseColor)`: Generates a tetradic palette.
 - `squarePalette(baseColor)`: Generates a square palette.
-- `genMonochromaticPalette(baseColor)`: Generates a monochromatic palette.
+- `monochromaticPalette(baseColor)`: Generates a monochromatic palette.
 - `shades(baseColor)`: Generates shades of a color.
 - `tints(baseColor)`: Generates tints of a color.
 - `tones(baseColor)`: Generates tones of a color.

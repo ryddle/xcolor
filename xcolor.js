@@ -610,7 +610,7 @@ module.exports = class xcolor {
      * @param {xcolor} baseColor - the base color to generate the palette from
      * @return {xcolor[]} an array containing the monochromatic colors
      */
-    static genMonochromaticPalette(baseColor) {
+    static monochromaticPalette(baseColor) {
         monochromaticPalette = [];
         let n = 15, s=0, b=0;
         for (var i = 0; i < n; i++) {
