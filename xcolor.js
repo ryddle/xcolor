@@ -28,8 +28,8 @@ module.exports = class xcolor {
     constructor(colorCode, alphaMode) {
         let regexp = new RegExp(xcolor.rgbRegex.source + '|' + xcolor.rgbaRegex.source + '|' + xcolor.hexRegex.source + '|' + xcolor.hexaRegex.source + '|' + xcolor.hslRegex.source + '|' + xcolor.hslaRegex.source + '|' + xcolor.hsbRegex.source + '|' + xcolor.hsbaRegex.source);
         if (!colorCode.match(regexp)) {
-            console.error('The string '+colorCode+' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
-            throw new Error('The string '+colorCode+' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
+            console.error('The string ' + colorCode + ' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
+            throw new Error('The string ' + colorCode + ' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
         } else {
             this.colorCode = colorCode;
             this.alphaMode = alphaMode;
@@ -206,6 +206,32 @@ module.exports = class xcolor {
         }
     }
 
+    // Static instance methods
+    static getRgb([r, g, b]) {
+        return new xcolor(`rgb(${r},${g},${b})`);
+    }
+
+    static getRgba([r, g, b, a]) {
+        return new xcolor(`rgba(${r},${g},${b},${a})`);
+    }
+
+    static getHsl([h, s, l]) {
+        return new xcolor(`hsl(${h},${s}%,${l}%)`);
+    }
+
+    static getHsla([h, s, l, a]) {
+        return new xcolor(`hsla(${h},${s}%,${l}%,${a})`);
+    }
+
+    static getHsb([h, s, b]) {
+        return new xcolor(`hsb(${h},${s}%,${b}%)`);
+    }
+
+    static getHsba([h, s, b, a]) {
+        return new xcolor(`hsba(${h},${s}%,${b}%,${a})`);
+    }
+
+    // Conversions
     static rgb2rgba(color) {
         let [r, g, b] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
         return `rgba(${r},${g},${b}, 1)`;
@@ -217,7 +243,7 @@ module.exports = class xcolor {
     }
 
     static rgb2hex(color) {
-        return '#'+color.match(/[\d\.]+/g).map((x,i)=> Math.round((+x)*(i<3?1:255)).toString(16).padStart(2,0)).join``;
+        return '#' + color.match(/[\d\.]+/g).map((x, i) => Math.round((+x) * (i < 3 ? 1 : 255)).toString(16).padStart(2, 0)).join``;
     }
 
     static rgba2hex(color) {
@@ -226,7 +252,7 @@ module.exports = class xcolor {
     }
 
     static rgba2hexa(color) {
-        return '#'+color.match(/[\d\.]+/g).map((x,i)=> Math.round((+x)*(i<3?1:255)).toString(16).padStart(2,0)).join``;
+        return '#' + color.match(/[\d\.]+/g).map((x, i) => Math.round((+x) * (i < 3 ? 1 : 255)).toString(16).padStart(2, 0)).join``;
     }
 
     static hex2rgba(color) {
@@ -241,7 +267,7 @@ module.exports = class xcolor {
 
     static hexa2rgba(color) {
         let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
-        return `rgba(${r},${g},${b},${Math.round((a/255)*10)/10})`;
+        return `rgba(${r},${g},${b},${Math.round((a / 255) * 10) / 10})`;
     }
 
     static hex2rgb(color) {
@@ -330,23 +356,23 @@ module.exports = class xcolor {
             let color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
             return Math.round(255 * color);
         }
-        let red=Math.round(f(0)/100);
-        let green=Math.round(f(8)/100);
-        let blue=Math.round(f(4)/100);
+        let red = Math.round(f(0) / 100);
+        let green = Math.round(f(8) / 100);
+        let blue = Math.round(f(4) / 100);
         return `rgb(${red},${green},${blue})`;
     }
 
     static hsla2rgba(colorCode) {
         let [_, h, s, l, a] = colorCode.match(/\((\d+),\s?(\d+)%,\s?(\d+)%,\s?(\d*\.\d+)\)/).map(Number);
-        let rgbA = (s * Math.min(l, 100 - l) / 100)/100;
+        let rgbA = (s * Math.min(l, 100 - l) / 100) / 100;
         let f = n => {
             let k = (n + h / 30) % 12;
             let color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
             return Math.round(255 * color);
         }
-        let red=Math.round(f(0)/100);
-        let green=Math.round(f(8)/100);
-        let blue=Math.round(f(4)/100);
+        let red = Math.round(f(0) / 100);
+        let green = Math.round(f(8) / 100);
+        let blue = Math.round(f(4) / 100);
         return `rgba(${red},${green},${blue},${rgbA})`;
     }
 
@@ -374,9 +400,9 @@ module.exports = class xcolor {
         s = s / 100;
         b = b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        let red=Math.round(f(5)*255);
-        let green=Math.round(f(3))*100;
-        let blue=Math.round(f(1)*100);
+        let red = Math.round(f(5) * 255);
+        let green = Math.round(f(3)) * 100;
+        let blue = Math.round(f(1) * 100);
         return `rgb(${red},${green},${blue})`;
     }
 
@@ -385,9 +411,9 @@ module.exports = class xcolor {
         s = s / 100;
         b = b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        let red=Math.round(f(5)*255);
-        let green=Math.round(f(3))*100;
-        let blue=Math.round(f(1)*100);
+        let red = Math.round(f(5) * 255);
+        let green = Math.round(f(3)) * 100;
+        let blue = Math.round(f(1) * 100);
         return `rgba(${red},${green},${blue},${a})`;
     }
 
@@ -470,8 +496,8 @@ module.exports = class xcolor {
      * @return {xcolor} A new xcolor object resulting from the linear interpolation
      */
     static lerpColor(xcolorA, xcolorB, intval) {
-        const rgbA = [xcolorA.r,xcolorA.g,xcolorA.b,xcolorA.a],
-            rgbB = [xcolorB.r,xcolorB.g,xcolorB.b,xcolorB.a];
+        const rgbA = [xcolorA.r, xcolorA.g, xcolorA.b, xcolorA.a],
+            rgbB = [xcolorB.r, xcolorB.g, xcolorB.b, xcolorB.a];
         const colorVal = (prop) =>
             Math.round(rgbA[prop] * (1 - intval) + rgbB[prop] * intval);
         return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
@@ -485,7 +511,7 @@ module.exports = class xcolor {
      * @return {xcolor} - the darkened xcolor
      */
     static darken(xcolor, amount) {
-        const rgb = [xcolor.r,xcolor.g,xcolor.b,xcolor.a];
+        const rgb = [xcolor.r, xcolor.g, xcolor.b, xcolor.a];
         const colorVal = (prop) =>
             Math.round(rgb[prop] * (1 - amount));
         return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
@@ -499,7 +525,7 @@ module.exports = class xcolor {
      * @return {xcolor} - The lightened xcolor object.
      */
     static ligthten(xcolor, amount) {
-        const rgb = [xcolor.r,xcolor.g,xcolor.b,xcolor.a];
+        const rgb = [xcolor.r, xcolor.g, xcolor.b, xcolor.a];
         const colorVal = (prop) =>
             Math.round(rgb[prop] * (1 + amount));
         return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
@@ -512,8 +538,8 @@ module.exports = class xcolor {
      * @return {xcolor[]} an array containing three analogous colors
      */
     static analogousPalette(baseColor) {
-        let analogous1 = new xcolor((baseColor.hsbH + 330) % 360, baseColor.hsbS, baseColor.hsbB);
-        let analogous3 = new xcolor((baseColor.hsbH + 30) % 360, baseColor.hsbS, baseColor.hsbB);
+        let analogous1 = xcolor.getHsb((baseColor.hsbH + 330) % 360, baseColor.hsbS, baseColor.hsbB);
+        let analogous3 = xcolor.getHsb((baseColor.hsbH + 30) % 360, baseColor.hsbS, baseColor.hsbB);
         return [analogous1, baseColor, analogous3];
     }
 
@@ -524,7 +550,7 @@ module.exports = class xcolor {
      * @return {xcolor[]} An array containing the base color and its complementary color.
      */
     static complementaryPalette(baseColor) {
-        let complementary1 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        let complementary1 = xcolor.getHsb((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
         return [baseColor, complementary1];
     }
 
@@ -535,8 +561,8 @@ module.exports = class xcolor {
      * @return {xcolor[]} An array containing the base color and its two split complementary colors.
      */
     static splitComplementaryPalette(baseColor) {
-        let splitComplementary1 = new xcolor((baseColor.hsbH + 150) % 360, baseColor.hsbS, baseColor.hsbB);
-        let splitComplementary2 = new xcolor((baseColor.hsbH + 210) % 360, baseColor.hsbS, baseColor.hsbB);
+        let splitComplementary1 = xcolor.getHsb((baseColor.hsbH + 150) % 360, baseColor.hsbS, baseColor.hsbB);
+        let splitComplementary2 = xcolor.getHsb((baseColor.hsbH + 210) % 360, baseColor.hsbS, baseColor.hsbB);
         return [baseColor, splitComplementary1, splitComplementary2];
     }
 
@@ -547,8 +573,8 @@ module.exports = class xcolor {
      * @return {xcolor[]} An array containing the base color and two triadic colors.
      */
     static triadicPalette(baseColor) {
-        let triadic1 = new xcolor((baseColor.hsbH + 120) % 360, baseColor.hsbS, baseColor.hsbB);
-        let triadic2 = new xcolor((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
+        let triadic1 = xcolor.getHsb((baseColor.hsbH + 120) % 360, baseColor.hsbS, baseColor.hsbB);
+        let triadic2 = xcolor.getHsb((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
         return [baseColor, triadic1, triadic2];
     }
 
@@ -559,9 +585,9 @@ module.exports = class xcolor {
      * @return {xcolor[]} an array containing the base color and three additional colors forming a tetradic palette
      */
     static tetradicPalette(baseColor) {
-        let tetradic1 = new xcolor((baseColor.hsbH + 60) % 360, baseColor.hsbS, baseColor.hsbB);
-        let tetradic2 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
-        let tetradic3 = new xcolor((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
+        let tetradic1 = xcolor.getHsb((baseColor.hsbH + 60) % 360, baseColor.hsbS, baseColor.hsbB);
+        let tetradic2 = xcolor.getHsb((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        let tetradic3 = xcolor.getHsb((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
         return [baseColor, tetradic1, tetradic2, tetradic3];
     }
 
@@ -572,10 +598,29 @@ module.exports = class xcolor {
      * @return {xcolor[]} an array containing the base color and three additional square colors
      */
     static squarePalette(baseColor) {
-        let square1 = new xcolor((baseColor.hsbH + 90) % 360, baseColor.hsbS, baseColor.hsbB);
-        let square2 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
-        let square3 = new xcolor((baseColor.hsbH + 270) % 360, baseColor.hsbS, baseColor.hsbB);
+        let square1 = xcolor.getHsb((baseColor.hsbH + 90) % 360, baseColor.hsbS, baseColor.hsbB);
+        let square2 = xcolor.getHsb((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        let square3 = xcolor.getHsb((baseColor.hsbH + 270) % 360, baseColor.hsbS, baseColor.hsbB);
         return [baseColor, square1, square2, square3];
+    }
+
+    /**
+     * Generate a monochromatic palette based on the base color.
+     *
+     * @param {xcolor} baseColor - the base color to generate the palette from
+     * @return {xcolor[]} an array containing the monochromatic colors
+     */
+    static genMonochromaticPalette(baseColor) {
+        monochromaticPalette = [];
+        let n = 15, s=0, b=0;
+        for (var i = 0; i < n; i++) {
+            s = 100;/* Vary the brightness regardless of value number */
+            b = map(i, 0, n - 1, 100, 0);/* Increase saturation only in the first half */
+            if (i < n / 2)
+                saturation = map(i, 0, n / 2 - 1, 0, 100);
+            monochromaticPalette.push(xcolor.getHsb(baseColor.hsbH, saturation, brightness));
+        }
+        return monochromaticPalette;
     }
 
     /**
@@ -587,7 +632,7 @@ module.exports = class xcolor {
     static shades(baseColor) {
         let shades = [];
         for (let i = 0; i < 15; i++) {
-            shades.push(new xcolor(baseColor.hsbH, baseColor.hsbS, map(i, 0, 14, baseColor.hsbB, 0)));
+            shades.push(xcolor.getHsb(baseColor.hsbH, baseColor.hsbS, map(i, 0, 14, baseColor.hsbB, 0)));
         }
         return shades;
     }
@@ -601,7 +646,7 @@ module.exports = class xcolor {
     static tints(baseColor) {
         let tints = [];
         for (let i = 0; i < 15; i++) {
-            tints.push(new xcolor(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), map(i, 0, 14, baseColor.hsbB, 100)));
+            tints.push(xcolor.getHsb(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), map(i, 0, 14, baseColor.hsbB, 100)));
         }
         return tints;
     }
@@ -615,7 +660,7 @@ module.exports = class xcolor {
     static tones(baseColor) {
         let tones = [];
         for (let i = 0; i < 15; i++) {
-            tones.push(new xcolor(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), baseColor.hsbB));
+            tones.push(xcolor.getHsb(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), baseColor.hsbB));
         }
         return tones;
     }

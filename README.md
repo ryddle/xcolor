@@ -66,6 +66,14 @@ These methods are private and used internally by the class to parse different co
 * `parseHsb(colorCode)`
 * `parseHsba(colorCode)`
 
+**Static Instance Methods**
+* `getRgb([r, g, b])`: Get an xcolor instance from rgb array 
+* `getRgba([r, g, b, a])`: Get an xcolor instance from rgba array 
+* `getHsl([h, s, l])`: Get an xcolor instance from hsl array 
+* `getHsla([h, s, l, a])`: Get an xcolor instance from hsla array 
+* `getHsb([h, s, b])`: Get an xcolor instance from hsb array 
+* `getHsba([h, s, b, a])`: Get an xcolor instance from hsba array 
+
 **Static Conversion Methods**
 
 These methods are used to convert between different color formats without creating an instance of the `xcolor` class.
@@ -110,6 +118,7 @@ These methods are used to convert between different color formats without creati
 - `triadicPalette(baseColor)`: Generates a triadic palette.
 - `tetradicPalette(baseColor)`: Generates a tetradic palette.
 - `squarePalette(baseColor)`: Generates a square palette.
+- `genMonochromaticPalette(baseColor)`: Generates a monochromatic palette.
 - `shades(baseColor)`: Generates shades of a color.
 - `tints(baseColor)`: Generates tints of a color.
 - `tones(baseColor)`: Generates tones of a color.
