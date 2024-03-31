@@ -94,7 +94,7 @@ These methods are used to convert between different color formats without creati
 
 **Color Generation:**
 
-- `randomColor(format = 'hex')`: Generates a random color in the specified format.
+- `randomColor(format = 'hex')`: Generates a random color in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
 
 **Color Manipulation:**
 

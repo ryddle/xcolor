@@ -435,7 +435,7 @@ module.exports = class xcolor {
 
 
     /**
-     * Generate a random color in the specified format.
+     * Generate a random color in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
      *
      * @param {string} format - The format of the color to generate (default: 'hex')
      * @return {string} The randomly generated color in the specified format
