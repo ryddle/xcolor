@@ -7,4 +7,4 @@ xcolor.js is a JavaScript library for color manipulation and conversion. It prov
 To install xcolor.js, you can use a package manager like npm or yarn:
 
 ```bash
-npm install xcolor
+npm install github:ryddle/xcolor
