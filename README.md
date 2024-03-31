@@ -9,6 +9,7 @@ To install xcolor.js, you can use a package manager like npm or yarn:
 
 ```bash
 npm install github:ryddle/xcolor
+```
 
 **Class: xcolor**
 
