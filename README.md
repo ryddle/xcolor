@@ -38,7 +38,7 @@ constructor(colorCode, alphaMode)
 ```
 
 * `colorCode`: A string representing the color code in any of the supported formats.
-* `alphaMode` (optional): A boolean value indicating whether to include the alpha channel in the conversion (Not currently functional. Defaults to `true`).
+* `alphaMode` (optional): A boolean value indicating whether to include the alpha channel in the conversion (**Not currently functional.** Defaults to `true`).
 
 **Throws an error if the color code is invalid.**
 
