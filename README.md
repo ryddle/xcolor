@@ -1,7 +1,14 @@
 # xcolor
-WARNING: this library is at early development<br>## xcolor.js
+**WARNING:** this library is at early development<br>## xcolor.js
 
-This document describes the `xcolor.js` library, a JavaScript class for converting between various color formats.
+The `xcolor.js` library provides a collection of JavaScript functions for working with colors in various formats. It offers methods for:
+
+- Generating random colors
+- Converting between color formats
+- Performing color manipulations, such as:
+    - Interpolating between colors
+    - Darkening and lightening colors
+    - Creating color palettes
 
 **Installation**
 
@@ -85,7 +92,24 @@ These methods are used to convert between different color formats without creati
 * `rgb2hsl(colorCode)`: Converts RGB to HSL.
 * `rgba2hsla(colorCode)`: Converts RGBA to HSLA.
 
-**Notes**
+**Color Generation:**
 
-* The code provides comments for some methods but lacks comments for others. Adding comments throughout the code would improve readability and maintainability.
-* Error handling is implemented by throwing errors for invalid color codes. Consider providing more informative error messages.
+- `randomColor(format = 'hex')`: Generates a random color in the specified format.
+
+**Color Manipulation:**
+
+- `lerpColor(xcolorA, xcolorB, intval)`: Linear interpolation between colors.
+- `darken(xcolor, amount)`: Darkens a color.
+- `lighten(xcolor, amount)`: Lightens a color.
+
+**Color Palette Generation:**
+
+- `analogousPalette(baseColor)`: Generates an analogous palette.
+- `complementaryPalette(baseColor)`: Generates a complementary palette.
+- `splitComplementaryPalette(baseColor)`: Generates a split complementary palette.
+- `triadicPalette(baseColor)`: Generates a triadic palette.
+- `tetradicPalette(baseColor)`: Generates a tetradic palette.
+- `squarePalette(baseColor)`: Generates a square palette.
+- `shades(baseColor)`: Generates shades of a color.
+- `tints(baseColor)`: Generates tints of a color.
+- `tones(baseColor)`: Generates tones of a color.
