@@ -13,18 +13,6 @@ describe('xcolor', () => {
     expect(c.getHex()).toBe('#ff0000');
   });
 
-  it('checks color equality', () => {
-    const c1 = new xcolor('red');
-    const c2 = new xcolor('#ff0000');
-    expect(c1).not.toBe(c2);
-  });
-
-  it('checks color difference', () => {
-    const c1 = new xcolor('red');
-    const c2 = new xcolor('blue');
-    expect(c1).not.toBe(c2);
-  });
-
   it('shows color in rgba', () => {
     const c = new xcolor('rgba(255,0,0,0.5)');
     expect(c.getRgba()).toBe('rgba(255,0,0,0.5)');
@@ -33,6 +21,37 @@ describe('xcolor', () => {
   it('shows color in rgb', () => {
     const c = new xcolor('rgba(255,0,0,0.5)');
     expect(c.getRgb()).toBe('rgb(255,0,0)');
+  });
+
+  it('shows color in hex', () => {
+    const c = new xcolor('#ff0000');
+    expect(c.getHex()).toBe('#ff0000');
+  });
+
+  it('shows color in hexa', () => {
+    const c = new xcolor('#ff000080');
+    expect(c.getHexa()).toBe('#ff000080');
+  });
+
+  it('shows color in hsl', () => {
+    const c = new xcolor('hsl(0,100%,50%)');
+    expect(c.getHsl()).toBe('hsl(0,100%,50%)');
+  });
+
+  it('shows color in hsla', () => {
+    const c = new xcolor('hsla(0,100%,50%,0.5)');
+    expect(c.getHsla()).toBe('hsla(0,100%,50%,0.5)');
+  });
+
+  it('shows color in hsb', () => {
+    const c = new xcolor('hsb(0,100%,50%)');
+    expect(c.getHsb()).toBe('hsb(0,100%,50%)');
+  });
+
+  it('shows color in hsba', () => {
+    const c = new xcolor('hsba(0,100%,50%,0.5)');
+    expect(c.getHsba()).toBe('hsba(0,100%,50%,0.5)');
+    console.log(c);
   });
 
 
