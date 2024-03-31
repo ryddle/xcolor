@@ -3,6 +3,9 @@
   "version": "0.5.0",
   "main": "xcolor.js",
   "license": "Apache-2.0",
+  "dependencies": {
+    "jest": "^29.7.0"
+  },
   "devDependencies": {
     "jest": "^29.7.0"
   },
