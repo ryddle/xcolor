@@ -19,31 +19,56 @@ function setup() {
             while (shadescontainer.firstChild) { shadescontainer.removeChild(shadescontainer.firstChild); };
             while (tintscontainer.firstChild) { tintscontainer.removeChild(tintscontainer.firstChild); };
             while (tonescontainer.firstChild) { tonescontainer.removeChild(tonescontainer.firstChild); };
+            
+            while (monochromaticPaletteContainer.firstChild) { monochromaticPaletteContainer.removeChild(monochromaticPaletteContainer.firstChild); };
 
             Pallete.baseColor = color;
             genShadesTintsTones();
+            genMonochromaticPalette();
         }
 
         palletecontainer.appendChild(colordiv);
     });
+
+    
+    document.body.appendChild(genPaletteLabel("mix palette"));
     document.body.appendChild(palletecontainer);
 
+    document.body.appendChild(genPaletteLabel("shades"));
     shadescontainer = document.createElement("div");
     shadescontainer.style.display = "inline-flex";
     shadescontainer.style.width = "100%";
     document.body.appendChild(shadescontainer);
 
+    document.body.appendChild(genPaletteLabel("tints"));
     tintscontainer = document.createElement("div");
     tintscontainer.style.display = "inline-flex";
     tintscontainer.style.width = "100%";
     document.body.appendChild(tintscontainer);
 
+    document.body.appendChild(genPaletteLabel("tones"));
     tonescontainer = document.createElement("div");
     tonescontainer.style.display = "inline-flex";
     tonescontainer.style.width = "100%";
     document.body.appendChild(tonescontainer);
 
     genShadesTintsTones();
+
+    document.body.appendChild(genPaletteLabel("Monochromatic Palette"));
+    monochromaticPaletteContainer = document.createElement("div");
+    monochromaticPaletteContainer.style.display = "inline-flex";
+    monochromaticPaletteContainer.style.width = "100%";
+    document.body.appendChild(monochromaticPaletteContainer);
+
+    genMonochromaticPalette();    
+    
+}
+
+function genPaletteLabel(_label) {
+    let label = document.createElement("span");
+    label.style.display="block";
+    label.innerText=_label;
+    return label;
 }
 
 var Pallete = {
@@ -59,6 +84,7 @@ var Pallete = {
     square2: null,
     square4: null,
     pallete: [],
+    monochromaticPalette: [],
     shades: [],
     tints: [],
     tones: [],
@@ -92,6 +118,20 @@ var Pallete = {
         for (let i = 0; i < 15; i++) {
             this.tones.push(color(hue(this.baseColor), map(i, 0, 14, saturation(this.baseColor), 0), brightness(this.baseColor)));
         }
+    },
+
+    genMonochromaticPalette: function () {
+        this.monochromaticPalette= [];
+        let n = 15;
+        for (var i = 0; i < n; i++) {
+            let saturation = 100;
+            /* Vary the brightness regardless of value number */
+            let brightness = map(i, 0, n - 1, 100, 0);
+            /* Increase saturation only in the first half */
+            if (i < n/2)
+              saturation = map(i, 0, n/2 - 1, 0, 100);
+            this.monochromaticPalette.push(color(hue(this.baseColor), saturation, brightness));
+          }
     }
 };
 function genShadesTintsTones() {
@@ -122,6 +162,19 @@ function genShadesTintsTones() {
         tonesdiv.style.height = "100px";
 
         tonescontainer.appendChild(tonesdiv);
+    });
+}
+
+function genMonochromaticPalette() {
+    Pallete.genMonochromaticPalette();
+
+    Pallete.monochromaticPalette.forEach(color => {
+        let colordiv = document.createElement("div");
+        colordiv.style.background = color;
+        colordiv.style.width = "100px";
+        colordiv.style.height = "100px";
+
+        monochromaticPaletteContainer.appendChild(colordiv);
     });
 }
 
