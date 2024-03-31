@@ -1,13 +1,13 @@
-const rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
-const rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
-const hexRegex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
-const hexaRegex = /^#?([a-fA-F0-9]{8}|[a-fA-F0-9]{4})$/;
-const hslRegex = /^hsl\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
-const hslaRegex = /^hsla\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
-const hsbRegex = /^hsb\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
-const hsbaRegex = /^hsba\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/
-
 module.exports = class xcolor {
+    static rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
+    static rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
+    static hexRegex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
+    static hexaRegex = /^#?([a-fA-F0-9]{8}|[a-fA-F0-9]{4})$/;
+    static hslRegex = /^hsl\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
+    static hslaRegex = /^hsla\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
+    static hsbRegex = /^hsb\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
+    static hsbaRegex = /^hsba\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
+
     /**
      * Initializes a new instance of the Color class with the specified color code.
      * By default, the alpha channel is set to 1.
@@ -26,7 +26,7 @@ module.exports = class xcolor {
      * @return {void}
      */
     constructor(colorCode, alphaMode) {
-        let regexp = new RegExp(rgbRegex.source + '|' + rgbaRegex.source + '|' + hexRegex.source + '|' + hexaRegex.source + '|' + hslRegex.source + '|' + hslaRegex.source + '|' + hsbRegex.source + '|' + hsbaRegex.source);
+        let regexp = new RegExp(xcolor.rgbRegex.source + '|' + xcolor.rgbaRegex.source + '|' + xcolor.hexRegex.source + '|' + xcolor.hexaRegex.source + '|' + xcolor.hslRegex.source + '|' + xcolor.hslaRegex.source + '|' + xcolor.hsbRegex.source + '|' + xcolor.hsbaRegex.source);
         if (!colorCode.match(regexp)) {
             console.error('The string '+colorCode+' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
             throw new Error('The string '+colorCode+' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
@@ -36,42 +36,42 @@ module.exports = class xcolor {
         }
 
         let matches;
-        if (matches = colorCode.match(rgbRegex)) {
+        if (matches = colorCode.match(xcolor.rgbRegex)) {
             this.parseRgb(colorCode);
             this.parseHex(xcolor.rgb2hex(colorCode));
             this.parseHsb(xcolor.rgb2hsb(colorCode));
             this.parseHsl(xcolor.rgb2hsl(colorCode));
-        } else if (matches = colorCode.match(rgbaRegex)) {
+        } else if (matches = colorCode.match(xcolor.rgbaRegex)) {
             this.parseRgba(colorCode);
             this.parseHexa(xcolor.rgba2hexa(colorCode));
             this.parseHsba(xcolor.rgba2hsba(colorCode));
             this.parseHsla(xcolor.rgba2hsla(colorCode));
-        } else if (matches = colorCode.match(hexRegex)) {
+        } else if (matches = colorCode.match(xcolor.hexRegex)) {
             this.parseHex(colorCode);
             this.parseRgb(xcolor.hex2rgb(colorCode));
             this.parseHsb(xcolor.hex2hsb(colorCode));
             this.parseHsl(xcolor.hex2hsl(colorCode));
-        } else if (matches = colorCode.match(hexaRegex)) {
+        } else if (matches = colorCode.match(xcolor.hexaRegex)) {
             this.parseHexa(colorCode);
             this.parseRgba(xcolor.hexa2rgba(colorCode));
             this.parseHsba(xcolor.hexa2hsba(colorCode));
             this.parseHsla(xcolor.hexa2hsla(colorCode));
-        } else if (matches = colorCode.match(hslRegex)) {
+        } else if (matches = colorCode.match(xcolor.hslRegex)) {
             this.parseHsl(colorCode);
             this.parseRgb(xcolor.hsl2rgb(colorCode));
             this.parseHsb(xcolor.hsl2hsb(colorCode));
             this.parseHex(xcolor.hsl2hex(colorCode));
-        } else if (matches = colorCode.match(hslaRegex)) {
+        } else if (matches = colorCode.match(xcolor.hslaRegex)) {
             this.parseHsla(colorCode);
             this.parseRgba(xcolor.hsla2rgba(colorCode));
             this.parseHsba(xcolor.hsla2hsba(colorCode));
             this.parseHexa(xcolor.hsla2hexa(colorCode));
-        } else if (matches = colorCode.match(hsbRegex)) {
+        } else if (matches = colorCode.match(xcolor.hsbRegex)) {
             this.parseHsb(colorCode);
             this.parseRgb(xcolor.hsb2rgb(colorCode));
             this.parseHsl(xcolor.hsb2hsl(colorCode));
             this.parseHex(xcolor.hsb2hex(colorCode));
-        } else if (matches = colorCode.match(hsbaRegex)) {
+        } else if (matches = colorCode.match(xcolor.hsbaRegex)) {
             this.parseHsba(colorCode);
             this.parseRgba(xcolor.hsba2rgba(colorCode));
             this.parseHsla(xcolor.hsba2hsla(colorCode));
@@ -106,7 +106,7 @@ module.exports = class xcolor {
 
     parseRgb(colorCode) {
         let matches;
-        if ((matches = colorCode.match(rgbRegex))) {
+        if ((matches = colorCode.match(xcolor.rgbRegex))) {
             this.r = parseInt(matches[1]);
             this.g = parseInt(matches[2]);
             this.b = parseInt(matches[3]);
@@ -117,7 +117,7 @@ module.exports = class xcolor {
     }
     parseRgba(colorCode) {
         let matches;
-        if ((matches = colorCode.match(rgbaRegex))) {
+        if ((matches = colorCode.match(xcolor.rgbaRegex))) {
             this.r = parseInt(matches[1]);
             this.g = parseInt(matches[2]);
             this.b = parseInt(matches[3]);
@@ -128,7 +128,7 @@ module.exports = class xcolor {
     }
     parseHex(colorCode) {
         let matches;
-        if ((matches = colorCode.match(hexRegex))) {
+        if ((matches = colorCode.match(xcolor.hexRegex))) {
             let hex = matches[1];
             if (hex.length === 3) {
                 hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
@@ -143,7 +143,7 @@ module.exports = class xcolor {
     }
     parseHexa(colorCode) {
         let matches;
-        if ((matches = colorCode.match(hexaRegex))) {
+        if ((matches = colorCode.match(xcolor.hexaRegex))) {
             let hexa = matches[1];
             if (hexa.length === 3) {
                 hexa = hexa[0] + hexa[0] + hexa[1] + hexa[1] + hexa[2] + hexa[2];
@@ -156,41 +156,38 @@ module.exports = class xcolor {
             throw new Error(`${colorCode} has not a valid hexa format`);
         }
     }
-    parseHsl(colorCode) {
-        let matches;
-        if ((matches = colorCode.match(hslRegex))) {
-            let [h, s, l] = [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3])];
-            this.hslH = h;
-            this.hslS = s;
-            this.hslL = l;
-            this.hslA = 1;
-            //this.parseRgb(xcolor.hsl2rgb(colorCode));
-        } else {
-            throw new Error(`${colorCode} has not a valid hsl format`);
-        }
-    }
     parseHsla(colorCode) {
         let matches;
-        if ((matches = colorCode.match(hslaRegex))) {
+        if ((matches = colorCode.match(xcolor.hslaRegex))) {
             let [h, s, l, a] = [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3]), parseFloat(matches[4])];
             this.hslH = h;
             this.hslS = s;
             this.hslL = l;
             this.hslA = a;
-            //this.parseRgba(xcolor.hsla2rgba(colorCode));
         } else {
             throw new Error(`${colorCode} has not a valid hsla format`);
         }
     }
+    parseHsl(colorCode) {
+        let matches;
+        if ((matches = colorCode.match(xcolor.hslRegex))) {
+            let [h, s, l] = [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3])];
+            this.hslH = h;
+            this.hslS = s;
+            this.hslL = l;
+            this.hslA = 1;
+        } else {
+            throw new Error(`${colorCode} has not a valid hsl format`);
+        }
+    }
     parseHsb(colorCode) {
         let matches;
-        if ((matches = colorCode.match(hsbRegex))) {
+        if ((matches = colorCode.match(xcolor.hsbRegex))) {
             let [h, s, b] = [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3])];
             this.hsbH = h;
             this.hsbS = s;
             this.hsbB = b;
             this.hsbA = 1;
-            //this.parseRgb(xcolor.hsb2rgb(colorCode));
         } else {
             throw new Error(`${colorCode} has not a valid hsb format`);
         }
@@ -198,31 +195,28 @@ module.exports = class xcolor {
 
     parseHsba(colorCode) {
         let matches;
-        if ((matches = colorCode.match(hsbaRegex))) {
+        if ((matches = colorCode.match(xcolor.hsbaRegex))) {
             let [h, s, b, a] = [parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3]), parseFloat(matches[4])];
             this.hsbH = h;
             this.hsbS = s;
             this.hsbB = b;
             this.hsbA = a;
-            //this.parseRgba(xcolor.hsba2rgba(colorCode));
         } else {
             throw new Error(`${colorCode} has not a valid hsba format`);
         }
     }
 
-    static hex2rgba(color) {
-        let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
-        return `rgba(${r},${g},${b},${a})`;
+    static rgb2rgba(color) {
+        let [r, g, b] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
+        return `rgba(${r},${g},${b}, 1)`;
     }
 
-    static hex2rgb(color) {
-        let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
+    static rgba2rgb(color) {
+        let [r, g, b, a] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
         return `rgb(${r},${g},${b})`;
     }
 
     static rgb2hex(color) {
-        //let [r, g, b] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
-        //return `#${r}${g}${b}`;
         return '#'+color.match(/[\d\.]+/g).map((x,i)=> Math.round((+x)*(i<3?1:255)).toString(16).padStart(2,0)).join``;
     }
 
@@ -233,6 +227,16 @@ module.exports = class xcolor {
 
     static rgba2hexa(color) {
         return '#'+color.match(/[\d\.]+/g).map((x,i)=> Math.round((+x)*(i<3?1:255)).toString(16).padStart(2,0)).join``;
+    }
+
+    static hex2rgba(color) {
+        let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
+        return `rgba(${r},${g},${b},${a})`;
+    }
+
+    static hex2rgb(color) {
+        let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
+        return `rgb(${r},${g},${b})`;
     }
 
     static hexa2rgba(color) {
@@ -261,16 +265,6 @@ module.exports = class xcolor {
         return xcolor.rgba2hsla(xcolor.hexa2rgba(color));
     }
 
-    static rgb2rgba(color) {
-        let [r, g, b] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
-        return `rgba(${r},${g},${b}, 1)`;
-    }
-
-    static rgba2rgb(color) {
-        let [r, g, b, a] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
-        return `rgb(${r},${g},${b})`;
-    }
-
     /**
     * @func hsl2hsb
     * @desc Return an HSB color from an HSL color
@@ -283,7 +277,7 @@ module.exports = class xcolor {
     * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
     */
     static hsl2hsb(colorCode) {
-        let [_, hslH, hslS, hslL] = colorCode.match(hslRegex).map(Number);
+        let [_, hslH, hslS, hslL] = colorCode.match(xcolor.hslRegex).map(Number);
         const hsb1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100;
         const hsbS = hsb1 === 0 ? 0 : 2 * hsb1 / (hslL + hsb1) * 100;
         const hsbB = hslL + hsb1;
@@ -291,7 +285,7 @@ module.exports = class xcolor {
     }
 
     static hsla2hsba(colorCode) {
-        let [_, hslH, hslS, hslL, hslA] = colorCode.match(hslaRegex).map(Number);
+        let [_, hslH, hslS, hslL, hslA] = colorCode.match(xcolor.hslaRegex).map(Number);
         const hsb1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100;
         const hsbS = hsb1 === 0 ? 0 : 2 * hsb1 / (hslL + hsb1) * 100;
         const hsbB = hslL + hsb1;
@@ -309,7 +303,7 @@ module.exports = class xcolor {
     * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
     */
     static hsb2hsl(colorCode) {
-        let [_, hsbH, hsbS, hsbB] = colorCode.match(hsbRegex).map(Number);
+        let [_, hsbH, hsbS, hsbB] = colorCode.match(xcolor.hsbRegex).map(Number);
         const hslL = (200 - hsbS) * hsbB / 100;
         const [hslS, hslB] = [
             hslL === 0 || hslL === 200 ? 0 : hsbS * hsbB / 100 / (hslL <= 100 ? hslL : 200 - hslL) * 100,
@@ -319,7 +313,7 @@ module.exports = class xcolor {
     }
 
     static hsba2hsla(colorCode) {
-        let [_, hsbH, hsbS, hsbB, hsbA] = colorCode.match(hsbaRegex).map(Number);
+        let [_, hsbH, hsbS, hsbB, hsbA] = colorCode.match(xcolor.hsbaRegex).map(Number);
         const hslL = (200 - hsbS) * hsbB / 100;
         const [hslS, hslB] = [
             hslL === 0 || hslL === 200 ? 0 : hsbS * hsbB / 100 / (hslL <= 100 ? hslL : 200 - hslL) * 100,
@@ -440,12 +434,18 @@ module.exports = class xcolor {
     }
 
 
+    /**
+     * Generate a random color in the specified format.
+     *
+     * @param {string} format - The format of the color to generate (default: 'hex')
+     * @return {string} The randomly generated color in the specified format
+     */
     static randomColor(format = 'hex') {
         let methods = ['hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla'];
         let method = methods.includes(format) ? format : methods[Math.floor(Math.random() * methods.length)];
         switch (method) {
             case 'hex':
-                return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+                return `#${((Math.random() * 0xfffff * 1000000).toString(16)).slice(0, 6)}`;
             case 'rgb':
                 return `rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`;
             case 'rgba':
@@ -461,5 +461,162 @@ module.exports = class xcolor {
         }
     }
 
+    /**
+     * Performs linear interpolation between two colors.
+     *
+     * @param {xcolor} xcolorA - The first xcolor object
+     * @param {xcolor} xcolorB - The second xcolor object
+     * @param {number} intval - The interpolation value between 0 and 1
+     * @return {xcolor} A new xcolor object resulting from the linear interpolation
+     */
+    static lerpColor(xcolorA, xcolorB, intval) {
+        const rgbA = [xcolorA.r,xcolorA.g,xcolorA.b,xcolorA.a],
+            rgbB = [xcolorB.r,xcolorB.g,xcolorB.b,xcolorB.a];
+        const colorVal = (prop) =>
+            Math.round(rgbA[prop] * (1 - intval) + rgbB[prop] * intval);
+        return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
+    }
 
+    /**
+     * Static method to darken a color by a specified amount.
+     *
+     * @param {xcolor} xcolor - the xcolor to darken
+     * @param {number} amount - the amount by which to darken the color between 0 and 1
+     * @return {xcolor} - the darkened xcolor
+     */
+    static darken(xcolor, amount) {
+        const rgb = [xcolor.r,xcolor.g,xcolor.b,xcolor.a];
+        const colorVal = (prop) =>
+            Math.round(rgb[prop] * (1 - amount));
+        return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
+    }
+
+    /**
+     * Lightens the given xcolor by the specified amount.
+     *
+     * @param {xcolor} xcolor - The xcolor object to be lightened.
+     * @param {number} amount - The amount by which to lighten the xcolor.
+     * @return {xcolor} - The lightened xcolor object.
+     */
+    static ligthten(xcolor, amount) {
+        const rgb = [xcolor.r,xcolor.g,xcolor.b,xcolor.a];
+        const colorVal = (prop) =>
+            Math.round(rgb[prop] * (1 + amount));
+        return new xcolor(`rgba( ${colorVal('r')}, ${colorVal('g')}, ${colorVal('b')}, ${colorVal('a')})`);
+    }
+
+    /**
+     * Generate an analogous color palette based on the given base color.
+     *
+     * @param {xcolor} baseColor - the base color to generate the palette from
+     * @return {xcolor[]} an array containing three analogous colors
+     */
+    static analogousPalette(baseColor) {
+        let analogous1 = new xcolor((baseColor.hsbH + 330) % 360, baseColor.hsbS, baseColor.hsbB);
+        let analogous3 = new xcolor((baseColor.hsbH + 30) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [analogous1, baseColor, analogous3];
+    }
+
+    /**
+     * Generates a complementary palette based on a given base color.
+     *
+     * @param {xcolor} baseColor - The base color to generate the complementary palette from.
+     * @return {xcolor[]} An array containing the base color and its complementary color.
+     */
+    static complementaryPalette(baseColor) {
+        let complementary1 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [baseColor, complementary1];
+    }
+
+    /**
+     * Generates a split complementary palette based on the provided base color.
+     *
+     * @param {xcolor} baseColor - The base color from which the palette is generated.
+     * @return {xcolor[]} An array containing the base color and its two split complementary colors.
+     */
+    static splitComplementaryPalette(baseColor) {
+        let splitComplementary1 = new xcolor((baseColor.hsbH + 150) % 360, baseColor.hsbS, baseColor.hsbB);
+        let splitComplementary2 = new xcolor((baseColor.hsbH + 210) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [baseColor, splitComplementary1, splitComplementary2];
+    }
+
+    /**
+     * Generates a triadic color palette based on a given base color.
+     *
+     * @param {xcolor} baseColor - The base color to generate the palette from.
+     * @return {xcolor[]} An array containing the base color and two triadic colors.
+     */
+    static triadicPalette(baseColor) {
+        let triadic1 = new xcolor((baseColor.hsbH + 120) % 360, baseColor.hsbS, baseColor.hsbB);
+        let triadic2 = new xcolor((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [baseColor, triadic1, triadic2];
+    }
+
+    /**
+     * Generate a tetradic color palette based on the input base color.
+     *
+     * @param {xcolor} baseColor - the base color used to generate the palette
+     * @return {xcolor[]} an array containing the base color and three additional colors forming a tetradic palette
+     */
+    static tetradicPalette(baseColor) {
+        let tetradic1 = new xcolor((baseColor.hsbH + 60) % 360, baseColor.hsbS, baseColor.hsbB);
+        let tetradic2 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        let tetradic3 = new xcolor((baseColor.hsbH + 240) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [baseColor, tetradic1, tetradic2, tetradic3];
+    }
+
+    /**
+     * Generate a square color palette based on the provided base color.
+     *
+     * @param {xcolor} baseColor - the base color to generate the palette from
+     * @return {xcolor[]} an array containing the base color and three additional square colors
+     */
+    static squarePalette(baseColor) {
+        let square1 = new xcolor((baseColor.hsbH + 90) % 360, baseColor.hsbS, baseColor.hsbB);
+        let square2 = new xcolor((baseColor.hsbH + 180) % 360, baseColor.hsbS, baseColor.hsbB);
+        let square3 = new xcolor((baseColor.hsbH + 270) % 360, baseColor.hsbS, baseColor.hsbB);
+        return [baseColor, square1, square2, square3];
+    }
+
+    /**
+     * Generates an array of shades based on the base color.
+     *
+     * @param {xcolor} baseColor - The base color to generate shades from.
+     * @return {xcolor[]} An array of xcolor objects representing the shades.
+     */
+    static shades(baseColor) {
+        let shades = [];
+        for (let i = 0; i < 15; i++) {
+            shades.push(new xcolor(baseColor.hsbH, baseColor.hsbS, map(i, 0, 14, baseColor.hsbB, 0)));
+        }
+        return shades;
+    }
+
+    /**
+     * Generate an array of tints based on the baseColor provided.
+     *
+     * @param {xcolor} baseColor - the base color used to generate tints
+     * @return {xcolor[]} an array of tints
+     */
+    static tints(baseColor) {
+        let tints = [];
+        for (let i = 0; i < 15; i++) {
+            tints.push(new xcolor(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), map(i, 0, 14, baseColor.hsbB, 100)));
+        }
+        return tints;
+    }
+
+    /**
+     * Generates a set of tones based on a base color.
+     *
+     * @param {xcolor} baseColor - The base color to generate tones from.
+     * @return {xcolor[]} An array of xcolor objects representing the generated tones.
+     */
+    static tones(baseColor) {
+        let tones = [];
+        for (let i = 0; i < 15; i++) {
+            tones.push(new xcolor(baseColor.hsbH, map(i, 0, 14, baseColor.hsbS, 0), baseColor.hsbB));
+        }
+        return tones;
+    }
 }
