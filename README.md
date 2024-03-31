@@ -1,5 +1,5 @@
 # xcolor
-**WARNING:** this library is at early development<br>## xcolor.js
+**WARNING:** this library is at early development
 
 The `xcolor.js` library provides a collection of JavaScript functions for working with colors in various formats. It offers methods for:
 
