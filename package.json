@@ -4,10 +4,12 @@
   "main": "xcolor.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "map-range": "^0.1.2"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "map-range": "^0.1.2"
   },
   "scripts": {
     "test": "jest"

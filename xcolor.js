@@ -1,3 +1,5 @@
+var map = require('map-range');
+
 class xcolor {
     static rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
     static rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
