@@ -1,4 +1,4 @@
-module.exports = class xcolor {
+class xcolor {
     static rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
     static rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
     static hexRegex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
@@ -207,28 +207,126 @@ module.exports = class xcolor {
     }
 
     // Static instance methods
-    static getRgb([r, g, b]) {
-        return new xcolor(`rgb(${r},${g},${b})`);
+
+    /**
+     * Gets the RGB color from an array or a list of RGB values.
+     * @param {Array} [r,g,b] - red, green and blue values
+     * or
+     * @param {Number} r - red value
+     * @param {Number} g - green value
+     * @param {Number} b - blue value
+     * @return {xcolor} new xcolor object representing the RGB color
+     */
+    static getRgb() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 3) {
+            values = arguments;
+        }
+        return new xcolor(`rgb(${Math.round(values[0])},${Math.round(values[1])},${Math.round(values[2])})`);
     }
 
-    static getRgba([r, g, b, a]) {
-        return new xcolor(`rgba(${r},${g},${b},${a})`);
+    /**
+     * Gets the RGBA color from an array or a list of RGBA values.
+     * @param {Array} [r,g,b,a] - red, green, blue and alpha values
+     * or
+     * @param {Number} r - red value
+     * @param {Number} g - green value
+     * @param {Number} b - blue value
+     * @param {Number} a - alpha value
+     * @return {xcolor} new xcolor object representing the RGB color
+     */
+    static getRgba() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 4) {
+            values = arguments;
+        }
+        return new xcolor(`rgba(${Math.round(values[0])},${Math.round(values[1])},${Math.round(values[2])},${Math.round(values[3])})`);
     }
 
-    static getHsl([h, s, l]) {
-        return new xcolor(`hsl(${h},${s}%,${l}%)`);
+    /**
+     * Creates a new xcolor object from an array or a list of HSL values.
+     *
+     * @param {Array} [h,s,l] - hue, saturation and lightness values
+     * or
+     * @param {Number} h - hue value
+     * @param {Number} s - saturation value
+     * @param {Number} l - lightness value
+     * @return {xcolor} - A new xcolor object representing the color in HSL format.
+     */
+    static getHsl() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 3) {
+            values = arguments;
+        }
+        return new xcolor(`hsl(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%)`);
     }
 
-    static getHsla([h, s, l, a]) {
-        return new xcolor(`hsla(${h},${s}%,${l}%,${a})`);
+    /**
+     * Creates a new xcolor object from an array or a list of HSL values.
+     *
+     * @param {Array} [h,s,l,a] - hue, saturation, lightness and alpha values
+     * or
+     * @param {Number} h - hue value
+     * @param {Number} s - saturation value
+     * @param {Number} l - lightness value
+     * @param {Number} a - alpha value
+     * @return {xcolor} - A new xcolor object representing the color in HSL format.
+     */
+    static getHsla() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 4) {
+            values = arguments;
+        }
+        return new xcolor(`hsla(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%,${Math.round(values[3])})`);
     }
 
-    static getHsb([h, s, b]) {
-        return new xcolor(`hsb(${h},${s}%,${b}%)`);
+    /**
+     * Creates a new xcolor object from an array or a list of HSL values.
+     *
+     * @param {Array} [h,s,b] - hue, saturation and brightness values
+     * or
+     * @param {Number} h - hue value
+     * @param {Number} s - saturation value
+     * @param {Number} b - brightness value
+     * @return {xcolor} - A new xcolor object representing the color in HSL format.
+     */
+    static getHsb() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 3) {
+            values = arguments;
+        }
+        return new xcolor(`hsb(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%)`);
     }
 
-    static getHsba([h, s, b, a]) {
-        return new xcolor(`hsba(${h},${s}%,${b}%,${a})`);
+    /**
+     * Creates a new xcolor object from an array or a list of HSL values.
+     *
+     * @param {Array} [h,s,b,a] - hue, saturation, brightness and alpha values
+     * or
+     * @param {Number} h - hue value
+     * @param {Number} s - saturation value
+     * @param {Number} b - brightness value
+     * @param {Number} a - alpha value
+     * @return {xcolor} - A new xcolor object representing the color in HSL format.
+     */
+    static getHsba() {
+        let values=[];
+        if(arguments.length === 1) {
+            values = arguments[0];
+        }else if(arguments.length === 4) {
+            values = arguments;
+        }
+        return new xcolor(`hsba(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%,${Math.round(values[3])})`);
     }
 
     // Conversions
@@ -307,7 +405,7 @@ module.exports = class xcolor {
         const hsb1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100;
         const hsbS = hsb1 === 0 ? 0 : 2 * hsb1 / (hslL + hsb1) * 100;
         const hsbB = hslL + hsb1;
-        return `hsb(${hslH}, ${hsbS}%, ${hsbB}%)`;
+        return `hsb(${Math.round(hslH)}, ${Math.round(hsbS)}%, ${Math.round(hsbB)}%)`;
     }
 
     static hsla2hsba(colorCode) {
@@ -315,7 +413,7 @@ module.exports = class xcolor {
         const hsb1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100;
         const hsbS = hsb1 === 0 ? 0 : 2 * hsb1 / (hslL + hsb1) * 100;
         const hsbB = hslL + hsb1;
-        return `hsba(${hslH}, ${hsbS}%, ${hsbB}%, ${hslA})`;
+        return `hsba(${Math.round(hslH)}, ${Math.round(hsbS)}%, ${Math.round(hsbB)}%, ${Math.round(hslA)})`;
     }
     /**
     * @func hsb2hsl
@@ -335,7 +433,7 @@ module.exports = class xcolor {
             hslL === 0 || hslL === 200 ? 0 : hsbS * hsbB / 100 / (hslL <= 100 ? hslL : 200 - hslL) * 100,
             hslL * 5 / 10
         ];
-        return `hsl(${hsbH}, ${hslS}%, ${hslB}%)`;
+        return `hsl(${Math.round(hsbH)}, ${Math.round(hslS)}%, ${Math.round(hslB)}%)`;
     }
 
     static hsba2hsla(colorCode) {
@@ -345,7 +443,7 @@ module.exports = class xcolor {
             hslL === 0 || hslL === 200 ? 0 : hsbS * hsbB / 100 / (hslL <= 100 ? hslL : 200 - hslL) * 100,
             hslL * 5 / 10
         ];
-        return `hsla(${hsbH}, ${hslS}%, ${hslB}%, ${hsbA})`;
+        return `hsla(${Math.round(hsbH)}, ${Math.round(hslS)}%, ${Math.round(hslB)}%, ${Math.round(hsbA)})`;
     }
 
     static hsl2rgb(colorCode) {
@@ -396,14 +494,10 @@ module.exports = class xcolor {
     }
 
     static hsb2rgb(colorCode) {
-        let [h, s, b] = colorCode.match(/\d+/g).map(Number);
-        s = s / 100;
-        b = b / 100;
-        let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        let red = Math.round(f(5) * 255);
-        let green = Math.round(f(3)) * 100;
-        let blue = Math.round(f(1) * 100);
-        return `rgb(${red},${green},${blue})`;
+        let [_h, _s, _b] = colorCode.match(/\d+/g).map(Number);
+        let h=_h, s=_s/100, b=_b/100;
+        let f= (n,k=(n+h/60)%6) => b - b*s*Math.max( Math.min(k,4-k,1), 0);
+        return `rgb(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)})`;
     }
 
     static hsba2rgba(colorCode) {
@@ -411,10 +505,7 @@ module.exports = class xcolor {
         s = s / 100;
         b = b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        let red = Math.round(f(5) * 255);
-        let green = Math.round(f(3)) * 100;
-        let blue = Math.round(f(1) * 100);
-        return `rgba(${red},${green},${blue},${a})`;
+        return `rgba(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)},${a})`;
     }
 
     static rgb2hsb(colorCode) {
@@ -665,3 +756,5 @@ module.exports = class xcolor {
         return tones;
     }
 }
+
+module.exports = xcolor;

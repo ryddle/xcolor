@@ -1,18 +1,18 @@
+const map = (value, x1, y1, x2, y2) => Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
+
+
 let shadescontainer;
 let tintscontainer;
 let tonescontainer;
 
-function setup() {
-    //createCanvas(0, 0);
-    colorMode(HSB, 360, 100, 100);
-
-    Palette.genColorPallete(color(random(0, 300), random(0, 100), random(0, 100)));
+function initialize() {
+    Palette.genColorPallete(xcolor.getHsb([Math.round(Math.random() * 300), Math.round(Math.random()* 100), Math.round(Math.random() * 100)]));
 
     let palettecontainer = document.createElement("div");
     palettecontainer.style.display = "inline-flex";
     Palette.pallete.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
@@ -42,7 +42,7 @@ function setup() {
     let analogousPalette = [Palette.analogous1, Palette.baseColor, Palette.analogous3];
     analogousPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         analogouscontainer.appendChild(colordiv);
@@ -61,7 +61,7 @@ function setup() {
     let complementaryPalette = [ Palette.baseColor, Palette.complementary];
     complementaryPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         complementarycontainer.appendChild(colordiv);
@@ -79,7 +79,7 @@ function setup() {
     let splitComplementaryPalette = [ Palette.baseColor, Palette.splitComplementary2, Palette.splitComplementary3];
     splitComplementaryPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         splitComplementarycontainer.appendChild(colordiv);
@@ -97,7 +97,7 @@ function setup() {
     let triadicPalette = [ Palette.baseColor, Palette.triadic2, Palette.triadic3];
     triadicPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         triadiccontainer.appendChild(colordiv);
@@ -115,7 +115,7 @@ function setup() {
     let tetradicPalette = [ Palette.baseColor, Palette.tetradic2, Palette.complementary, Palette.triadic3];
     tetradicPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         tetradiccontainer.appendChild(colordiv);
@@ -133,7 +133,7 @@ function setup() {
     let squarePalette = [ Palette.baseColor, Palette.square2, Palette.complementary, Palette.square4];
     squarePalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
         squarecontainer.appendChild(colordiv);
@@ -210,18 +210,17 @@ var Palette = {
     tints: [],
     tones: [],
     genColorPallete: function (_color) {
-        colorMode(HSB);
-        this.baseColor = color(_color);
-        this.analogous1 = color((hue(this.baseColor) + 330) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.analogous3 = color((hue(this.baseColor) + 30) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.complementary = color((hue(this.baseColor) + 180) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.splitComplementary2 = color((hue(this.baseColor) + 150) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.splitComplementary3 = color((hue(this.baseColor) + 210) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.triadic2 = color((hue(this.baseColor) + 120) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.triadic3 = color((hue(this.baseColor) + 240) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.tetradic2 = color((hue(this.baseColor) + 60) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.square2 = color((hue(this.baseColor) + 90) % 360, saturation(this.baseColor), brightness(this.baseColor));
-        this.square4 = color((hue(this.baseColor) + 270) % 360, saturation(this.baseColor), brightness(this.baseColor));
+        this.baseColor = _color;
+        this.analogous1 = xcolor.getHsb([(this.baseColor.hsbH + 330) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.analogous3 = xcolor.getHsb([(this.baseColor.hsbH + 30) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.complementary = xcolor.getHsb([(this.baseColor.hsbH + 180) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.splitComplementary2 = xcolor.getHsb([(this.baseColor.hsbH + 150) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.splitComplementary3 = xcolor.getHsb([(this.baseColor.hsbH + 210) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.triadic2 = xcolor.getHsb([(this.baseColor.hsbH + 120) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.triadic3 = xcolor.getHsb([(this.baseColor.hsbH + 240) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.tetradic2 = xcolor.getHsb([(this.baseColor.hsbH + 60) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.square2 = xcolor.getHsb([(this.baseColor.hsbH + 90) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        this.square4 = xcolor.getHsb([(this.baseColor.hsbH + 270) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
 
         this.pallete.push(this.baseColor, this.analogous1, this.analogous3, this.complementary, this.splitComplementary2, this.splitComplementary3, this.triadic2, this.triadic3, this.tetradic2, this.square2, this.square4);
     },
@@ -231,13 +230,13 @@ var Palette = {
         this.tints= [];
         this.tones= [];
         for (let i = 0; i < 15; i++) {
-            this.shades.push(color(hue(this.baseColor), saturation(this.baseColor), map(i, 0, 14, brightness(this.baseColor), 0)));
+            this.shades.push(xcolor.getHsb([this.baseColor.hsbH, this.baseColor.hsbS, map(i, 0, 14, this.baseColor.hsbB, 0)]));
         }
         for (let i = 0; i < 15; i++) {
-            this.tints.push(color(hue(this.baseColor), map(i, 0, 14, saturation(this.baseColor), 0), map(i, 0, 14, brightness(this.baseColor), 100)));
+            this.tints.push(xcolor.getHsb([this.baseColor.hsbH, map(i, 0, 14, this.baseColor.hsbS, 0), map(i, 0, 14, this.baseColor.hsbB, 100)]));
         }
         for (let i = 0; i < 15; i++) {
-            this.tones.push(color(hue(this.baseColor), map(i, 0, 14, saturation(this.baseColor), 0), brightness(this.baseColor)));
+            this.tones.push(xcolor.getHsb([this.baseColor.hsbH, map(i, 0, 14, this.baseColor.hsbS, 0), this.baseColor.hsbB]));
         }
     },
 
@@ -251,7 +250,7 @@ var Palette = {
             /* Increase saturation only in the first half */
             if (i < n/2)
               saturation = map(i, 0, n/2 - 1, 0, 100);
-            this.monochromaticPalette.push(color(hue(this.baseColor), saturation, brightness));
+            this.monochromaticPalette.push(xcolor.getHsb([this.baseColor.hsbH, Math.min(Math.round(saturation),100), Math.round(brightness)]));
           }
     }
 };
@@ -260,7 +259,7 @@ function genShadesTintsTones() {
 
     Palette.shades.forEach(shade => {
         let shadediv = document.createElement("div");
-        shadediv.style.background = shade;
+        shadediv.style.background = shade.getRgb();
         shadediv.style.width = "100px";
         shadediv.style.height = "100px";
 
@@ -269,7 +268,7 @@ function genShadesTintsTones() {
 
     Palette.tints.forEach(tint => {
         let tintsdiv = document.createElement("div");
-        tintsdiv.style.background = tint;
+        tintsdiv.style.background = tint.getRgb();
         tintsdiv.style.width = "100px";
         tintsdiv.style.height = "100px";
 
@@ -278,7 +277,7 @@ function genShadesTintsTones() {
 
     Palette.tones.forEach(tone => {
         let tonesdiv = document.createElement("div");
-        tonesdiv.style.background = tone;
+        tonesdiv.style.background = tone.getRgb();
         tonesdiv.style.width = "100px";
         tonesdiv.style.height = "100px";
 
@@ -291,7 +290,7 @@ function genMonochromaticPalette() {
 
     Palette.monochromaticPalette.forEach(color => {
         let colordiv = document.createElement("div");
-        colordiv.style.background = color;
+        colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
 
@@ -299,3 +298,4 @@ function genMonochromaticPalette() {
     });
 }
 
+document.onload = initialize();
