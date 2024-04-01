@@ -3,9 +3,9 @@ const { expect, describe, it } = require('@jest/globals');
 
 describe('xcolor', () => {
   it('creates instances', () => {
-    //const c = new xcolor('red');
-    //expect(c).not.toBeInstanceOf(xcolor);
-    expect(new xcolor('red')).toThrowErrorMatchingSnapshot();
+    expect(() => {
+      new xcolor('red');
+    }).toThrow();
   });
 
   it('shows color in hex', () => {
