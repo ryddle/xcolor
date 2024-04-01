@@ -67,12 +67,12 @@ These methods are private and used internally by the class to parse different co
 * `parseHsba(colorCode)`
 
 **Static Instance Methods**
-* `getRgb([r, g, b])`: Get an xcolor instance from rgb array 
-* `getRgba([r, g, b, a])`: Get an xcolor instance from rgba array 
-* `getHsl([h, s, l])`: Get an xcolor instance from hsl array 
-* `getHsla([h, s, l, a])`: Get an xcolor instance from hsla array 
-* `getHsb([h, s, b])`: Get an xcolor instance from hsb array 
-* `getHsba([h, s, b, a])`: Get an xcolor instance from hsba array 
+* `getRgb([r, g, b]|r,g,b)`: Gets the RGB color from an array or a list of RGB values. 
+* `getRgba([r, g, b, a]|r,g,b,a)`: Get an xcolor instance from an array or a list of RGBA values.
+* `getHsl([h, s, l]|h,s,l)`: Get an xcolor instance from an array or a list of HSL values.
+* `getHsla([h, s, l, a]|h,s,l,a)`: Get an xcolor instance from an array or a list of HSLA values.
+* `getHsb([h, s, b]|h,s,b)`: Get an xcolor instance from an array or a list of HSB values.
+* `getHsba([h, s, b, a]|h,s,b,a)`: Get an xcolor instance from an array or a list of HSBA values.
 
 **Static Conversion Methods**
 

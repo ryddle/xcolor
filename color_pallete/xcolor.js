@@ -1,3 +1,12 @@
+const map = function(value, x1, y1, x2, y2) { 
+    const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
+    if(x2>y2){
+        return Math.min(Math.max(nv, y2), x2);
+    }else{
+        return Math.max(Math.min(nv, y2), x2);
+    }
+}
+
 class xcolor {
     static rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
     static rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
@@ -207,6 +216,16 @@ class xcolor {
     }
 
     // Static instance methods
+
+    /**
+     * Get xcolor instance from the provided color code.
+     *
+     * @param {string} colorCode - The color code to create xcolor instance from
+     * @return {xcolor} xcolor - The xcolor instance created from the color code
+     */
+    static getXcolor(colorCode) {
+        return new xcolor(colorCode);
+    }
 
     /**
      * Gets the RGB color from an array or a list of RGB values.
@@ -579,6 +598,33 @@ class xcolor {
     }
 
     /**
+     * Generate a random color in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
+     *
+     * @param {string} format - The format of the color to generate (default: 'hex')
+     * @return {string} The randomly generated color in the specified format
+     */
+    static randomXcolor(format = 'hex') {
+        let methods = ['hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla'];
+        let method = methods.includes(format) ? format : methods[Math.floor(Math.random() * methods.length)];
+        switch (method) {
+            case 'hex':
+                return new xcolor(`#${((Math.random() * 0xfffff * 1000000).toString(16)).slice(0, 6)}`);
+            case 'rgb':
+                return xcolor.getRgb(Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256));
+            case 'rgba':
+                return xcolor.getRgba(Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.random());
+            case 'hsb':
+                return xcolor.getHsb(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100));
+            case 'hsba':
+                return xcolor.getHsba(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100),Math.random());
+            case 'hsl':
+                return xcolor.getHsl(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100));
+            case 'hsla':
+                return xcolor.getHsla(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100),Math.random());
+        }
+    }
+
+    /**
      * Performs linear interpolation between two colors.
      *
      * @param {xcolor} xcolorA - The first xcolor object
@@ -702,14 +748,14 @@ class xcolor {
      * @return {xcolor[]} an array containing the monochromatic colors
      */
     static monochromaticPalette(baseColor) {
-        monochromaticPalette = [];
+        let monochromaticPalette = [];
         let n = 15, s=0, b=0;
         for (var i = 0; i < n; i++) {
             s = 100;/* Vary the brightness regardless of value number */
             b = map(i, 0, n - 1, 100, 0);/* Increase saturation only in the first half */
             if (i < n / 2)
-                saturation = map(i, 0, n / 2 - 1, 0, 100);
-            monochromaticPalette.push(xcolor.getHsb(baseColor.hsbH, saturation, brightness));
+                s = map(i, 0, n / 2 - 1, 0, 100);
+            monochromaticPalette.push(xcolor.getHsb(baseColor.hsbH, s, b));
         }
         return monochromaticPalette;
     }

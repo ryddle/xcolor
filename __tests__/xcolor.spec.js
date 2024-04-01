@@ -81,5 +81,16 @@ describe('xcolor', () => {
   });
 
 
+  it('generates a monochromaticPalette palette', () => {
+    const color = new xcolor(xcolor.randomColor('hsl'));
+    const palette = xcolor.monochromaticPalette(color);
+    expect(palette.length).toBe(15);
+  })
+
+  it('generates a shades', () => {
+    const color = xcolor.randomXcolor('hsl');
+    const palette = xcolor.shades(color);
+    expect(palette.length).toBe(15);
+  })
 });
 
