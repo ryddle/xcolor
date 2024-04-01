@@ -67,6 +67,7 @@ These methods are private and used internally by the class to parse different co
 * `parseHsba(colorCode)`
 
 **Static Instance Methods**
+* `getXcolor(colorCode)`: Get xcolor instance from the provided color code.
 * `getRgb([r, g, b]|r,g,b)`: Gets the RGB color from an array or a list of RGB values. 
 * `getRgba([r, g, b, a]|r,g,b,a)`: Get an xcolor instance from an array or a list of RGBA values.
 * `getHsl([h, s, l]|h,s,l)`: Get an xcolor instance from an array or a list of HSL values.
@@ -102,7 +103,8 @@ These methods are used to convert between different color formats without creati
 
 **Color Generation:**
 
-- `randomColor(format = 'hex')`: Generates a random color in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
+- `randomColor(format = 'hex')`: Generates a random color as string in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
+- `randomXcolor(format = 'hex')`: Generates a random xcolor object in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
 
 **Color Manipulation:**
 

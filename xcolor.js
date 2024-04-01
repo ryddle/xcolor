@@ -1,10 +1,6 @@
 const map = function(value, x1, y1, x2, y2) { 
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
-    if(x2>y2){
-        return Math.min(Math.max(nv, y2), x2);
-    }else{
-        return Math.max(Math.min(nv, y2), x2);
-    }
+    return (x2>y2)?Math.min(Math.max(nv, y2), x2):Math.max(Math.min(nv, y2), x2);
 }
 
 class xcolor {
