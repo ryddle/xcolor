@@ -3,6 +3,19 @@ const map = function(value, x1, y1, x2, y2) {
     return (x2>y2)?Math.min(Math.max(nv, y2), x2):Math.max(Math.min(nv, y2), x2);
 }
 
+/*
+ * xcolor.js is a simple class to manipulate colors in JavaScript
+ * It provides methods to parse color codes, convert color spaces and generate color codes.
+ * Supported color formats: hex, hexa, rgb, rgba, hsl, hsla
+ * Supported color spaces: RGB, HSB (HSV), HSL
+ * - Generating random colors
+ * - Converting between color formats
+ * - Performing color manipulations, such as:
+ *   - Interpolating between colors
+ *   - Darkening and lightening colors
+ *   - Creating color palettes
+ * 
+*/
 class xcolor {
     static rgbRegex = /^rgb\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3})\)$/;
     static rgbaRegex = /^rgba\((\d{1,3}),\s?(\d{1,3}),\s?(\d{1,3}),\s?(0?(\.\d+)?|1(\.0)?)\)$/;
@@ -16,7 +29,7 @@ class xcolor {
     /**
      * Initializes a new instance of the Color class with the specified color code.
      * By default, the alpha channel is set to 1.
-     *
+     * @constructor
      * @param {string} colorCode - The color code to initialize the Color instance with.
      *                             The color code can be in any of the following formats:
      *                             - RGB: "rgb(R, G, B)"
@@ -84,31 +97,91 @@ class xcolor {
         }
     }
 
+/**
+     * @description Returns the RGBA value of the color object.
+     * @name getRgba
+     * @method
+     * @private
+     * @memberof xcolor
+     * @param {string} color - The color code to be parsed.
+     * @return {string} The RGBA value of the color object in the format "rgba(r, g, b, a)".
+     * @example
+     *  //return exception
+     * var color = new xcolor('red');
+     * @example
+     *  //return 'rgba(255,0,0,0.5)'
+     * var color = new xcolor('#ff0000');
+     * color.getRgba();
+     * @throws {Error} If the color code is invalid.
+     */
     getRgba() {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;
     }
+/**
+     * Returns the RGB value of the color in the format "rgb(r,g,b)".
+     *
+     * @return {string} The RGB value of the color.
+     */
     getRgb() {
         return `rgb(${this.r},${this.g},${this.b})`;
     }
+/**
+     * A description of the entire function.
+     *
+     * @param {type} paramName - description of parameter
+     * @return {type} description of return value
+     */
     getHexa() {
         return `#${this.hr}${this.hg}${this.hb}${this.ha}`;
     }
+/**
+     * Returns the hexadecimal representation of the color.
+     *
+     * @return {string} The hexadecimal color value.
+     */
     getHex() {
         return `#${this.hr}${this.hg}${this.hb}`;
     }
+/**
+     * Returns a string representation of the HSBA color value in the format "hsba(H,S%,B%,A)".
+     *
+     * @return {string} The HSBA color value as a string.
+     */
     getHsba() {
         return `hsba(${this.hsbH},${this.hsbS}%,${this.hsbB}%,${this.hsbA})`;
     }
+/**
+     * A method to get the HSB color format.
+     *
+     * @return {string} The HSB color in string format
+     */
     getHsb() {
         return `hsb(${this.hsbH},${this.hsbS}%,${this.hsbB}%)`;
     }
+/**
+     * Get the HSLA color value.
+     *
+     * @return {string} HSLA color string
+     */
     getHsla() {
         return `hsla(${this.hslH},${this.hslS}%,${this.hslL}%,${this.hslA})`;
     }
+/**
+     * Return the HSL color string.
+     *
+     * @return {string} The HSL color string
+     */
     getHsl() {
         return `hsl(${this.hslH},${this.hslS}%,${this.hslL}%)`;
     }
 
+/**
+     * A function to parse an RGB color code.
+     *
+     * @param {string} colorCode - The RGB color code to parse.
+     * @return {void} This function does not return anything.
+     * @throws {Error} Throws an error if the color code is not in the correct format.
+     */
     parseRgb(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.rgbRegex))) {
@@ -120,6 +193,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid rgb format`);
         }
     }
+/**
+     * Parses an RGBA color code and sets the red, green, blue, and alpha values of the current object.
+     *
+     * @param {string} colorCode - The RGBA color code to parse.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code is not in a valid RGBA format.
+     */
     parseRgba(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.rgbaRegex))) {
@@ -131,6 +211,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid rgba format`);
         }
     }
+/**
+     * Parse a color code in hex format and set the RGBA values accordingly.
+     *
+     * @param {string} colorCode - The color code in hex format to parse.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code is not in a valid hex format.
+     */
     parseHex(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hexRegex))) {
@@ -146,6 +233,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid hex format`);
         }
     }
+/**
+     * Parses a hexadecimal color code and sets the corresponding RGB and alpha values.
+     *
+     * @param {string} colorCode - The hexadecimal color code to parse.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code is not in a valid hexadecimal format.
+     */
     parseHexa(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hexaRegex))) {
@@ -161,6 +255,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid hexa format`);
         }
     }
+/**
+     * Parses the given color code in hsla format and updates the hsla properties of the object.
+     *
+     * @param {string} colorCode - The color code to be parsed in hsla format.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code does not have a valid hsla format.
+     */
     parseHsla(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hslaRegex))) {
@@ -173,6 +274,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid hsla format`);
         }
     }
+/**
+     * Parses a HSL color code and sets the corresponding HSL values.
+     *
+     * @param {string} colorCode - The HSL color code to parse.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the colorCode does not have a valid HSL format.
+     */
     parseHsl(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hslRegex))) {
@@ -185,6 +293,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid hsl format`);
         }
     }
+/**
+     * Parses a color code in HSB format and sets the corresponding HSB values for this object.
+     *
+     * @param {string} colorCode - The color code to parse in HSB format.
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code does not have a valid HSB format.
+     */
     parseHsb(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hsbRegex))) {
@@ -197,7 +312,13 @@ class xcolor {
             throw new Error(`${colorCode} has not a valid hsb format`);
         }
     }
-
+/**
+     * Parse the given color code into HSBA values.
+     *
+     * @param {string} colorCode - the color code to be parsed
+     * @return {void} This function does not return anything.
+     * @throws {Error} If the color code does not have a valid HSBA format.
+     */
     parseHsba(colorCode) {
         let matches;
         if ((matches = colorCode.match(xcolor.hsbaRegex))) {
@@ -345,61 +466,128 @@ class xcolor {
     }
 
     // Conversions
+
+    /**
+     * Converts an RGB color to RGBA format.
+     *
+     * @param {string} color - the RGB color to convert
+     * @return {string} the color in RGBA format
+     */
     static rgb2rgba(color) {
         let [r, g, b] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
         return `rgba(${r},${g},${b}, 1)`;
     }
-
+/**
+     * Converts rgba color to rgb color.
+     *
+     * @param {string} color - The rgba color to be converted
+     * @return {string} The converted rgb color
+     */
     static rgba2rgb(color) {
         let [r, g, b, a] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
         return `rgb(${r},${g},${b})`;
     }
-
+/**
+     * Converts an RGB color value to a hexadecimal color code.
+     *
+     * @param {string} color - The RGB color value to convert.
+     * @return {string} The hexadecimal color code.
+     */
     static rgb2hex(color) {
         return '#' + color.match(/[\d\.]+/g).map((x, i) => Math.round((+x) * (i < 3 ? 1 : 255)).toString(16).padStart(2, 0)).join``;
     }
-
+/**
+     * Converts an RGBA color value to a hexadecimal color code.
+     *
+     * @param {string} color - The RGBA color value to be converted.
+     * @return {string} The hexadecimal color code.
+     */
     static rgba2hex(color) {
         let [r, g, b, a] = color.match(/\d+/g).map(x => (+x).toString(16).padStart(2, 0));
         return `#${r}${g}${b}`;
     }
-
+/**
+     * Converts an RGBA color value to a hexadecimal color code.
+     *
+     * @param {string} color - The RGBA color value to convert.
+     * @return {string} The hexadecimal color code.
+     */
     static rgba2hexa(color) {
         return '#' + color.match(/[\d\.]+/g).map((x, i) => Math.round((+x) * (i < 3 ? 1 : 255)).toString(16).padStart(2, 0)).join``;
     }
-
+/**
+     * Converts a hexadecimal color code to an RGBA color code.
+     *
+     * @param {string} color - The hexadecimal color code to convert.
+     * @return {string} The RGBA color code.
+     */
     static hex2rgba(color) {
         let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgba(${r},${g},${b},${a})`;
     }
-
+/**
+     * Converts a hexadecimal color code to an RGB color code.
+     *
+     * @param {string} color - The hexadecimal color code to convert.
+     * @return {string} The RGB color code equivalent to the input hexadecimal color code.
+     */
     static hex2rgb(color) {
         let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgb(${r},${g},${b})`;
     }
-
+/**
+     * Converts a hexadecimal color code to rgba format.
+     *
+     * @param {string} color - the hexadecimal color code to convert
+     * @return {string} the rgba formatted color
+     */
     static hexa2rgba(color) {
         let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgba(${r},${g},${b},${Math.round((a / 255) * 10) / 10})`;
     }
-
+/**
+     * Converts a hexadecimal color code to an RGB color code.
+     *
+     * @param {string} color - The hexadecimal color code to convert.
+     * @return {string} The RGB color code equivalent to the input hexadecimal color code.
+     */
     static hex2rgb(color) {
         let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgb(${r},${g},${b})`;
     }
-
+/**
+     * Converts a hexadecimal color code to its corresponding hue, saturation, and brightness values.
+     *
+     * @param {string} color - The hexadecimal color code to be converted.
+     * @return {object} An object containing the hue, saturation, and brightness values of the color.
+     */
     static hex2hsb(color) {
         return xcolor.rgb2hsb(xcolor.hex2rgb(color));
     }
-
+/**
+     * Convert a hexadecimal color to HSBA representation.
+     *
+     * @param {string} color - The hexadecimal color to be converted
+     * @return {object} - The HSBA representation of the input color
+     */
     static hexa2hsba(color) {
         return xcolor.rgba2hsba(xcolor.hexa2rgba(color));
     }
-
+/**
+     * Convert a hex color to an HSL color.
+     *
+     * @param {string} color - The hex color to convert
+     * @return {array} The HSL color array
+     */
     static hex2hsl(color) {
         return xcolor.rgb2hsl(xcolor.hex2rgb(color));
     }
-
+/**
+     * Convert a hexa color to an HSLA color.
+     *
+     * @param {type} color - description of the hexa color
+     * @return {type} description of the resulting HSLA color
+     */
     static hexa2hsla(color) {
         return xcolor.rgba2hsla(xcolor.hexa2rgba(color));
     }
@@ -407,12 +595,11 @@ class xcolor {
     /**
     * @func hsl2hsb
     * @desc Return an HSB color from an HSL color
-    * @param {Number} h - Hue Angle (0 - 360)
-    * @param {Number} s - Saturation (0 - 100)
-    * @param {Number} l - Lightness (0 - 100)
+    * @param {string} colorCode - string containing HSL color
     * @return {StringHSB}
     * @example
-    * hsl2hsb(0, 100, 50)
+    * // returns hsba(150, 100%, 100%)
+    * hsl2hsb('hsl(150, 100%, 50%)')
     * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
     */
     static hsl2hsb(colorCode) {
@@ -422,7 +609,16 @@ class xcolor {
         const hsbB = hslL + hsb1;
         return `hsb(${Math.round(hslH)}, ${Math.round(hsbS)}%, ${Math.round(hsbB)}%)`;
     }
-
+/**
+    * @func hsla2hsba
+    * @desc Return an HSBA color from an HSLA color
+    * @param {string} colorCode - string containing HSLA color
+    * @return {StringHSBA}
+    * @example
+    * // returns hsba(150, 100%, 100%, 0.5)
+    * hsla2hsba('hsla(150, 100%, 50%, 0.5)')
+    * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
+    */
     static hsla2hsba(colorCode) {
         let [_, hslH, hslS, hslL, hslA] = colorCode.match(xcolor.hslaRegex).map(Number);
         const hsb1 = hslS * (hslL < 50 ? hslL : 100 - hslL) / 100;
@@ -433,12 +629,11 @@ class xcolor {
     /**
     * @func hsb2hsl
     * @desc Return an HSL color from an HSB color
-    * @param {Number} h - Hue Angle (0 - 360)
-    * @param {Number} s - Saturation (0 - 100)
-    * @param {Number} b - Brightness (0 - 100)
-    * @return {ArrayHSL}
+    * @param {string} colorCode - string containing HSB color
+    * @return {StringHSL}
     * @example
-    * hsb2hsl(0, 0, 0) // => [0, 100, 50]
+    * // returns hsl(150, 100%, 25%)
+    * hsb2hsl('hsb(150, 100%, 50%)')
     * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
     */
     static hsb2hsl(colorCode) {
@@ -450,7 +645,16 @@ class xcolor {
         ];
         return `hsl(${Math.round(hsbH)}, ${Math.round(hslS)}%, ${Math.round(hslB)}%)`;
     }
-
+/**
+    * @func hsba2hsla
+    * @desc Return an HSLA color from an HSBA color
+    * @param {string} colorCode - string containing HSBA color
+    * @return {StringHSLA}
+    * @example
+    * // returns hsla(150, 100%, 25%, 0.5)
+    * hsba2hsla('hsba(150, 100%, 50%, 0.5)')
+    * @link https://gist.github.com/defims/0ca2ef8832833186ed396a2f8a204117
+    */
     static hsba2hsla(colorCode) {
         let [_, hsbH, hsbS, hsbB, hsbA] = colorCode.match(xcolor.hsbaRegex).map(Number);
         const hslL = (200 - hsbS) * hsbB / 100;
@@ -460,7 +664,15 @@ class xcolor {
         ];
         return `hsla(${Math.round(hsbH)}, ${Math.round(hslS)}%, ${Math.round(hslB)}%, ${Math.round(hsbA)})`;
     }
-
+/**
+     * Converts an HSL color code to an RGB color code.
+     *
+     * @param {string} colorCode - the HSL color code to convert
+     * @return {string} the RGB color code
+     * @example
+     * // returns rgb(0, 255, 128)
+     * hsl2rgb('hsl(150, 100%, 50%)')
+     */
     static hsl2rgb(colorCode) {
         let [h, s, l] = colorCode.match(/\d+/g).map(Number);
         let a = s * Math.min(l, 100 - l) / 100;
@@ -474,7 +686,15 @@ class xcolor {
         let blue = Math.round(f(4) / 100);
         return `rgb(${red},${green},${blue})`;
     }
-
+/**
+     * Converts an HSLA color code to an RGBA color code.
+     *
+     * @param {string} colorCode - the HSLA color code to convert
+     * @return {string} the RGBA color code
+     * @example
+     * // returns rgb(0, 255, 128, 0.5)
+     * hsla2rgba('hsl(150, 100%, 50%, 0.5)')
+     */
     static hsla2rgba(colorCode) {
         let [_, h, s, l, a] = colorCode.match(/\((\d+),\s?(\d+)%,\s?(\d+)%,\s?(\d*\.\d+)\)/).map(Number);
         let rgbA = (s * Math.min(l, 100 - l) / 100) / 100;
@@ -488,7 +708,15 @@ class xcolor {
         let blue = Math.round(f(4) / 100);
         return `rgba(${red},${green},${blue},${rgbA})`;
     }
-
+/**
+     * Convert RGB color code to HSL format.
+     *
+     * @param {string} colorCode - the RGB color code to be converted
+     * @return {string} the corresponding HSL color code
+     * @example
+     * // returns hsl(150, 100%, 50%)
+     * rgb2hsl('rgb(0, 255, 128)')
+     */
     static rgb2hsl(colorCode) {
         let [r, g, b] = colorCode.match(/\d+/g).map(Number);
         let max = Math.max(r, g, b),
@@ -501,20 +729,44 @@ class xcolor {
                         : (r - g) / d + 4;
         return `hsl(${Math.round(h * 60)}, ${Math.round(s * 100)}%, ${Math.round(((max / 255) * 100))}%)`;
     }
-
+/**
+     * Converts an RGBA color code to HSLA format.
+     *
+     * @param {string} colorCode - The RGBA color code to be converted
+     * @return {string} The color in HSLA format
+     * @example
+     * // returns hsla(150, 100%, 50%, 0.5)
+     * rgba2hsla('rgba(0, 255, 128, 0.5)')
+     */
     static rgba2hsla(colorCode) {
         let [_, r, g, b, a] = colorCode.match(/\((\d+),\s?(\d+),\s?(\d+),\s?(\d*\.\d+)\)/).map(Number);
         let [h, s, l] = this.rgb2hsl(`rgb(${r},${g},${b})`).match(/\d+/g).map(Number);
         return `hsla(${h}, ${s}%, ${l}%, ${a})`;
     }
-
+/**
+     * Convert a color in HSB format to RGB format.
+     *
+     * @param {string} colorCode - the color code in the HSB format
+     * @return {string} the color code in the RGB format
+     * @example
+     * // returns rgb(0, 255, 128)
+     * hsb2rgb('hsb(150, 100%, 100%)')
+     */
     static hsb2rgb(colorCode) {
         let [_h, _s, _b] = colorCode.match(/\d+/g).map(Number);
         let h=_h, s=_s/100, b=_b/100;
         let f= (n,k=(n+h/60)%6) => b - b*s*Math.max( Math.min(k,4-k,1), 0);
         return `rgb(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)})`;
     }
-
+/**
+     * Converts a color code in HSBA format to RGBA format.
+     *
+     * @param {string} colorCode - The color code in HSBA format, enclosed in parentheses and separated by commas.
+     * @return {string} The color code in RGBA format, enclosed in quotes and separated by commas.
+     * @example
+     * // returns rgba(0, 255, 128, 0.5)
+     * hsba2rgba('hsba(150, 100%, 100%, 0.5)')
+     */
     static hsba2rgba(colorCode) {
         let [_, h, s, b, a] = colorCode.match(/\((\d+),\s?(\d+)%,\s?(\d+)%,\s?(\d*\.\d+)\)/).map(Number);
         s = s / 100;
@@ -522,7 +774,15 @@ class xcolor {
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
         return `rgba(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)},${a})`;
     }
-
+/**
+     * Converts an RGB color code to an HSB color code.
+     *
+     * @param {string} colorCode - the RGB color code to convert
+     * @return {string} the HSB color code
+     * @example
+     * // returns hsb(150, 100%, 100%)
+     * rgb2hsb('rgb(0, 255, 128)')
+     */
     static rgb2hsb(colorCode) {
         let [r, g, b] = colorCode.match(/\d+/g).map(Number);
         let max = Math.max(r, g, b),
@@ -535,7 +795,15 @@ class xcolor {
                         : (r - g) / d + 4;
         return `hsb(${Math.round(h * 60)}, ${Math.round(s * 100)}%, ${Math.round(((max / 255) * 100))}%)`;
     }
-
+/**
+     * Converts an RGBA color code to HSBA format.
+     *
+     * @param {string} colorCode - The RGBA color code to convert.
+     * @return {string} The color in HSBA format.
+     * @example
+     * // returns hsba(150, 100%, 100%, 0.5)
+     * rgba2hsba('rgba(0, 255, 128, 0.5)')
+     */
     static rgba2hsba(colorCode) {
         let [_, r, g, b, a] = colorCode.match(/\((\d+),\s?(\d+),\s?(\d+),\s?(\d*\.\d+)\)/).map(Number);
         let max = Math.max(r, g, b),
@@ -549,18 +817,51 @@ class xcolor {
         return `hsba(${Math.round(h * 60)}, ${Math.round(s * 100)}%, ${Math.round(((max / 255) * 100))}%, ${a})`;
     }
 
+/**
+     * Converts an HSL color code to its corresponding hexadecimal representation.
+     *
+     * @param {Array} colorCode - An array containing the HSL color code in the format [hue, saturation, lightness].
+     * @return {string} The hexadecimal representation of the given HSL color code.
+     * @example
+     * // returns #ff0000
+     * hsl2hex('hsl(0, 100%, 50%)')
+     */
     static hsl2hex(colorCode) {
         return xcolor.rgb2hex(xcolor.hsl2rgb(colorCode));
     }
-
+/**
+     * Converts a color in HSLA format to hexadecimal format.
+     *
+     * @param {string} colorCode - the color code in HSLA format
+     * @return {string} the color code in hexadecimal format
+     * @example
+     * // returns #ff000080
+     * hsla2hexa('hsla(0, 100%, 50%, 0.5)')
+     */
     static hsla2hexa(colorCode) {
         return xcolor.rgba2hexa(xcolor.hsla2rgba(colorCode));
     }
-
+/**
+     * Converts a color code from HSB (Hue, Saturation, Brightness) to Hexadecimal.
+     *
+     * @param {Array} colorCode - An array containing the HSB color code.
+     * @return {string} The hexadecimal representation of the color code.
+     * @example
+     * // returns #ff0000
+     * hsb2hex('hsb(0, 100%, 100%)')
+     */
     static hsb2hex(colorCode) {
         return xcolor.rgb2hex(xcolor.hsb2rgb(colorCode));
     }
-
+/**
+     * Converts a color code in HSBA format to hexadecimal format.
+     *
+     * @param {string} colorCode - The color code in HSBA format.
+     * @return {string} The color code in hexadecimal format.
+     * @example
+     * // returns #ff000080
+     * hsba2hexa('hsba(0, 100%, 100%, 0.5)')
+     */
     static hsba2hexa(colorCode) {
         return xcolor.rgba2hexa(xcolor.hsba2rgba(colorCode));
     }
@@ -571,6 +872,27 @@ class xcolor {
      *
      * @param {string} format - The format of the color to generate (default: 'hex')
      * @return {string} The randomly generated color in the specified format
+* @example
+     * // returns #ff0000
+     * randomColor('hex')
+     * @example
+     * // returns rgb(255, 0, 0)
+     * randomColor('rgb')
+     * @example
+     * // returns rgba(255, 0, 0, 0.5)
+     * randomColor('rgba')
+     * @example
+     * // returns hsb(0, 100%, 100%)
+     * randomColor('hsb')
+     * @example
+     * // returns hsba(0, 100%, 100%, 0.5)
+     * randomColor('hsba')
+     * @example
+     * // returns hsl(0, 100%, 50%)
+     * randomColor('hsl')
+     * @example
+     * // returns hsla(0, 100%, 50%, 0.5)
+     * randomColor('hsla')
      */
     static randomColor(format = 'hex') {
         let methods = ['hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla'];
@@ -597,7 +919,10 @@ class xcolor {
      * Generate a random color in the specified format ('hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla').
      *
      * @param {string} format - The format of the color to generate (default: 'hex')
-     * @return {string} The randomly generated color in the specified format
+     * @return {xcolor} The randomly generated color in the specified format
+* @example
+     * // returns xcolor
+     * randomColor('hex')
      */
     static randomXcolor(format = 'hex') {
         let methods = ['hex', 'rgb', 'rgba', 'hsb', 'hsba', 'hsl', 'hsla'];
@@ -754,6 +1079,24 @@ class xcolor {
             monochromaticPalette.push(xcolor.getHsb(baseColor.hsbH, s, b));
         }
         return monochromaticPalette;
+    }
+
+    /**
+     * Generates a greyscale palette based on the provided base color.
+     *
+     * @param {Object} baseColor - The base color to generate the palette from.
+     * @return {xcolor[]} An array of xcolor objects representing the greyscale palette.
+     */
+    static greysPalette(baseColor) {
+        let greysPalette = [];
+        let n = 15;
+        let s = 0;
+        for (var i = 0; i < n; i++) {
+            /* Vary the brightness regardless of value number */
+            let b = map(i, 0, n - 1, 100, 0);
+            greysPalette.push(xcolor.getHsb(baseColor.hsbH, s, Math.round(b)));
+        }
+        return greysPalette;
     }
 
     /**

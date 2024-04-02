@@ -98,9 +98,21 @@ class xcolor {
     }
 
     /**
-     * Returns the RGBA value of the color object.
-     *
+     * @description Returns the RGBA value of the color object.
+     * @name getRgba
+     * @method
+     * @private
+     * @memberof xcolor
+     * @param {string} color - The color code to be parsed.
      * @return {string} The RGBA value of the color object in the format "rgba(r, g, b, a)".
+     * @example
+     *  //return exception
+     * var color = new xcolor('red');
+     * @example
+     *  //return 'rgba(255,0,0,0.5)'
+     * var color = new xcolor('#ff0000');
+     * color.getRgba();
+     * @throws {Error} If the color code is invalid.
      */
     getRgba() {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;

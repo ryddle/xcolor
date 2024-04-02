@@ -103,16 +103,22 @@ var Palette = {
     genColorPallete: function (_color) {
         this.pallete = [];
         this.baseColor = _color;
-        this.analogous1 = xcolor.getHsb([(this.baseColor.hsbH + 330) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.analogous3 = xcolor.getHsb([(this.baseColor.hsbH + 30) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.complementary = xcolor.getHsb([(this.baseColor.hsbH + 180) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.splitComplementary2 = xcolor.getHsb([(this.baseColor.hsbH + 150) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.splitComplementary3 = xcolor.getHsb([(this.baseColor.hsbH + 210) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.triadic2 = xcolor.getHsb([(this.baseColor.hsbH + 120) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.triadic3 = xcolor.getHsb([(this.baseColor.hsbH + 240) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.tetradic2 = xcolor.getHsb([(this.baseColor.hsbH + 60) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.square2 = xcolor.getHsb([(this.baseColor.hsbH + 90) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
-        this.square4 = xcolor.getHsb([(this.baseColor.hsbH + 270) % 360, this.baseColor.hsbS, this.baseColor.hsbB]);
+        let analogousPalette = xcolor.analogousPalette(this.baseColor);
+        this.analogous1 = analogousPalette[0];
+        this.analogous3 = analogousPalette[2];
+        let complementaryPalette = xcolor.complementaryPalette(this.baseColor);
+        this.complementary = complementaryPalette[1];
+        let splitComplementaryPalette = xcolor.splitComplementaryPalette(this.baseColor);
+        this.splitComplementary2 = splitComplementaryPalette[1];
+        this.splitComplementary3 = splitComplementaryPalette[2];
+        let triadicPalette = xcolor.triadicPalette(this.baseColor);
+        this.triadic2 = triadicPalette[1];
+        this.triadic3 = triadicPalette[2];
+        let tetradicPalette = xcolor.tetradicPalette(this.baseColor);
+        this.tetradic2 = tetradicPalette[1];
+        let squarePalette = xcolor.squarePalette(this.baseColor);
+        this.square2 = squarePalette[1];
+        this.square4 = squarePalette[3];
 
         this.pallete.push(this.baseColor, this.analogous1, this.analogous3, this.complementary, this.splitComplementary2, this.splitComplementary3, this.triadic2, this.triadic3, this.tetradic2, this.square2, this.square4);
 
@@ -120,43 +126,17 @@ var Palette = {
     },
 
     genShadesTintTones: function () {
-        this.shades = [];
-        this.tints = [];
-        this.tones = [];
-        for (let i = 0; i < 15; i++) {
-            this.shades.push(xcolor.getHsb([this.baseColor.hsbH, this.baseColor.hsbS, map(i, 0, 14, this.baseColor.hsbB, 0)]));
-        }
-        for (let i = 0; i < 15; i++) {
-            this.tints.push(xcolor.getHsb([this.baseColor.hsbH, map(i, 0, 14, this.baseColor.hsbS, 0), map(i, 0, 14, this.baseColor.hsbB, 100)]));
-        }
-        for (let i = 0; i < 15; i++) {
-            this.tones.push(xcolor.getHsb([this.baseColor.hsbH, map(i, 0, 14, this.baseColor.hsbS, 0), this.baseColor.hsbB]));
-        }
+        this.shades = xcolor.shades(this.baseColor);
+        this.tints = xcolor.tints(this.baseColor);
+        this.tones = xcolor.tones(this.baseColor);
     },
 
     genMonochromaticPalette: function () {
-        this.monochromaticPalette = [];
-        let n = 15;
-        for (var i = 0; i < n; i++) {
-            let saturation = 100;
-            /* Vary the brightness regardless of value number */
-            let brightness = map(i, 0, n - 1, 100, 0);
-            /* Increase saturation only in the first half */
-            if (i < n / 2)
-                saturation = map(i, 0, n / 2 - 1, 0, 100);
-            this.monochromaticPalette.push(xcolor.getHsb([this.baseColor.hsbH, Math.min(Math.round(saturation), 100), Math.round(brightness)]));
-        }
+        this.monochromaticPalette = xcolor.monochromaticPalette(this.baseColor);
     },
 
     genGreysPalette: function () {
-        this.greysPalette = [];
-        let n = 15;
-        let saturation = 0;
-        for (var i = 0; i < n; i++) {
-            /* Vary the brightness regardless of value number */
-            let brightness = map(i, 0, n - 1, 100, 0);
-            this.greysPalette.push(xcolor.getHsb([this.baseColor.hsbH, saturation, Math.round(brightness)]));
-        }
+        this.greysPalette = xcolor.greysPalette(this.baseColor);
     }
 };
 
