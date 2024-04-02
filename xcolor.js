@@ -1,6 +1,6 @@
-const map = function(value, x1, y1, x2, y2) { 
+const map = function (value, x1, y1, x2, y2) {
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
-    return (x2>y2)?Math.min(Math.max(nv, y2), x2):Math.max(Math.min(nv, y2), x2);
+    return (x2 > y2) ? Math.min(Math.max(nv, y2), x2) : Math.max(Math.min(nv, y2), x2);
 }
 
 /*
@@ -174,7 +174,7 @@ class xcolor {
     getHsl() {
         return `hsl(${this.hslH},${this.hslS}%,${this.hslL}%)`;
     }
-    
+
     /**
      * A function to parse an RGB color code.
      *
@@ -354,10 +354,10 @@ class xcolor {
      * @return {xcolor} new xcolor object representing the RGB color
      */
     static getRgb() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 3) {
+        } else if (arguments.length === 3) {
             values = arguments;
         }
         return new xcolor(`rgb(${Math.round(values[0])},${Math.round(values[1])},${Math.round(values[2])})`);
@@ -374,10 +374,10 @@ class xcolor {
      * @return {xcolor} new xcolor object representing the RGB color
      */
     static getRgba() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 4) {
+        } else if (arguments.length === 4) {
             values = arguments;
         }
         return new xcolor(`rgba(${Math.round(values[0])},${Math.round(values[1])},${Math.round(values[2])},${Math.round(values[3])})`);
@@ -394,10 +394,10 @@ class xcolor {
      * @return {xcolor} - A new xcolor object representing the color in HSL format.
      */
     static getHsl() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 3) {
+        } else if (arguments.length === 3) {
             values = arguments;
         }
         return new xcolor(`hsl(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%)`);
@@ -415,10 +415,10 @@ class xcolor {
      * @return {xcolor} - A new xcolor object representing the color in HSL format.
      */
     static getHsla() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 4) {
+        } else if (arguments.length === 4) {
             values = arguments;
         }
         return new xcolor(`hsla(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%,${Math.round(values[3])})`);
@@ -435,10 +435,10 @@ class xcolor {
      * @return {xcolor} - A new xcolor object representing the color in HSL format.
      */
     static getHsb() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 3) {
+        } else if (arguments.length === 3) {
             values = arguments;
         }
         return new xcolor(`hsb(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%)`);
@@ -456,10 +456,10 @@ class xcolor {
      * @return {xcolor} - A new xcolor object representing the color in HSL format.
      */
     static getHsba() {
-        let values=[];
-        if(arguments.length === 1) {
+        let values = [];
+        if (arguments.length === 1) {
             values = arguments[0];
-        }else if(arguments.length === 4) {
+        } else if (arguments.length === 4) {
             values = arguments;
         }
         return new xcolor(`hsba(${Math.round(values[0])},${Math.round(values[1])}%,${Math.round(values[2])}%,${Math.round(values[3])})`);
@@ -754,9 +754,9 @@ class xcolor {
      */
     static hsb2rgb(colorCode) {
         let [_h, _s, _b] = colorCode.match(/\d+/g).map(Number);
-        let h=_h, s=_s/100, b=_b/100;
-        let f= (n,k=(n+h/60)%6) => b - b*s*Math.max( Math.min(k,4-k,1), 0);
-        return `rgb(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)})`;
+        let h = _h, s = _s / 100, b = _b / 100;
+        let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
+        return `rgb(${map(f(5), 0, 1, 0, 255)},${map(f(3), 0, 1, 0, 255)},${map(f(1), 0, 1, 0, 255)})`;
     }
     /**
      * Converts a color code in HSBA format to RGBA format.
@@ -772,7 +772,7 @@ class xcolor {
         s = s / 100;
         b = b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        return `rgba(${map(f(5),0,1,0,255)},${map(f(3),0,1,0,255)},${map(f(1),0,1,0,255)},${a})`;
+        return `rgba(${map(f(5), 0, 1, 0, 255)},${map(f(3), 0, 1, 0, 255)},${map(f(1), 0, 1, 0, 255)},${a})`;
     }
     /**
      * Converts an RGB color code to an HSB color code.
@@ -931,17 +931,17 @@ class xcolor {
             case 'hex':
                 return new xcolor(`#${((Math.random() * 0xfffff * 1000000).toString(16)).slice(0, 6)}`);
             case 'rgb':
-                return xcolor.getRgb(Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256));
+                return xcolor.getRgb(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256));
             case 'rgba':
-                return xcolor.getRgba(Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.floor(Math.random() * 256),Math.random());
+                return xcolor.getRgba(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.random());
             case 'hsb':
-                return xcolor.getHsb(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100));
+                return xcolor.getHsb(Math.floor(Math.random() * 360), Math.floor(Math.random() * 100), Math.floor(Math.random() * 100));
             case 'hsba':
-                return xcolor.getHsba(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100),Math.random());
+                return xcolor.getHsba(Math.floor(Math.random() * 360), Math.floor(Math.random() * 100), Math.floor(Math.random() * 100), Math.random());
             case 'hsl':
-                return xcolor.getHsl(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100));
+                return xcolor.getHsl(Math.floor(Math.random() * 360), Math.floor(Math.random() * 100), Math.floor(Math.random() * 100));
             case 'hsla':
-                return xcolor.getHsla(Math.floor(Math.random() * 360),Math.floor(Math.random() * 100),Math.floor(Math.random() * 100),Math.random());
+                return xcolor.getHsla(Math.floor(Math.random() * 360), Math.floor(Math.random() * 100), Math.floor(Math.random() * 100), Math.random());
         }
     }
 
@@ -1070,7 +1070,7 @@ class xcolor {
      */
     static monochromaticPalette(baseColor) {
         let monochromaticPalette = [];
-        let n = 15, s=0, b=0;
+        let n = 15, s = 0, b = 0;
         for (var i = 0; i < n; i++) {
             s = 100;/* Vary the brightness regardless of value number */
             b = map(i, 0, n - 1, 100, 0);/* Increase saturation only in the first half */
@@ -1079,6 +1079,24 @@ class xcolor {
             monochromaticPalette.push(xcolor.getHsb(baseColor.hsbH, s, b));
         }
         return monochromaticPalette;
+    }
+
+    /**
+     * Generates a greyscale palette based on the provided base color.
+     *
+     * @param {Object} baseColor - The base color to generate the palette from.
+     * @return {xcolor[]} An array of xcolor objects representing the greyscale palette.
+     */
+    static greysPalette(baseColor) {
+        let greysPalette = [];
+        let n = 15;
+        let s = 0;
+        for (var i = 0; i < n; i++) {
+            /* Vary the brightness regardless of value number */
+            let b = map(i, 0, n - 1, 100, 0);
+            greysPalette.push(xcolor.getHsb(baseColor.hsbH, s, Math.round(b)));
+        }
+        return greysPalette;
     }
 
     /**
