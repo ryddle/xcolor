@@ -2,10 +2,15 @@ const xcolor = require('../xcolor');
 const { expect, describe, it } = require('@jest/globals');
 
 describe('xcolor', () => {
-  it('creates instances', () => {
+  /* it('creates instances', () => {
     expect(() => {
       new xcolor('red');
     }).toThrow();
+  }); */
+
+  it('shows color in html named colors list', () => {
+    const c = new xcolor('darkolivegreen');
+    expect(c.getHex()).toBe('#556b2f');
   });
 
   it('shows color in hex', () => {

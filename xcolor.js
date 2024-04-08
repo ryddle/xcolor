@@ -1,3 +1,5 @@
+const { htmlColors } = require('./htmlColors');
+
 const map = function (value, x1, y1, x2, y2) {
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
     return (x2 > y2) ? Math.min(Math.max(nv, y2), x2) : Math.max(Math.min(nv, y2), x2);
@@ -25,7 +27,9 @@ class xcolor {
     static hslaRegex = /^hsla\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
     static hsbRegex = /^hsb\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
     static hsbaRegex = /^hsba\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
+    static htmlColorRegex = new RegExp('^(' + Object.keys(htmlColors).join('|') + ')$', 'i');
 
+    static colorSpaces = ['RGB', 'HSB', 'HSL'];
     /**
      * Initializes a new instance of the Color class with the specified color code.
      * By default, the alpha channel is set to 1.
@@ -44,7 +48,7 @@ class xcolor {
      * @return {void}
      */
     constructor(colorCode, alphaMode) {
-        let regexp = new RegExp(xcolor.rgbRegex.source + '|' + xcolor.rgbaRegex.source + '|' + xcolor.hexRegex.source + '|' + xcolor.hexaRegex.source + '|' + xcolor.hslRegex.source + '|' + xcolor.hslaRegex.source + '|' + xcolor.hsbRegex.source + '|' + xcolor.hsbaRegex.source);
+        let regexp = new RegExp(xcolor.rgbRegex.source + '|' + xcolor.rgbaRegex.source + '|' + xcolor.hexRegex.source + '|' + xcolor.hexaRegex.source + '|' + xcolor.hslRegex.source + '|' + xcolor.hslaRegex.source + '|' + xcolor.hsbRegex.source + '|' + xcolor.hsbaRegex.source + '|' + xcolor.htmlColorRegex.source, 'i');
         if (!colorCode.match(regexp)) {
             console.error('The string ' + colorCode + ' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
             throw new Error('The string ' + colorCode + ' is an invalid color format. Valid formats are: rgb, rgba, hex, hexa, hsl, hsla, hsb, hsba');
@@ -54,7 +58,12 @@ class xcolor {
         }
 
         let matches;
-        if (matches = colorCode.match(xcolor.rgbRegex)) {
+        if (matches = colorCode.match(xcolor.htmlColorRegex)) {
+            this.parseHex(htmlColors[matches[0]]);
+            this.parseRgb(xcolor.hex2rgb(htmlColors[matches[0]]));
+            this.parseHsb(xcolor.hex2hsb(htmlColors[matches[0]]));
+            this.parseHsl(xcolor.hex2hsl(htmlColors[matches[0]]));
+        }else if (matches = colorCode.match(xcolor.rgbRegex)) {
             this.parseRgb(colorCode);
             this.parseHex(xcolor.rgb2hex(colorCode));
             this.parseHsb(xcolor.rgb2hsb(colorCode));

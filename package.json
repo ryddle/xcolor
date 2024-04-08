@@ -18,5 +18,9 @@
     "docs-show": "firefox -new-tab ./docs/index.html -foreground",
     "docs-gen": "npx documentation build {​​​​​​xcolor.js}​​​​​​​ --config documentation.yml -f html -o docs",
     "docs": "npm run docs-gen && npm run docs-show"
+  },
+  "exports": {
+    ".": "./xcolor.js",
+    "./htmlColors": "./htmlColors.js"
   }
 }
