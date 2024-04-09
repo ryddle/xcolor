@@ -22,6 +22,7 @@ npm install github:ryddle/xcolor
 
 The `xcolor` class provides methods to parse and convert between different color formats:
 
+* HTML colors (aliceblue, red, black, etc...)
 * RGB (red, green, blue)
 * RGBA (red, green, blue, alpha)
 * HEX (hexadecimal color code)
