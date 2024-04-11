@@ -8,6 +8,8 @@ function initialize() {
 
     document.getElementById("inputcolor").value = Palette.baseColor.getHex();
 
+    document.getElementById("mainPanel").appendChild(genColorPanel(Palette.baseColor));
+
     palettescontainer01 = document.createElement("div");
     palettescontainer01.style.display = "inline-flex";
     palettescontainer01.style.marginBottom = "20px";
@@ -97,6 +99,63 @@ function genColorLabel(color) {
     return label;
 }
 
+function genColorPanel(color) {
+    let colorPanel = document.createElement("div");
+    colorPanel.id="colorPanel";
+    colorPanel.style.display = "flex";
+    colorPanel.style.flexWrap = "wrap";
+
+    function genInputText(label, value) {
+        let inputGroup = document.createElement("div");
+        inputGroup.style.margin = "5px";
+        inputGroup.style.display = "flex";
+        inputGroup.style.alignItems = "center";
+
+        let inputText = document.createElement("input");
+        inputText.type = "text";
+        inputText.value = value;
+        inputText.readOnly = true;
+        inputText.style.flexGrow = "1";
+        inputText.style.marginRight = "5px";
+
+        let btnCopy = document.createElement("button");
+        btnCopy.innerHTML = '<i class="far fa-clipboard"></i>';
+        btnCopy.style.padding = "5px";
+        btnCopy.style.background = "transparent";
+        btnCopy.style.border = "none";
+        btnCopy.style.cursor = "pointer";
+        btnCopy.onclick = function () {
+            navigator.clipboard.writeText(inputText.value);
+        }
+
+        let labelText = document.createElement("span");
+        labelText.innerText = label;
+
+        inputGroup.appendChild(labelText);
+        inputGroup.appendChild(inputText);
+        inputGroup.appendChild(btnCopy);
+
+        return inputGroup;
+    }
+
+    colorPanel.appendChild(genInputText("hex", color.getHex()));
+    colorPanel.appendChild(genInputText("rgb", color.getRgb()));
+    colorPanel.appendChild(genInputText("hsl", color.getHsl()));
+    colorPanel.appendChild(genInputText("hsb", color.getHsb()));
+
+    return colorPanel;
+}
+
+function updateColorPanel(color) {
+    let colorPanels = document.getElementById("colorPanel");
+    let inputTexts = colorPanels.getElementsByTagName("input");
+
+    inputTexts[0].value = color.getHex();
+    inputTexts[1].value = color.getRgb();
+    inputTexts[2].value = color.getHsl();
+    inputTexts[3].value = color.getHsb();
+}
+
 var Palette = {
     baseColor: null,
     analogous1: null,
@@ -172,6 +231,8 @@ function updateColor(_color) {
     genBasePalettes();
     genShadesTintsTones();
     genMonochromaticPalette();
+
+    updateColorPanel(color);
 }
 
 function genMixPalette(){
@@ -184,9 +245,11 @@ function genMixPalette(){
 
             navigator.clipboard.writeText(color.getHex());
 
-            document.getElementById("inputcolor").value = color.getHex();
+            updateColorPanel(color);
 
-            while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
+            /*document.getElementById("inputcolor").value = color.getHex();
+
+             while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
             while (palettescontainer01.firstChild) { palettescontainer01.removeChild(palettescontainer01.firstChild); };
             while (palettescontainer02.firstChild) { palettescontainer02.removeChild(palettescontainer02.firstChild); };
 
@@ -200,8 +263,23 @@ function genMixPalette(){
             genMixPalette();
             genBasePalettes();
             genShadesTintsTones();
-            genMonochromaticPalette();
+            genMonochromaticPalette(); */
+   
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
 
@@ -223,7 +301,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         analogouscontainer.appendChild(colordiv);
@@ -246,7 +339,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         complementarycontainer.appendChild(colordiv);
@@ -269,7 +377,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         splitComplementarycontainer.appendChild(colordiv);
@@ -293,7 +416,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         triadiccontainer.appendChild(colordiv);
@@ -316,7 +454,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         tetradiccontainer.appendChild(colordiv);
@@ -339,7 +492,22 @@ function genBasePalettes() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         squarecontainer.appendChild(colordiv);
@@ -360,7 +528,22 @@ function genShadesTintsTones() {
         shadediv.style.height = "100px";
         shadediv.onclick = function () {
             navigator.clipboard.writeText(shade.getHex());
+            updateColorPanel(shade);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (shade.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = shade.getHex();
+            updateColor(shade.getHex());
+        }
+        shadediv.appendChild(btn);
+
         let colorLabel = genColorLabel(shade);
         shadediv.appendChild(colorLabel);
 
@@ -374,7 +557,22 @@ function genShadesTintsTones() {
         tintsdiv.style.height = "100px";
         tintsdiv.onclick = function () {
             navigator.clipboard.writeText(tint.getHex());
+            updateColorPanel(tint);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (tint.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = tint.getHex();
+            updateColor(tint.getHex());
+        }
+        tintsdiv.appendChild(btn);
+
         let colorLabel = genColorLabel(tint);
         tintsdiv.appendChild(colorLabel);
         tintscontainer.appendChild(tintsdiv);
@@ -387,7 +585,22 @@ function genShadesTintsTones() {
         tonesdiv.style.height = "100px";
         tonesdiv.onclick = function () {
             navigator.clipboard.writeText(tone.getHex());
+            updateColorPanel(tone);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (tone.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = tone.getHex();
+            updateColor(tone.getHex());
+        }
+        tonesdiv.appendChild(btn);
+
         let colorLabel = genColorLabel(tone);
         tonesdiv.appendChild(colorLabel);
         tonescontainer.appendChild(tonesdiv);
@@ -404,7 +617,22 @@ function genMonochromaticPalette() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         monochromaticPaletteContainer.appendChild(colordiv);
@@ -421,7 +649,22 @@ function genGreysPalette() {
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
             navigator.clipboard.writeText(color.getHex());
+            updateColorPanel(color);
         }
+
+        let btn = document.createElement("button");
+        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+        btn.style.padding = "5px";
+        btn.style.background = "transparent";
+        btn.style.border = "none";
+        btn.style.cursor = "pointer";
+        btn.style.float = "right";
+        btn.onclick = function () {
+            document.getElementById("inputcolor").value = color.getHex();
+            updateColor(color.getHex());
+        }
+        colordiv.appendChild(btn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         greysPaletteContainer.appendChild(colordiv);
