@@ -83,6 +83,20 @@ function genPaletteLabel(_label) {
     return label;
 }
 
+function genColorLabel(color) {
+    let label = document.createElement("span");
+    label.style.display = "block";
+    label.style.color = color.hsbB > 60 ? "black" : "white";
+    label.style.fontWeight="bold";
+    label.style.display="table-cell";
+    label.style.width="100px";
+    label.style.height="100px";
+    label.style.textAlign="center";
+    label.style.verticalAlign="middle";
+    label.innerText = color.getHex().toUpperCase();
+    return label;
+}
+
 var Palette = {
     baseColor: null,
     analogous1: null,
@@ -168,6 +182,8 @@ function genMixPalette(){
         colordiv.style.height = "100px";
         colordiv.onclick = function () {
 
+            navigator.clipboard.writeText(color.getHex());
+
             document.getElementById("inputcolor").value = color.getHex();
 
             while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
@@ -186,6 +202,8 @@ function genMixPalette(){
             genShadesTintsTones();
             genMonochromaticPalette();
         }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
 
         mixpalettecontainer.appendChild(colordiv);
     });
@@ -203,6 +221,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         analogouscontainer.appendChild(colordiv);
     });
     let analogousLabel = genPaletteLabel("Analogous");
@@ -221,6 +244,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         complementarycontainer.appendChild(colordiv);
     });
     let complementaryLabel = genPaletteLabel("Complementary");
@@ -239,6 +267,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         splitComplementarycontainer.appendChild(colordiv);
     });
     let splitComplementaryLabel = genPaletteLabel("Split Complementary");
@@ -258,6 +291,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         triadiccontainer.appendChild(colordiv);
     });
     let triadicLabel = genPaletteLabel("Triadic");
@@ -276,6 +314,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         tetradiccontainer.appendChild(colordiv);
     });
     let tetradicLabel = genPaletteLabel("Tetradic");
@@ -294,6 +337,11 @@ function genBasePalettes() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         squarecontainer.appendChild(colordiv);
     });
     let squareLabel = genPaletteLabel("Square");
@@ -310,6 +358,11 @@ function genShadesTintsTones() {
         shadediv.style.background = shade.getRgb();
         shadediv.style.width = "100px";
         shadediv.style.height = "100px";
+        shadediv.onclick = function () {
+            navigator.clipboard.writeText(shade.getHex());
+        }
+        let colorLabel = genColorLabel(shade);
+        shadediv.appendChild(colorLabel);
 
         shadescontainer.appendChild(shadediv);
     });
@@ -319,7 +372,11 @@ function genShadesTintsTones() {
         tintsdiv.style.background = tint.getRgb();
         tintsdiv.style.width = "100px";
         tintsdiv.style.height = "100px";
-
+        tintsdiv.onclick = function () {
+            navigator.clipboard.writeText(tint.getHex());
+        }
+        let colorLabel = genColorLabel(tint);
+        tintsdiv.appendChild(colorLabel);
         tintscontainer.appendChild(tintsdiv);
     });
 
@@ -328,7 +385,11 @@ function genShadesTintsTones() {
         tonesdiv.style.background = tone.getRgb();
         tonesdiv.style.width = "100px";
         tonesdiv.style.height = "100px";
-
+        tonesdiv.onclick = function () {
+            navigator.clipboard.writeText(tone.getHex());
+        }
+        let colorLabel = genColorLabel(tone);
+        tonesdiv.appendChild(colorLabel);
         tonescontainer.appendChild(tonesdiv);
     });
 }
@@ -341,7 +402,11 @@ function genMonochromaticPalette() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
-
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         monochromaticPaletteContainer.appendChild(colordiv);
     });
 }
@@ -354,7 +419,11 @@ function genGreysPalette() {
         colordiv.style.background = color.getRgb();
         colordiv.style.width = "100px";
         colordiv.style.height = "100px";
-
+        colordiv.onclick = function () {
+            navigator.clipboard.writeText(color.getHex());
+        }
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
         greysPaletteContainer.appendChild(colordiv);
     });
 }
