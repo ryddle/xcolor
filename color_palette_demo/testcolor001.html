@@ -5,9 +5,11 @@
     <script src="xcolor.js"></script>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script>
-
-    </script>
+    <style>
+        span {
+            font-family: monospace;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,9 +18,9 @@
 <div id="mainPanel" style="display: flex;border: 1px solid #888; border-radius: 4px; width: 1500px; margin-bottom: 10px; padding-left: 10px;">
     <div style="margin: 30px;margin-left: 0px;">
         <input type="color" id="inputcolor" name="inputcolor" value="#000000" onchange="updateColor(this.value)" />
-        <label for="inputcolor">Select Color</label>
+        <label for="inputcolor" style="font-family: monospace;">Select color or update page</label>
     </div>
-    <div style="width: 300px;"></div>
+    <div style="width: 200px;"></div>
 </div>
 <script src="testcolor001.js"></script>
 

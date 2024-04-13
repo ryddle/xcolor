@@ -23,14 +23,14 @@ function initialize() {
 
     genBasePalettes();
 
-    document.body.appendChild(genPaletteLabel("mix palette"));
+    document.body.appendChild(genPaletteLabel("Mix palette"));
     mixpalettecontainer = document.createElement("div");
     mixpalettecontainer.style.display = "inline-flex";
     document.body.appendChild(mixpalettecontainer);
 
     genMixPalette(); 
 
-    document.body.appendChild(genPaletteLabel("shades"));
+    document.body.appendChild(genPaletteLabel("Shades"));
     shadescontainer = document.createElement("div");
     shadescontainer.style.display = "inline-flex";
     shadescontainer.style.borderWidth = "1px";
@@ -38,7 +38,7 @@ function initialize() {
     shadescontainer.style.borderColor = "#ccc";
     document.body.appendChild(shadescontainer);
 
-    document.body.appendChild(genPaletteLabel("tints"));
+    document.body.appendChild(genPaletteLabel("Tints"));
     tintscontainer = document.createElement("div");
     tintscontainer.style.display = "inline-flex";
     tintscontainer.style.borderWidth = "1px";
@@ -46,7 +46,7 @@ function initialize() {
     tintscontainer.style.borderColor = "#ccc";
     document.body.appendChild(tintscontainer);
 
-    document.body.appendChild(genPaletteLabel("tones"));
+    document.body.appendChild(genPaletteLabel("Tones"));
     tonescontainer = document.createElement("div");
     tonescontainer.style.display = "inline-flex";
     tonescontainer.style.borderWidth = "1px";
@@ -117,6 +117,7 @@ function genColorPanel(color) {
         inputText.readOnly = true;
         inputText.style.flexGrow = "1";
         inputText.style.marginRight = "5px";
+        inputText.style.marginLeft = "5px";
 
         let btnCopy = document.createElement("button");
         btnCopy.innerHTML = '<i class="far fa-clipboard"></i>';
@@ -138,10 +139,10 @@ function genColorPanel(color) {
         return inputGroup;
     }
 
-    colorPanel.appendChild(genInputText("hex", color.getHex()));
-    colorPanel.appendChild(genInputText("rgb", color.getRgb()));
-    colorPanel.appendChild(genInputText("hsl", color.getHsl()));
-    colorPanel.appendChild(genInputText("hsb", color.getHsb()));
+    colorPanel.appendChild(genInputText("HEX", color.getHex()));
+    colorPanel.appendChild(genInputText("RGB", color.getRgb()));
+    colorPanel.appendChild(genInputText("HSL", color.getHsl()));
+    colorPanel.appendChild(genInputText("HSB", color.getHsb()));
 
     return colorPanel;
 }
@@ -368,7 +369,7 @@ function genBasePalettes() {
     splitComplementarycontainer.style.display = "inline-flex";
     splitComplementarycontainer.style.position = "relative";
     splitComplementarycontainer.style.top = "20px";
-    splitComplementarycontainer.style.left = "-100px";
+    splitComplementarycontainer.style.left = "-200px";
     let splitComplementaryPalette = [Palette.baseColor, Palette.splitComplementary2, Palette.splitComplementary3];
     splitComplementaryPalette.forEach(color => {
         let colordiv = document.createElement("div");
@@ -398,7 +399,7 @@ function genBasePalettes() {
         splitComplementarycontainer.appendChild(colordiv);
     });
     let splitComplementaryLabel = genPaletteLabel("Split Complementary");
-    splitComplementaryLabel.style.width = "100px";
+    splitComplementaryLabel.style.width = "200px";
     palettescontainer01.appendChild(splitComplementaryLabel);
     palettescontainer01.appendChild(splitComplementarycontainer);
 
