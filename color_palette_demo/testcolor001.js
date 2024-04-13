@@ -99,6 +99,38 @@ function genColorLabel(color) {
     return label;
 }
 
+function createColorDiv(color) {
+    let colordiv = document.createElement("div");
+    colordiv.style.background = color.getRgb();
+    colordiv.style.width = "100px";
+    colordiv.style.height = "100px";
+    colordiv.style.cursor = "pointer";
+    colordiv.style.position = "relative";
+    colordiv.onclick = function () {
+        navigator.clipboard.writeText(color.getHex());
+        updateColorPanel(color);
+    }
+
+    return colordiv;
+}
+
+function createColorPickerBtn(color) {
+    let btn = document.createElement("button");
+    btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+    btn.style.padding = "5px";
+    btn.style.background = "transparent";
+    btn.style.border = "none";
+    btn.style.cursor = "pointer";
+    btn.style.float = "right";
+    btn.style.position = "absolute";
+    btn.style.left = "75px";
+    btn.onclick = function () {
+        document.getElementById("inputcolor").value = color.getHex();
+        updateColor(color.getHex());
+    }
+    return btn;
+}
+
 function genColorPanel(color) {
     let colorPanel = document.createElement("div");
     colorPanel.id="colorPanel";
@@ -139,7 +171,7 @@ function genColorPanel(color) {
         return inputGroup;
     }
 
-    colorPanel.appendChild(genInputText("HEX", color.getHex()));
+    colorPanel.appendChild(genInputText("HEX", color.getHex().toUpperCase()));
     colorPanel.appendChild(genInputText("RGB", color.getRgb()));
     colorPanel.appendChild(genInputText("HSL", color.getHsl()));
     colorPanel.appendChild(genInputText("HSB", color.getHsb()));
@@ -238,48 +270,11 @@ function updateColor(_color) {
 
 function genMixPalette(){
     Palette.pallete.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
 
-            navigator.clipboard.writeText(color.getHex());
+        let colordiv = createColorDiv(color);
 
-            updateColorPanel(color);
-
-            /*document.getElementById("inputcolor").value = color.getHex();
-
-             while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
-            while (palettescontainer01.firstChild) { palettescontainer01.removeChild(palettescontainer01.firstChild); };
-            while (palettescontainer02.firstChild) { palettescontainer02.removeChild(palettescontainer02.firstChild); };
-
-            while (shadescontainer.firstChild) { shadescontainer.removeChild(shadescontainer.firstChild); };
-            while (tintscontainer.firstChild) { tintscontainer.removeChild(tintscontainer.firstChild); };
-            while (tonescontainer.firstChild) { tonescontainer.removeChild(tonescontainer.firstChild); };
-
-            while (monochromaticPaletteContainer.firstChild) { monochromaticPaletteContainer.removeChild(monochromaticPaletteContainer.firstChild); };
-
-            Palette.genColorPallete(color);
-            genMixPalette();
-            genBasePalettes();
-            genShadesTintsTones();
-            genMonochromaticPalette(); */
-   
-        }
-
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -296,27 +291,10 @@ function genBasePalettes() {
     analogouscontainer.style.left = "-100px";
     let analogousPalette = [Palette.analogous1, Palette.baseColor, Palette.analogous3];
     analogousPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -334,27 +312,10 @@ function genBasePalettes() {
     complementarycontainer.style.left = "-100px";
     let complementaryPalette = [Palette.baseColor, Palette.complementary];
     complementaryPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -372,27 +333,10 @@ function genBasePalettes() {
     splitComplementarycontainer.style.left = "-200px";
     let splitComplementaryPalette = [Palette.baseColor, Palette.splitComplementary2, Palette.splitComplementary3];
     splitComplementaryPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -411,27 +355,10 @@ function genBasePalettes() {
     triadiccontainer.style.left = "-100px";
     let triadicPalette = [Palette.baseColor, Palette.triadic2, Palette.triadic3];
     triadicPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -449,27 +376,10 @@ function genBasePalettes() {
     tetradiccontainer.style.left = "-100px";
     let tetradicPalette = [Palette.baseColor, Palette.tetradic2, Palette.complementary, Palette.triadic3];
     tetradicPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -487,27 +397,10 @@ function genBasePalettes() {
     squarecontainer.style.left = "-100px";
     let squarePalette = [Palette.baseColor, Palette.square2, Palette.complementary, Palette.square4];
     squarePalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -522,89 +415,38 @@ function genBasePalettes() {
 function genShadesTintsTones() {
     Palette.genShadesTintTones();
 
-    Palette.shades.forEach(shade => {
-        let shadediv = document.createElement("div");
-        shadediv.style.background = shade.getRgb();
-        shadediv.style.width = "100px";
-        shadediv.style.height = "100px";
-        shadediv.onclick = function () {
-            navigator.clipboard.writeText(shade.getHex());
-            updateColorPanel(shade);
-        }
+    Palette.shades.forEach(color => {
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (shade.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = shade.getHex();
-            updateColor(shade.getHex());
-        }
-        shadediv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
-        let colorLabel = genColorLabel(shade);
-        shadediv.appendChild(colorLabel);
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
 
-        shadescontainer.appendChild(shadediv);
+        shadescontainer.appendChild(colordiv);
     });
 
-    Palette.tints.forEach(tint => {
-        let tintsdiv = document.createElement("div");
-        tintsdiv.style.background = tint.getRgb();
-        tintsdiv.style.width = "100px";
-        tintsdiv.style.height = "100px";
-        tintsdiv.onclick = function () {
-            navigator.clipboard.writeText(tint.getHex());
-            updateColorPanel(tint);
-        }
+    Palette.tints.forEach(color => {
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (tint.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = tint.getHex();
-            updateColor(tint.getHex());
-        }
-        tintsdiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
-        let colorLabel = genColorLabel(tint);
-        tintsdiv.appendChild(colorLabel);
-        tintscontainer.appendChild(tintsdiv);
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
+        tintscontainer.appendChild(colordiv);
     });
 
-    Palette.tones.forEach(tone => {
-        let tonesdiv = document.createElement("div");
-        tonesdiv.style.background = tone.getRgb();
-        tonesdiv.style.width = "100px";
-        tonesdiv.style.height = "100px";
-        tonesdiv.onclick = function () {
-            navigator.clipboard.writeText(tone.getHex());
-            updateColorPanel(tone);
-        }
+    Palette.tones.forEach(color => {
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (tone.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = tone.getHex();
-            updateColor(tone.getHex());
-        }
-        tonesdiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
-        let colorLabel = genColorLabel(tone);
-        tonesdiv.appendChild(colorLabel);
-        tonescontainer.appendChild(tonesdiv);
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
+        tonescontainer.appendChild(colordiv);
     });
 }
 
@@ -612,27 +454,10 @@ function genMonochromaticPalette() {
     Palette.genMonochromaticPalette();
 
     Palette.monochromaticPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -644,27 +469,10 @@ function genGreysPalette() {
     Palette.genGreysPalette();
 
     Palette.greysPalette.forEach(color => {
-        let colordiv = document.createElement("div");
-        colordiv.style.background = color.getRgb();
-        colordiv.style.width = "100px";
-        colordiv.style.height = "100px";
-        colordiv.onclick = function () {
-            navigator.clipboard.writeText(color.getHex());
-            updateColorPanel(color);
-        }
+        let colordiv = createColorDiv(color);
 
-        let btn = document.createElement("button");
-        btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
-        btn.style.padding = "5px";
-        btn.style.background = "transparent";
-        btn.style.border = "none";
-        btn.style.cursor = "pointer";
-        btn.style.float = "right";
-        btn.onclick = function () {
-            document.getElementById("inputcolor").value = color.getHex();
-            updateColor(color.getHex());
-        }
-        colordiv.appendChild(btn);
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
