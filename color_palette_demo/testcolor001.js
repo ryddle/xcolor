@@ -4,9 +4,11 @@ let tintscontainer;
 let tonescontainer;
 
 function initialize() {
-    Palette.genColorPallete(xcolor.getHsb([Math.round(Math.random() * 300), Math.round(Math.random() * 100), Math.round(Math.random() * 100)]));
+    //Palette.genColorPallete(xcolor.getHsb([Math.round(Math.random() * 300), Math.round(Math.random() * 100), Math.round(Math.random() * 100)]));
+    Palette.genColorPallete(xcolor.randomXcolor("hsb"));
 
-    document.getElementById("inputcolor").value = Palette.baseColor.getHex();
+    document.getElementById("inputcolor").value = Palette.baseColor.getHexString();
+    document.getElementById("inputcolor2").style.backgroundColor = Palette.baseColor.getHexString();
 
     document.getElementById("mainPanel").appendChild(genColorPanel(Palette.baseColor));
 
@@ -88,26 +90,27 @@ function genPaletteLabel(_label) {
 function genColorLabel(color) {
     let label = document.createElement("span");
     label.style.display = "block";
-    label.style.color = color.hsbB > 60 ? "black" : "white";
+    label.style.color = color.hsb.b > 60 ? "black" : "white";
     label.style.fontWeight="bold";
     label.style.display="table-cell";
     label.style.width="100px";
     label.style.height="100px";
     label.style.textAlign="center";
     label.style.verticalAlign="middle";
-    label.innerText = color.getHex().toUpperCase();
+    label.innerText = color.getHexString().toUpperCase();
     return label;
 }
 
 function createColorDiv(color) {
     let colordiv = document.createElement("div");
-    colordiv.style.background = color.getRgb();
+    colordiv.style.background = color.getRgbString();
     colordiv.style.width = "100px";
     colordiv.style.height = "100px";
-    colordiv.style.cursor = "pointer";
+    colordiv.style.cursor = "cursor: grab";
+    colordiv.style.cursor = "-webkit-grab";
     colordiv.style.position = "relative";
     colordiv.onclick = function () {
-        navigator.clipboard.writeText(color.getHex());
+        navigator.clipboard.writeText(color.getHexString());
         updateColorPanel(color);
     }
 
@@ -116,7 +119,7 @@ function createColorDiv(color) {
 
 function createColorPickerBtn(color) {
     let btn = document.createElement("button");
-    btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsbB > 60 ? "black" : "white") + '"></i>';
+    btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsb.b > 60 ? "black" : "white") + '"></i>';
     btn.style.padding = "5px";
     btn.style.background = "transparent";
     btn.style.border = "none";
@@ -125,8 +128,8 @@ function createColorPickerBtn(color) {
     btn.style.position = "absolute";
     btn.style.left = "75px";
     btn.onclick = function () {
-        document.getElementById("inputcolor").value = color.getHex();
-        updateColor(color.getHex());
+        document.getElementById("inputcolor").value = color.getHexString();
+        updateColor(color.getHexString());
     }
     return btn;
 }
@@ -171,10 +174,10 @@ function genColorPanel(color) {
         return inputGroup;
     }
 
-    colorPanel.appendChild(genInputText("HEX", color.getHex().toUpperCase()));
-    colorPanel.appendChild(genInputText("RGB", color.getRgb()));
-    colorPanel.appendChild(genInputText("HSL", color.getHsl()));
-    colorPanel.appendChild(genInputText("HSB", color.getHsb()));
+    colorPanel.appendChild(genInputText("HEX", color.getHexString().toUpperCase()));
+    colorPanel.appendChild(genInputText("RGB", color.getRgbString()));
+    colorPanel.appendChild(genInputText("HSL", color.getHslString()));
+    colorPanel.appendChild(genInputText("HSB", color.getHsbString()));
 
     return colorPanel;
 }
@@ -183,10 +186,10 @@ function updateColorPanel(color) {
     let colorPanels = document.getElementById("colorPanel");
     let inputTexts = colorPanels.getElementsByTagName("input");
 
-    inputTexts[0].value = color.getHex();
-    inputTexts[1].value = color.getRgb();
-    inputTexts[2].value = color.getHsl();
-    inputTexts[3].value = color.getHsb();
+    inputTexts[0].value = color.getHexString().toUpperCase();
+    inputTexts[1].value = color.getRgbString();
+    inputTexts[2].value = color.getHslString();
+    inputTexts[3].value = color.getHsbString();
 }
 
 var Palette = {
@@ -228,7 +231,7 @@ var Palette = {
 
         this.pallete.push(this.baseColor, this.analogous1, this.analogous3, this.complementary, this.splitComplementary2, this.splitComplementary3, this.triadic2, this.triadic3, this.tetradic2, this.square2, this.square4);
 
-        this.pallete.sort((a,b) => a.hsbH - b.hsbH);
+        this.pallete.sort((a,b) => a.hsb.h - b.hsb.h);
     },
 
     genShadesTintTones: function () {
@@ -248,6 +251,8 @@ var Palette = {
 
 function updateColor(_color) {
     color = xcolor.getXcolor(_color);
+
+    document.getElementById("inputcolor2").style.backgroundColor =color.getHexString();
 
     while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
     while (palettescontainer01.firstChild) { palettescontainer01.removeChild(palettescontainer01.firstChild); };
@@ -478,6 +483,12 @@ function genGreysPalette() {
         colordiv.appendChild(colorLabel);
         greysPaletteContainer.appendChild(colordiv);
     });
+}
+
+
+function genColorPickerPanel(event, colorCode){
+    let cppanel = new xcolorPicker(event, colorCode);//.createColorPickerPanel(Palette.baseColor);
+    document.body.appendChild(cppanel);
 }
 
 document.onload = initialize();
