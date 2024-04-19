@@ -18,7 +18,7 @@ class xcolorPicker {
             borderTop: 'none'
         };
 
-        this.tabActive = {
+        this.tabActiveStyle = {
             backgroundColor: '#eee',
             float: 'left',
             border: 'none',
@@ -36,7 +36,7 @@ class xcolorPicker {
         }
 
 
-        this.tab = {
+        this.tabStyle = {
             backgroundColor: 'inherit',
             float: 'left',
             border: 'none',
@@ -70,13 +70,13 @@ class xcolorPicker {
         }
         for (i = 0; i < this.tablinks.length; i++) {
             this.tablinks[i].style.backgroundColor = "inherit";
-            Object.assign(this.tablinks[i].style, this.tab);
+            Object.assign(this.tablinks[i].style, this.tabStyle);
         }
         tabcontent = this.tabcontents.find(element => element.id == tab.tabPanel);
         tabcontent.style.display = "block";
         tab.className += " active";
         //tab.style.backgroundColor = "#ccc";
-        Object.assign(this.tab.style, this.tabActive);
+        Object.assign(tab.style, this.tabActiveStyle);
     }
 
     calculateWheelColor(event) {
@@ -207,7 +207,7 @@ class xcolorPicker {
         this.rgbTab.className = "tablinks active";
         this.rgbTab.tabPanel = "rgbPanel";
         this.rgbTab.innerText = "RGB";
-        Object.assign(this.rgbTab.style, this.tabActive);//tablinksStyle);
+        Object.assign(this.rgbTab.style, this.tabActiveStyle);//tablinksStyle);
         this.rgbTab.onclick = function (event) { _self.openTab(event, this); };
         this.tabPanel.appendChild(this.rgbTab);
 
@@ -215,7 +215,7 @@ class xcolorPicker {
         this.hexTab.className = "tablinks";
         this.hexTab.tabPanel = "hexPanel";
         this.hexTab.innerText = "HEX";
-        Object.assign(this.hexTab.style, this.tab);//tablinksStyle);
+        Object.assign(this.hexTab.style, this.tabStyle);//tablinksStyle);
         this.hexTab.onclick = function (event) { _self.openTab(event, this); };
         this.tabPanel.appendChild(this.hexTab);
 
@@ -223,7 +223,7 @@ class xcolorPicker {
         this.hslTab.className = "tablinks";
         this.hslTab.tabPanel = "hslPanel";
         this.hslTab.innerText = "HSL";
-        Object.assign(this.hslTab.style, this.tab);//tablinksStyle);
+        Object.assign(this.hslTab.style, this.tabStyle);//tablinksStyle);
         this.hslTab.onclick = function (event) {
             _self.updateHslForm();
             _self.updateHslPickers();
@@ -235,7 +235,7 @@ class xcolorPicker {
         this.hsbTab.className = "tablinks";
         this.hsbTab.tabPanel = "hsbPanel";
         this.hsbTab.innerText = "HSB";
-        Object.assign(this.hsbTab.style, this.tab);//tablinksStyle);
+        Object.assign(this.hsbTab.style, this.tabStyle);//tablinksStyle);
         this.hsbTab.onclick = function (event) { _self.openTab(event, this); };
         this.tabPanel.appendChild(this.hsbTab);
 
