@@ -54,6 +54,8 @@ class xcolorPicker {
 
         this.createColorPickerPanel(event);
 
+        this.updateRgbForm();
+        this.updateRgbPickers();
         this.updateHslForm();
         this.updateHslPickers();
         this.updateHsbForm();
@@ -92,6 +94,39 @@ class xcolorPicker {
         var distance = Math.sqrt(x * x + y * y);
         //console.log(angle, distance);
         return { angle: angle, distance: distance };
+    }
+
+    updateRgbForm() {
+        this.inputRgbRed.value = this.color.rgb.r;
+        this.inputRgbGreen.value = this.color.rgb.g;
+        this.inputRgbBlue.value = this.color.rgb.b;
+
+        this.inputHexRed.value = this.color.hex.r.toUpperCase();
+        this.inputHexGreen.value = this.color.hex.g.toUpperCase();
+        this.inputHexBlue.value = this.color.hex.b.toUpperCase();
+
+        this.inputRgb.value = this.color.getRgbString();
+        this.inputHex.value = this.color.getHexString().toUpperCase();
+
+        this.rgbformRgbColor.style.backgroundColor = this.color.getRgbString();
+
+        //this.rgbformHSB.innerText = this.color.getHsbString();
+    }
+
+    updateRgbPickers() {
+        let wx = xcolorPickermap(this.color.hsb.s, 0, 100, 0, 322);
+        let wy = xcolorPickermap(this.color.hsb.b, 0, 100, 322, 0);
+
+        this.rgbWheelSliderCircleOut.style.left = wx + "px";
+        this.rgbWheelSliderCircleOut.style.top = wy + "px";
+
+        this.rgbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.h, 0, 360, 8, 315))) + "px";
+
+        this.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.s, 0, 100, 8, 315))) + "px";
+        this.rgbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";
+        
+        this.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.b, 0, 100, 8, 315))) + "px";
+        this.rgbLightSlider02.style.background = "linear-gradient(to right, rgb(255, 255, 255) 0%, " + this.color.getRgbString() + " 100%)";
     }
 
     updateHslForm() {
@@ -206,18 +241,10 @@ class xcolorPicker {
         this.rgbTab = document.createElement("button");
         this.rgbTab.className = "tablinks active";
         this.rgbTab.tabPanel = "rgbPanel";
-        this.rgbTab.innerText = "RGB";
+        this.rgbTab.innerText = "RGB/HEX";
         Object.assign(this.rgbTab.style, this.tabActiveStyle);//tablinksStyle);
         this.rgbTab.onclick = function (event) { _self.openTab(event, this); };
         this.tabPanel.appendChild(this.rgbTab);
-
-        this.hexTab = document.createElement("button");
-        this.hexTab.className = "tablinks";
-        this.hexTab.tabPanel = "hexPanel";
-        this.hexTab.innerText = "HEX";
-        Object.assign(this.hexTab.style, this.tabStyle);//tablinksStyle);
-        this.hexTab.onclick = function (event) { _self.openTab(event, this); };
-        this.tabPanel.appendChild(this.hexTab);
 
         this.hslTab = document.createElement("button");
         this.hslTab.className = "tablinks";
@@ -239,7 +266,15 @@ class xcolorPicker {
         this.hsbTab.onclick = function (event) { _self.openTab(event, this); };
         this.tabPanel.appendChild(this.hsbTab);
 
-        this.tablinks = [this.rgbTab, this.hexTab, this.hslTab, this.hsbTab];
+        this.htmlTab = document.createElement("button");
+        this.htmlTab.className = "tablinks";
+        this.htmlTab.tabPanel = "htmlPanel";
+        this.htmlTab.innerText = "HTML";
+        Object.assign(this.htmlTab.style, this.tabStyle);//tablinksStyle);
+        this.htmlTab.onclick = function (event) { _self.openTab(event, this); };
+        this.tabPanel.appendChild(this.htmlTab);
+
+        this.tablinks = [this.rgbTab, this.hslTab, this.hsbTab, this.htmlTab];
         for (var i = 0; i < this.tablinks.length; i++) {
             this.tablinks[i].onmouseover = function () {
                 (this.className.indexOf("active") == -1) ? this.style.backgroundColor = "#ddd" : this.style.backgroundColor = "#ccc";
@@ -277,11 +312,11 @@ class xcolorPicker {
 
         this.colorPickerPanel.appendChild(this.createRgbPanel(true));
 
-        this.colorPickerPanel.appendChild(this.createHexPanel(false));
-
         this.colorPickerPanel.appendChild(this.createHslPanel(false));
 
         this.colorPickerPanel.appendChild(this.createHsbPanel(false));
+
+        this.colorPickerPanel.appendChild(this.createHtmlPanel(false));
 
         return this.colorPickerPanel;
     }
@@ -331,7 +366,8 @@ class xcolorPicker {
             width: "60px",
             fontFamily: 'monospace',
             fontSize: '1.2em',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            textAlign: 'right'
         };
 
         this.rgbformRed = document.createElement("div");
@@ -351,11 +387,12 @@ class xcolorPicker {
         this.inputRgbRed.id = "rgbRed";
         this.inputRgbRed.type = "number";
         this.inputRgbRed.min = "0";
-        this.inputRgbRed.max = "360";
+        this.inputRgbRed.max = "255";
         this.inputRgbRed.value = this.color.rgb.r;
         Object.assign(this.inputRgbRed.style, inputsStyle);
         this.inputRgbRed.onchange = function () {
-            _self.rgbRed = this.value;
+            _self.color = xcolor.getRgb(this.value, _self.color.rgb.g, _self.color.rgb.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.updateRgbForm();
             _self.updateRgbPickers();
         }
@@ -379,10 +416,11 @@ class xcolorPicker {
         this.inputRgbGreen.type = "number";
         this.inputRgbGreen.value = this.color.rgb.g;
         this.inputRgbGreen.min = "0";
-        this.inputRgbGreen.max = "100";
+        this.inputRgbGreen.max = "255";
         Object.assign(this.inputRgbGreen.style, inputsStyle);
         this.inputRgbGreen.onchange = function () {
-            _self.rgbGreen = this.value;
+            _self.color = xcolor.getRgb(_self.color.rgb.r, this.value, _self.color.rgb.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.updateRgbForm();
             _self.updateRgbPickers();
         }
@@ -406,10 +444,11 @@ class xcolorPicker {
         this.inputRgbBlue.type = "number";
         this.inputRgbBlue.value = this.color.rgb.b;
         this.inputRgbBlue.min = "0";
-        this.inputRgbBlue.max = "100";
+        this.inputRgbBlue.max = "255";
         Object.assign(this.inputRgbBlue.style, inputsStyle);
         this.inputRgbBlue.onchange = function () {
-            _self.rgbBlue = this.value;
+            _self.color = xcolor.getRgb(_self.color.rgb.r, _self.color.rgb.g, this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.updateRgbForm();
             _self.updateRgbPickers();
         }
@@ -440,10 +479,8 @@ class xcolorPicker {
             marginBottom: '10px'
         });
         this.inputRgb.onchange = function () {
-            let rgbColor = xcolor.getXcolor(this.value);
-            _self.rgbRed = rgbColor.rgb.r;
-            _self.rgbGreen = rgbColor.rgb.g;
-            _self.rgbBlue = rgbColor.rgb.b;
+            _self.color = xcolor.getXcolor(this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.updateRgbPickers();
             _self.updateRgbForm();
         }
@@ -458,6 +495,145 @@ class xcolorPicker {
         this.copyIconRgb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
         this.copyIconRgb.onclick = function () { navigator.clipboard.writeText(_self.inputRgb.value); }
         this.rgbformRGB.appendChild(this.copyIconRgb);
+
+        ////////////HEX/////////////////////////////////
+        this.rgbformHexRed = document.createElement("div");
+        this.rgbformHexRed.style.display = 'flex';
+        this.rgbformHexRed.style.flexDirection = 'row';
+        this.rgbformHexRed.style.alignItems = 'center';
+        this.rgbformHexRed.style.justifyContent = 'space-between';
+        this.rgbformHexRed.style.marginTop = '20px';
+        this.rgbFormPanel.appendChild(this.rgbformHexRed);
+
+        this.labelHexRed = document.createElement("label");
+        this.labelHexRed.for = "hexRed";
+        this.labelHexRed.innerText = "Hex Red";
+        Object.assign(this.labelHexRed.style, labelsStyle);
+        this.rgbformHexRed.appendChild(this.labelHexRed);
+
+        this.inputHexRed = document.createElement("input");
+        this.inputHexRed.id = "hexRed";
+        this.inputHexRed.type = "text";
+        this.inputHexRed.min = "0";
+        this.inputHexRed.max = "360";
+        this.inputHexRed.value = this.color.hex.r.toUpperCase();
+        Object.assign(this.inputHexRed.style, inputsStyle);
+        this.inputHexRed.onchange = function () {
+            _self.color = xcolor.getXcolor('#' + this.value +  _self.color.hex.g + _self.color.hex.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
+        this.rgbformHexRed.appendChild(this.inputHexRed);
+
+        this.rgbformHexGreen = document.createElement("div");
+        this.rgbformHexGreen.style.display = 'flex';
+        this.rgbformHexGreen.style.flexDirection = 'row';
+        this.rgbformHexGreen.style.alignItems = 'center';
+        this.rgbformHexGreen.style.justifyContent = 'space-between';
+        this.rgbFormPanel.appendChild(this.rgbformHexGreen);
+
+        this.labelHexGreen = document.createElement("label");
+        this.labelHexGreen.for = "hexGreen";
+        this.labelHexGreen.innerText = "Hex Green";
+        Object.assign(this.labelHexGreen.style, labelsStyle);
+        this.rgbformHexGreen.appendChild(this.labelHexGreen);
+
+        this.inputHexGreen = document.createElement("input");
+        this.inputHexGreen.id = "hexGreen";
+        this.inputHexGreen.type = "text";
+        this.inputHexGreen.value = this.color.hex.g.toUpperCase();
+        this.inputHexGreen.min = "0";
+        this.inputHexGreen.max = "100";
+        Object.assign(this.inputHexGreen.style, inputsStyle);
+        this.inputHexGreen.onchange = function () {
+            _self.color = xcolor.getXcolor('#' + _self.color.hex.r + this.value + _self.color.hex.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
+        this.rgbformHexGreen.appendChild(this.inputHexGreen);
+
+        this.rgbformHexBlue = document.createElement("div");
+        this.rgbformHexBlue.style.display = 'flex';
+        this.rgbformHexBlue.style.flexDirection = 'row';
+        this.rgbformHexBlue.style.alignItems = 'center';
+        this.rgbformHexBlue.style.justifyContent = 'space-between';
+        this.rgbFormPanel.appendChild(this.rgbformHexBlue);
+
+        this.labelHexBlue = document.createElement("label");
+        this.labelHexBlue.for = "hexBlue";
+        this.labelHexBlue.innerText = "Hex Blue";
+        Object.assign(this.labelHexBlue.style, labelsStyle);
+        this.rgbformHexBlue.appendChild(this.labelHexBlue);
+
+        this.inputHexBlue = document.createElement("input");
+        this.inputHexBlue.id = "hexBlue";
+        this.inputHexBlue.type = "text";
+        this.inputHexBlue.value = this.color.hex.b.toUpperCase();
+        this.inputHexBlue.min = "0";
+        this.inputHexBlue.max = "100";
+        Object.assign(this.inputHexBlue.style, inputsStyle);
+        this.inputHexBlue.onchange = function () {
+            _self.color = xcolor.getXcolor('#' + _self.color.hex.r + _self.color.hex.g + this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
+        this.rgbformHexBlue.appendChild(this.inputHexBlue);
+
+        this.rgbformHEX = document.createElement("div");
+        this.rgbformHEX.style.display = 'flex';
+        this.rgbformHEX.style.flexDirection = 'row';
+        this.rgbformHEX.style.alignItems = 'center';
+        this.rgbformHEX.style.justifyContent = 'space-between';
+        this.rgbFormPanel.appendChild(this.rgbformHEX);
+
+        this.labelHex = document.createElement("label");
+        this.labelHex.for = "hexStr";
+        this.labelHex.innerText = "HEX";
+        Object.assign(this.labelHex.style, labelsStyle);
+        this.rgbformHEX.appendChild(this.labelHex);
+
+        this.inputHex = document.createElement("input");
+        this.inputHex.id = "hexStr";
+        this.inputHex.type = "text";
+        this.inputHex.value = this.color.getHexString().toUpperCase();
+        Object.assign(this.inputHex.style, {
+            width: "160px",
+            fontFamily: 'monospace',
+            fontSize: '1.2em',
+            marginTop: '10px',
+            marginBottom: '10px'
+        });
+        this.inputHex.onchange = function () {
+            _self.color = xcolor.getXcolor(this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.updateRgbPickers();
+            _self.updateRgbForm();
+        }
+        this.rgbformHEX.appendChild(this.inputHex);
+
+        this.copyIconHex = document.createElement('button');
+        Object.assign(this.copyIconHex.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconHex.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconHex.onclick = function () { navigator.clipboard.writeText(_self.inputHex.value); }
+        this.rgbformHEX.appendChild(this.copyIconHex);
+
+
+
+        ////////////////HSB///////////////////////////////
+        /* this.rgbformHSB = document.createElement("div");
+        this.rgbformHSB.style.display = 'flex';
+        this.rgbformHSB.style.flexDirection = 'row';
+        this.rgbformHSB.style.alignItems = 'center';
+        this.rgbformHSB.style.justifyContent = 'space-between';
+        this.rgbformHSB.innerText = this.color.getHsbString();
+        this.rgbFormPanel.appendChild(this.rgbformHSB); */
 
         this.rgbPanel.appendChild(this.rgbFormPanel);
 
@@ -474,21 +650,21 @@ class xcolorPicker {
         this.rgbWheelPanel.style.position = "relative";
         this.rgbWheelPanel.style.overflow = "visible";
         this.rgbWheelPanel.style.display = "block";
-        this.rgbWheelPanel.style.backgroundColor = this.color.getRgbString();
+        this.rgbWheelPanel.style.backgroundColor = xcolor.getHsb(this.color.hsb.h, 100, 100).getRgbString(); //_self.color.getRgbString();this.color.getRgbString();
         this.rgbWheelPanel.onclick = function (event) {
             if (event.target.className == "") return;
             //console.log(event);
             //let data = _self.calculateWheelColor(event);
-            _self.rgbWheelSliderCircleOut.style.left = event.layerX - 13 + "px";
-            _self.rgbWheelSliderCircleOut.style.top = event.layerY - 13 + "px";
+            let x = event.layerX-13;
+            let y = event.layerY-13;
 
-            _self.rgbSatSliderCircleOut.style.left = Math.max(8, Math.min(315, (xcolorPickermap(data.angle, 0, 360, 8, 315)))) + "px";
+            _self.rgbWheelSliderCircleOut.style.left = x + "px";
+            _self.rgbWheelSliderCircleOut.style.top = y + "px";
 
-            _self.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(data.distance, 0, 175, 8, 315))) + "px";
+            _self.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, (xcolorPickermap(x, 0, 350, 8, 315)))) + "px";
+            _self.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(y, 0, 350, 315, 8))) + "px";
 
-
-            _self.rgbRed = data.angle;
-            _self.rgbBlue = xcolorPickermap(data.distance, 0, 175, 0, 100);
+            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(parseInt(_self.rgbSaturationSliderCircleOut.style.left), 8, 315, 0, 100), xcolorPickermap(parseInt(_self.rgbLightSliderCircleOut.style.left), 8, 315, 0, 100));
             _self.updateRgbForm();
             _self.updateRgbPickers();
         };
@@ -540,68 +716,77 @@ class xcolorPicker {
         this.rgbWheelSat.style.background = "linear-gradient(to bottom, transparent 0%, #000 100%)";
         this.rgbWheelPanel.appendChild(this.rgbWheelSat);
 
-        /* this.rgbWheelBorder = document.createElement("DIV");
-        this.rgbWheelBorder.className = "IroWheelBorder";
-        this.rgbWheelBorder.style.position = "absolute";
-        this.rgbWheelBorder.style.top = "0px";
-        this.rgbWheelBorder.style.left = "0px";
-        this.rgbWheelBorder.style.width = "100%";
-        this.rgbWheelBorder.style.height = "100%";
-        this.rgbWheelBorder.style.borderRadius = "50%";
-        this.rgbWheelBorder.style.boxSizing = "border-box";
-        this.rgbWheelBorder.style.border = "4px solid rgb(255, 255, 255)";
-        this.rgbWheelPanel.appendChild(this.rgbWheelBorder); */
-
         this.rgbWheelPanelContainer.appendChild(this.rgbWheelPanel);
 
-        this.rgbRedSlider01 = document.createElement("DIV");
-        this.rgbRedSlider01.className = "IroSlider";
-        this.rgbRedSlider01.style.position = "relative";
-        this.rgbRedSlider01.style.width = "350px";
-        this.rgbRedSlider01.style.height = "44px";
-        this.rgbRedSlider01.style.borderRadius = "22px";
-        this.rgbRedSlider01.style.background = "conic-gradient(rgb(204, 204, 204) 25%, rgb(255, 255, 255) 0deg, rgb(255, 255, 255) 50%, rgb(204, 204, 204) 0deg, rgb(204, 204, 204) 75%, rgb(255, 255, 255) 0deg) 0% 0% / 8px 8px";
-        this.rgbRedSlider01.style.overflow = "visible";
-        this.rgbRedSlider01.style.display = "block";
-        this.rgbRedSlider01.style.marginTop = "12px";
+        this.rgbHueSlider01 = document.createElement("DIV");
+        this.rgbHueSlider01.className = "IroSlider";
+        this.rgbHueSlider01.style.position = "relative";
+        this.rgbHueSlider01.style.width = "350px";
+        this.rgbHueSlider01.style.height = "44px";
+        this.rgbHueSlider01.style.borderRadius = "22px";
+        this.rgbHueSlider01.style.background = "conic-gradient(rgb(204, 204, 204) 25%, rgb(255, 255, 255) 0deg, rgb(255, 255, 255) 50%, rgb(204, 204, 204) 0deg, rgb(204, 204, 204) 75%, rgb(255, 255, 255) 0deg) 0% 0% / 8px 8px";
+        this.rgbHueSlider01.style.overflow = "visible";
+        this.rgbHueSlider01.style.display = "block";
+        this.rgbHueSlider01.style.marginTop = "12px";
 
-        this.rgbRedSlider02 = document.createElement("DIV");
-        this.rgbRedSlider02.className = "IroSliderGradient";
-        this.rgbRedSlider02.style.position = "absolute";
-        this.rgbRedSlider02.style.top = "0px";
-        this.rgbRedSlider02.style.left = "0px";
-        this.rgbRedSlider02.style.width = "100%";
-        this.rgbRedSlider02.style.height = "100%";
-        this.rgbRedSlider02.style.borderRadius = "22px";
-        this.rgbRedSlider02.style.background = "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 16.666%, rgb(0, 255, 0) 33.333%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 66.666%, rgb(255, 0, 255) 83.333%, rgb(255, 0, 0) 100%)";
-        this.rgbRedSlider02.style.boxSizing = "border-box";
-        this.rgbRedSlider02.style.border = "4px solid rgb(255, 255, 255)";
-        this.rgbRedSlider01.appendChild(this.rgbRedSlider02);
+        this.rgbHueSlider02 = document.createElement("DIV");
+        this.rgbHueSlider02.className = "IroSliderGradient";
+        this.rgbHueSlider02.style.position = "absolute";
+        this.rgbHueSlider02.style.top = "0px";
+        this.rgbHueSlider02.style.left = "0px";
+        this.rgbHueSlider02.style.width = "100%";
+        this.rgbHueSlider02.style.height = "100%";
+        this.rgbHueSlider02.style.borderRadius = "22px";
+        this.rgbHueSlider02.style.background = "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 16.666%, rgb(0, 255, 0) 33.333%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 66.666%, rgb(255, 0, 255) 83.333%, rgb(255, 0, 0) 100%)";
+        this.rgbHueSlider02.style.boxSizing = "border-box";
+        this.rgbHueSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.rgbHueSlider01.appendChild(this.rgbHueSlider02);
 
-        this.rgbRedSliderCircleOut = document.createElement("div");
-        this.rgbRedSliderCircleOut.style.border = "2px solid #444";
-        this.rgbRedSliderCircleOut.style.borderRadius = "13px";
-        this.rgbRedSliderCircleOut.style.willChange = "transform";
-        this.rgbRedSliderCircleOut.style.top = "8px";
-        this.rgbRedSliderCircleOut.style.left = "315px";
-        this.rgbRedSliderCircleOut.style.width = "24px";
-        this.rgbRedSliderCircleOut.style.height = "24px";
-        this.rgbRedSliderCircleOut.style.position = "absolute";
-        this.rgbRedSliderCircleOut.style.overflow = "visible";
+        this.rgbHueSliderCircleOut = document.createElement("div");
+        this.rgbHueSliderCircleOut.style.border = "2px solid #444";
+        this.rgbHueSliderCircleOut.style.borderRadius = "13px";
+        this.rgbHueSliderCircleOut.style.willChange = "transform";
+        this.rgbHueSliderCircleOut.style.top = "8px";
+        this.rgbHueSliderCircleOut.style.left = "315px";
+        this.rgbHueSliderCircleOut.style.width = "24px";
+        this.rgbHueSliderCircleOut.style.height = "24px";
+        this.rgbHueSliderCircleOut.style.position = "absolute";
+        this.rgbHueSliderCircleOut.style.overflow = "visible";
+        this.rgbHueSliderCircleOut.onmousedown = function (e) {
+            this.isDragging = true;
+            this.initialPosition = { x: parseInt(this.style.left), y: parseInt(this.style.top) };
+            this.initDragPosition = { x: e.clientX, y: e.clientY };
+        };
+        this.rgbHueSliderCircleOut.onmousemove = function (e) {
+            if (this.isDragging) {
+                let newleft = (e.clientX > this.initDragPosition.x) ? this.initialPosition.x + (e.clientX - this.initDragPosition.x) : this.initialPosition.x - (this.initDragPosition.x - e.clientX);
+                newleft = Math.max(8, Math.min(315, newleft));
+                this.style.left = newleft + "px";
 
-        this.rgbRedSliderCircleIn = document.createElement("div");
-        this.rgbRedSliderCircleIn.style.border = "2px solid rgb(255, 255, 255)";
-        this.rgbRedSliderCircleIn.style.borderRadius = "12px";
-        this.rgbRedSliderCircleIn.style.top = "-0px";
-        this.rgbRedSliderCircleIn.style.left = "-0px";
-        this.rgbRedSliderCircleIn.style.width = "20px";
-        this.rgbRedSliderCircleIn.style.height = "20px";
-        this.rgbRedSliderCircleIn.style.position = "absolute";
-        this.rgbRedSliderCircleIn.style.overflow = "visible";
-        this.rgbRedSliderCircleOut.appendChild(this.rgbRedSliderCircleIn);
+                _self.color = xcolor.getHsb(xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+                _self.rgbWheelPanel.style.backgroundColor = xcolor.getHsb(_self.color.hsb.h, 100, 100).getRgbString(); //_self.color.getRgbString();
+                _self.updateRgbForm();
+                _self.updateRgbPickers();
+            }
+        }
+        this.rgbHueSliderCircleOut.onmouseup = function (e) {
+            this.isDragging = false;
+            this.initialPosition = { x: parseInt(this.style.left), y: parseInt(this.style.top) };
+        };
 
-        this.rgbRedSlider01.appendChild(this.rgbRedSliderCircleOut);
-        this.rgbWheelPanelContainer.appendChild(this.rgbRedSlider01);
+        this.rgbHueSliderCircleIn = document.createElement("div");
+        this.rgbHueSliderCircleIn.style.border = "2px solid rgb(255, 255, 255)";
+        this.rgbHueSliderCircleIn.style.borderRadius = "12px";
+        this.rgbHueSliderCircleIn.style.top = "-0px";
+        this.rgbHueSliderCircleIn.style.left = "-0px";
+        this.rgbHueSliderCircleIn.style.width = "20px";
+        this.rgbHueSliderCircleIn.style.height = "20px";
+        this.rgbHueSliderCircleIn.style.position = "absolute";
+        this.rgbHueSliderCircleIn.style.overflow = "visible";
+        this.rgbHueSliderCircleOut.appendChild(this.rgbHueSliderCircleIn);
+
+        this.rgbHueSlider01.appendChild(this.rgbHueSliderCircleOut);
+        this.rgbWheelPanelContainer.appendChild(this.rgbHueSlider01);
 
         this.rgbSaturationSlider01 = document.createElement("DIV");
         this.rgbSaturationSlider01.className = "IroSlider";
@@ -648,8 +833,10 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.rgbGreen = xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100);
+                //_self.rgbGreen = xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100);
+                _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b);
                 _self.updateRgbForm();
+                _self.updateRgbPickers();
             }
         }
         this.rgbSaturationSliderCircleOut.onmouseup = function (e) {
@@ -705,6 +892,26 @@ class xcolorPicker {
         this.rgbLightSliderCircleOut.style.height = "24px";
         this.rgbLightSliderCircleOut.style.position = "absolute";
         this.rgbLightSliderCircleOut.style.overflow = "visible";
+        this.rgbLightSliderCircleOut.onmousedown = function (e) {
+            this.isDragging = true;
+            this.initialPosition = { x: parseInt(this.style.left), y: parseInt(this.style.top) };
+            this.initDragPosition = { x: e.clientX, y: e.clientY };
+        };
+        this.rgbLightSliderCircleOut.onmousemove = function (e) {
+            if (this.isDragging) {
+                let newleft = (e.clientX > this.initDragPosition.x) ? this.initialPosition.x + (e.clientX - this.initDragPosition.x) : this.initialPosition.x - (this.initDragPosition.x - e.clientX);
+                newleft = Math.max(8, Math.min(315, newleft));
+                this.style.left = newleft + "px";
+
+                _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100));
+                _self.updateRgbForm();
+                _self.updateRgbPickers();
+            }
+        }
+        this.rgbLightSliderCircleOut.onmouseup = function (e) {
+            this.isDragging = false;
+            this.initialPosition = { x: parseInt(this.style.left), y: parseInt(this.style.top) };
+        };
 
         this.rgbLightSliderCircleIn = document.createElement("div");
         this.rgbLightSliderCircleIn.style.border = "2px solid rgb(255, 255, 255)";
@@ -726,22 +933,6 @@ class xcolorPicker {
         this.tabcontents.push(this.rgbPanel);
 
         return this.rgbPanel;
-    }
-
-    createHexPanel(isActive) {
-        this.hexPanel = document.createElement("div");
-        this.hexPanel.id = "hexPanel";
-        this.hexPanel.className = "tabcontent";
-        Object.assign(this.hexPanel.style, this.tabcontentStyle);
-        this.hexPanel.innerText = "HEX";
-        if (isActive) {
-            this.hexPanel.style.display = "";
-            this.hexTab.style.backgroundColor = "#ccc";
-        }
-
-        this.tabcontents.push(this.hexPanel);
-
-        return this.hexPanel;
     }
 
     createHslPanel(isActive) {
@@ -1392,7 +1583,7 @@ class xcolorPicker {
 
             //_self.hsbHue = data.angle;
             //_self.hsbBright = xcolorPickermap(data.distance, 0, 175, 0, 100);
-            _self.color = xcolor.getHsl(data.angle, _self.color.hsb.s, xcolorPickermap(data.distance, 0, 175, 0, 100)) //xcolor.getXcolor("hsb(" + data.angle + ", " + _self.color.hsb.s + "%, " + xcolorPickermap(data.distance, 0, 175, 0, 100) + "%)");
+            _self.color = xcolor.getHsl(data.angle, _self.color.hsb.s, xcolorPickermap(data.distance, 0, 175, 0, 100)); //xcolor.getXcolor("hsb(" + data.angle + ", " + _self.color.hsb.s + "%, " + xcolorPickermap(data.distance, 0, 175, 0, 100) + "%)");
             _self.updateHsbForm();
             _self.updateHsbPickers();
         };
@@ -1556,7 +1747,7 @@ class xcolorPicker {
                 this.style.left = newleft + "px";
 
                 //_self.hsbSat = xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100);
-                _self.color = xcolor.getHsl(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100), _self.color.hsb.b); //xcolor.getXcolor("hsb(" + _self.color.hsb.h + ", " + xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100) + "%, " + _self.color.hsb.b + "%)");
+                _self.color = xcolor.getHsl(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b); //xcolor.getXcolor("hsb(" + _self.color.hsb.h + ", " + xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100) + "%, " + _self.color.hsb.b + "%)");
                 _self.updateHsbForm();
             }
         }
@@ -1634,6 +1825,58 @@ class xcolorPicker {
         this.tabcontents.push(this.hsbPanel);
 
         return this.hsbPanel;
+    }
+
+    createHtmlPanel(isActive) {
+        this.htmlPanel = document.createElement("div");
+        this.htmlPanel.id = "htmlPanel";
+        this.htmlPanel.className = "tabcontent";
+        Object.assign(this.htmlPanel.style, this.tabcontentStyle);
+        //this.htmlPanel.innerText = "HTML COLORS";
+        if (isActive) {
+            this.htmlPanel.style.display = "";
+            this.htmlTab.style.backgroundColor = "#ccc";
+        }
+
+        this.htmlBoardPanel = document.createElement("div");
+        Object.assign(this.htmlBoardPanel.style, {
+            padding: '5px',
+            float: "left",
+            width: "300px",
+            height: "520px",
+            backgroundColor: "rgb(241, 241, 241)",
+            border: "1px solid #ccc",
+            borderRadius: "4px"
+        });
+
+        this.htmlSectionPanel = document.createElement("section");
+        Object.assign(this.htmlSectionPanel.style, {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(10, 1fr)', /* 8 columnas iguales en el tablero */
+            gridTemplateRows: 'repeat(14, 1fr)' /* 8 filas en el tablero */
+        });
+
+        this.htmlBoardPanel.appendChild(this.htmlSectionPanel);
+
+        for (let i = 0; i < Object.keys(htmlColors).length; i++) {
+            let htmlBoxPanel = document.createElement("div");
+            htmlBoxPanel.title = (Object.keys(htmlColors)[i]);
+            Object.assign(htmlBoxPanel.style, {
+                backgroundColor: htmlColors[(Object.keys(htmlColors)[i])], /* Color de fondo de las casillas */
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: '4em', /* Tamaño de la fuente de las piezas */
+                height: '30px'
+             });
+            this.htmlSectionPanel.appendChild(htmlBoxPanel);
+        }
+
+        this.htmlPanel.appendChild(this.htmlBoardPanel);
+
+        this.tabcontents.push(this.htmlPanel);
+
+        return this.htmlPanel;
     }
 
 }
