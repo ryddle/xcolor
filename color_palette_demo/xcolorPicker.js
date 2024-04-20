@@ -7,6 +7,8 @@ class xcolorPicker {
 
     constructor(event, colorCode) {
         this.color = xcolor.getXcolor('#ff0000');
+        this.htmlcolor = {name:"",value:""};
+
         if (colorCode !== undefined) {
             this.color = xcolor.getXcolor(colorCode);
         }
@@ -60,7 +62,7 @@ class xcolorPicker {
         this.updateHslPickers();
         this.updateHsbForm();
         this.updateHsbPickers();
-
+        this.updateHtmlForm()
 
         return this.colorPickerPanel;
     }
@@ -124,7 +126,7 @@ class xcolorPicker {
 
         this.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.s, 0, 100, 8, 315))) + "px";
         this.rgbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";
-        
+
         this.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.b, 0, 100, 8, 315))) + "px";
         this.rgbLightSlider02.style.background = "linear-gradient(to right, rgb(255, 255, 255) 0%, " + this.color.getRgbString() + " 100%)";
     }
@@ -193,6 +195,16 @@ class xcolorPicker {
         this.hsbBrightnessSlider02.style.background = "linear-gradient(to right, rgb(255, 255, 255) 0%, " + this.color.getRgbString() + " 100%)";
     }
 
+    updateHtmlForm() {
+        this.hcformRgbColor.style.backgroundColor = this.color.getRgbString();
+        this.labelhcHtml.innerText = this.htmlcolor.name;
+
+        this.inputhcRgb.value = this.color.getRgbString();
+        this.inputhcHex.value = this.color.getHexString();
+        this.inputhcHsl.value = this.color.getHslString();
+        this.inputhcHsb.value = this.color.getHsbString();
+    }
+
     /**
      * Creates a color picker panel component
      * @return {HTMLDivElement} the color picker panel element
@@ -207,7 +219,7 @@ class xcolorPicker {
             left: event.clientX + 'px',
             top: event.clientY + 'px',
             width: '650px',
-            height: '600px',
+            height: '650px',
             display: 'flex',
             flexDirection: 'column',
             padding: '10px',
@@ -317,6 +329,18 @@ class xcolorPicker {
         this.colorPickerPanel.appendChild(this.createHsbPanel(false));
 
         this.colorPickerPanel.appendChild(this.createHtmlPanel(false));
+
+
+        this.divCmdButtons = document.createElement("div");
+        this.divCmdButtons.style.width="100%";
+        this.divCmdButtons.style.height="50px";
+        this.divCmdButtons.style.alignContent="end";
+
+        this.acceptBtn = document.createElement("button");
+        this.acceptBtn.style.float="right";
+        this.acceptBtn.innerText = "Accept";
+        this.divCmdButtons.appendChild(this.acceptBtn);
+        this.colorPickerPanel.appendChild(this.divCmdButtons);
 
         return this.colorPickerPanel;
     }
@@ -519,7 +543,7 @@ class xcolorPicker {
         this.inputHexRed.value = this.color.hex.r.toUpperCase();
         Object.assign(this.inputHexRed.style, inputsStyle);
         this.inputHexRed.onchange = function () {
-            _self.color = xcolor.getXcolor('#' + this.value +  _self.color.hex.g + _self.color.hex.b);
+            _self.color = xcolor.getXcolor('#' + this.value + _self.color.hex.g + _self.color.hex.b);
             _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.updateRgbForm();
             _self.updateRgbPickers();
@@ -655,8 +679,8 @@ class xcolorPicker {
             if (event.target.className == "") return;
             //console.log(event);
             //let data = _self.calculateWheelColor(event);
-            let x = event.layerX-13;
-            let y = event.layerY-13;
+            let x = event.layerX - 13;
+            let y = event.layerY - 13;
 
             _self.rgbWheelSliderCircleOut.style.left = x + "px";
             _self.rgbWheelSliderCircleOut.style.top = y + "px";
@@ -1828,15 +1852,233 @@ class xcolorPicker {
     }
 
     createHtmlPanel(isActive) {
+        let _self = this;
         this.htmlPanel = document.createElement("div");
         this.htmlPanel.id = "htmlPanel";
         this.htmlPanel.className = "tabcontent";
         Object.assign(this.htmlPanel.style, this.tabcontentStyle);
-        //this.htmlPanel.innerText = "HTML COLORS";
         if (isActive) {
             this.htmlPanel.style.display = "";
             this.htmlTab.style.backgroundColor = "#ccc";
         }
+
+        /// rgb form panel
+        this.hcFormPanel = document.createElement("div");
+        Object.assign(this.hcFormPanel.style, {
+            padding: '5px',
+            float: "right",
+            width: "220px",
+            height: "520px",
+            backgroundColor: "rgb(241, 241, 241)",
+            border: "1px solid #ccc",
+            borderRadius: "4px"
+        });
+
+        this.hcformRgbColor = document.createElement("div");
+        this.hcformRgbColor.style.display = 'flex';
+        this.hcformRgbColor.style.flexDirection = 'row';
+        this.hcformRgbColor.style.backgroundColor = this.color.getRgbString();
+        this.hcformRgbColor.style.height = "50px";
+        this.hcformRgbColor.style.width = "100%";
+        this.hcformRgbColor.style.border = "1px solid #ccc";
+        this.hcformRgbColor.style.borderRadius = "4px";
+        this.hcformRgbColor.style.marginBottom = "10px";
+        this.hcFormPanel.appendChild(this.hcformRgbColor);
+
+        const labelsStyle = {
+            fontFamily: 'monospace',
+            fontSize: '1.2em'
+        };
+
+        this.hcformHTML = document.createElement("div");
+        Object.assign(this.hcformHTML.style, {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '18px',
+            fontFamily: 'monospace'
+        });
+
+        this.labelhcHtml = document.createElement("label");
+        this.labelhcHtml.for = "rgbStr";
+        this.labelhcHtml.innerText = "RGB";
+        Object.assign(this.labelhcHtml.style, labelsStyle);
+        this.labelhcHtml.innerText = this.htmlcolor!=null?this.htmlcolor.value:"";
+
+        this.hcformHTML.appendChild(this.labelhcHtml);
+
+        this.copyIconhcHtml = document.createElement('button');
+        Object.assign(this.copyIconhcHtml.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconhcHtml.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconhcHtml.onclick = function () { navigator.clipboard.writeText(_self.labelhcHtml.innerText); }
+        this.hcformHTML.appendChild(this.copyIconhcHtml);
+
+        this.hcFormPanel.appendChild(this.hcformHTML);
+        
+        
+        this.hcformRGB = document.createElement("div");
+        this.hcformRGB.style.display = 'flex';
+        this.hcformRGB.style.flexDirection = 'row';
+        this.hcformRGB.style.alignItems = 'center';
+        this.hcformRGB.style.justifyContent = 'space-between';
+        this.hcFormPanel.appendChild(this.hcformRGB);
+
+        this.labelhcRgb = document.createElement("label");
+        this.labelhcRgb.for = "rgbStr";
+        this.labelhcRgb.innerText = "RGB";
+        Object.assign(this.labelhcRgb.style, labelsStyle);
+        this.hcformRGB.appendChild(this.labelhcRgb);
+
+        this.inputhcRgb = document.createElement("input");
+        this.inputhcRgb.id = "rgbStr";
+        this.inputhcRgb.type = "text";
+        this.inputhcRgb.disabled = true;
+        this.inputhcRgb.value = this.color.getRgbString();
+        Object.assign(this.inputhcRgb.style, {
+            width: "160px",
+            fontFamily: 'monospace',
+            fontSize: '1.2em',
+            marginTop: '10px',
+            marginBottom: '10px'
+        });
+        this.hcformRGB.appendChild(this.inputhcRgb);
+
+        this.copyIconhcRgb = document.createElement('button');
+        Object.assign(this.copyIconhcRgb.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconhcRgb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconhcRgb.onclick = function () { navigator.clipboard.writeText(_self.inputhcRgb.value); }
+        this.hcformRGB.appendChild(this.copyIconhcRgb);
+
+        ////////////HEX/////////////////////////////////
+        this.hcformHEX = document.createElement("div");
+        this.hcformHEX.style.display = 'flex';
+        this.hcformHEX.style.flexDirection = 'row';
+        this.hcformHEX.style.alignItems = 'center';
+        this.hcformHEX.style.justifyContent = 'space-between';
+        this.hcFormPanel.appendChild(this.hcformHEX);
+
+        this.labelhcHex = document.createElement("label");
+        this.labelhcHex.for = "hchexStr";
+        this.labelhcHex.innerText = "HEX";
+        Object.assign(this.labelhcHex.style, labelsStyle);
+        this.hcformHEX.appendChild(this.labelhcHex);
+
+        this.inputhcHex = document.createElement("input");
+        this.inputhcHex.id = "hchexStr";
+        this.inputhcHex.type = "text";
+        this.inputhcHex.disabled = true;
+        this.inputhcHex.value = this.color.getHexString().toUpperCase();
+        Object.assign(this.inputhcHex.style, {
+            width: "160px",
+            fontFamily: 'monospace',
+            fontSize: '1.2em',
+            marginTop: '10px',
+            marginBottom: '10px'
+        });
+
+        this.hcformHEX.appendChild(this.inputhcHex);
+
+        this.copyIconhcHex = document.createElement('button');
+        Object.assign(this.copyIconhcHex.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconhcHex.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconhcHex.onclick = function () { navigator.clipboard.writeText(_self.inputhcHex.value); }
+        this.hcformHEX.appendChild(this.copyIconhcHex);
+
+        ////////////HSL/////////////////////////////////
+        this.hcformHSL = document.createElement("div");
+        this.hcformHSL.style.display = 'flex';
+        this.hcformHSL.style.flexDirection = 'row';
+        this.hcformHSL.style.alignItems = 'center';
+        this.hcformHSL.style.justifyContent = 'space-between';
+        this.hcFormPanel.appendChild(this.hcformHSL);
+
+        this.labelhcHsl = document.createElement("label");
+        this.labelhcHsl.for = "hchslStr";
+        this.labelhcHsl.innerText = "HSL";
+        Object.assign(this.labelhcHsl.style, labelsStyle);
+        this.hcformHSL.appendChild(this.labelhcHsl);
+
+        this.inputhcHsl = document.createElement("input");
+        this.inputhcHsl.id = "hchslStr";
+        this.inputhcHsl.type = "text";
+        this.inputhcHsl.disabled = true;
+        this.inputhcHsl.value = this.color.getHslString();
+        Object.assign(this.inputhcHsl.style, {
+            width: "160px",
+            fontFamily: 'monospace',
+            fontSize: '1.2em',
+            marginTop: '10px',
+            marginBottom: '10px'
+        });
+
+        this.hcformHSL.appendChild(this.inputhcHsl);
+
+        this.copyIconhcHsl = document.createElement('button');
+        Object.assign(this.copyIconhcHsl.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconhcHsl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconhcHsl.onclick = function () { navigator.clipboard.writeText(_self.inputhcHsl.value); }
+        this.hcformHSL.appendChild(this.copyIconhcHsl);
+
+        ////////////HSB/////////////////////////////////
+        this.hcformHSB = document.createElement("div");
+        this.hcformHSB.style.display = 'flex';
+        this.hcformHSB.style.flexDirection = 'row';
+        this.hcformHSB.style.alignItems = 'center';
+        this.hcformHSB.style.justifyContent = 'space-between';
+        this.hcFormPanel.appendChild(this.hcformHSB);
+
+        this.labelhcHsb = document.createElement("label");
+        this.labelhcHsb.for = "hchsbStr";
+        this.labelhcHsb.innerText = "HSB";
+        Object.assign(this.labelhcHsb.style, labelsStyle);
+        this.hcformHSB.appendChild(this.labelhcHsb);
+
+        this.inputhcHsb = document.createElement("input");
+        this.inputhcHsb.id = "hchsbStr";
+        this.inputhcHsb.type = "text";
+        this.inputhcHsb.disabled = true;
+        this.inputhcHsb.value = this.color.getHsbString();
+        Object.assign(this.inputhcHsb.style, {
+            width: "160px",
+            fontFamily: 'monospace',
+            fontSize: '1.2em',
+            marginTop: '10px',
+            marginBottom: '10px'
+        });
+    
+        this.hcformHSB.appendChild(this.inputhcHsb);
+
+        this.copyIconhcHsb = document.createElement('button');
+        Object.assign(this.copyIconhcHsb.style, {
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        })
+        this.copyIconhcHsb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+        this.copyIconhcHsb.onclick = function () { navigator.clipboard.writeText(_self.inputhcHsb.value); }
+        this.hcformHSB.appendChild(this.copyIconhcHsb);
+
+
+        this.htmlPanel.appendChild(this.hcFormPanel);
+
+        /////////////////HTML COLORS///////////////////////
 
         this.htmlBoardPanel = document.createElement("div");
         Object.assign(this.htmlBoardPanel.style, {
@@ -1852,8 +2094,8 @@ class xcolorPicker {
         this.htmlSectionPanel = document.createElement("section");
         Object.assign(this.htmlSectionPanel.style, {
             display: 'grid',
-            gridTemplateColumns: 'repeat(10, 1fr)', /* 8 columnas iguales en el tablero */
-            gridTemplateRows: 'repeat(14, 1fr)' /* 8 filas en el tablero */
+            gridTemplateColumns: 'repeat(10, 1fr)',
+            gridTemplateRows: 'repeat(14, 1fr)'
         });
 
         this.htmlBoardPanel.appendChild(this.htmlSectionPanel);
@@ -1862,13 +2104,23 @@ class xcolorPicker {
             let htmlBoxPanel = document.createElement("div");
             htmlBoxPanel.title = (Object.keys(htmlColors)[i]);
             Object.assign(htmlBoxPanel.style, {
-                backgroundColor: htmlColors[(Object.keys(htmlColors)[i])], /* Color de fondo de las casillas */
+                backgroundColor: htmlColors[(Object.keys(htmlColors)[i])],
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                fontSize: '4em', /* Tamaño de la fuente de las piezas */
                 height: '30px'
-             });
+            });
+            htmlBoxPanel.onclick = function () {
+                _self.color = xcolor.getXcolor(this.style.backgroundColor);
+                _self.htmlcolor = {name:this.title, color:this.style.backgroundColor};
+                _self.updateHtmlForm();
+                _self.updateRgbForm();
+                _self.updateRgbPickers();
+                _self.updateHslForm();
+                _self.updateHslPickers();
+                _self.updateHsbForm();
+                _self.updateHsbPickers();
+            };
             this.htmlSectionPanel.appendChild(htmlBoxPanel);
         }
 
