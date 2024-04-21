@@ -331,7 +331,7 @@ class xcolorPicker {
         this.closeBtn.style.borderRadius = "3px";
         this.closeBtn.innerText = "X";
         this.closeBtn.onclick = function () {
-            this.colorPickerDialog.close();
+            _self.colorPickerDialog.close();
         }
         this.closeBtnPanel.appendChild(this.closeBtn);
 
@@ -359,7 +359,7 @@ class xcolorPicker {
         this.acceptBtn.style.float = "right";
         this.acceptBtn.innerText = "Accept";
         this.acceptBtn.onclick = function () {
-            _self.colorPickerDialog.returnValue = _self.color.getRgbString();
+            _self.colorPickerDialog.returnValue = _self.color.getHexString();
             _self.colorPickerDialog.close();
         }
         this.divCmdButtons.appendChild(this.acceptBtn);

@@ -152,7 +152,7 @@ class xcolor {
      * @return {type} description of return value
      */
     getHexaString() {
-        return `#${this.#hex.r}${this.#hex.g}${this.#hex.h}${this.#hex.a}`;
+        return `#${this.#hex.r}${this.#hex.g}${this.#hex.h}${this.#hex.a}`.toUpperCase();
     }
     /**
      * Returns the hexadecimal representation of the color.
@@ -160,7 +160,7 @@ class xcolor {
      * @return {string} The hexadecimal color value.
      */
     getHexString() {
-        return `#${this.#hex.r}${this.#hex.g}${this.#hex.b}`;
+        return `#${this.#hex.r}${this.#hex.g}${this.#hex.b}`.toUpperCase();
     }
     /**
      * Returns a string representation of the HSBA color value in the format "hsba(H,S%,B%,A)".
