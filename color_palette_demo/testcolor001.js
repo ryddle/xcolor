@@ -252,7 +252,8 @@ var Palette = {
 function updateColor(_color) {
     color = xcolor.getXcolor(_color);
 
-    document.getElementById("inputcolor2").style.backgroundColor =color.getHexString();
+    document.getElementById("inputcolor").value = color.getHexString();
+    document.getElementById("inputcolor2").style.backgroundColor = color.getHexString();
 
     while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
     while (palettescontainer01.firstChild) { palettescontainer01.removeChild(palettescontainer01.firstChild); };
@@ -487,8 +488,23 @@ function genGreysPalette() {
 
 
 function genColorPickerPanel(event, colorCode){
-    let cppanel = new xcolorPicker(event, colorCode);//.createColorPickerPanel(Palette.baseColor);
-    document.body.appendChild(cppanel);
+    let cpdialog = new xcolorPicker(event, colorCode);//.createColorPickerPanel(Palette.baseColor);
+    document.body.appendChild(cpdialog);
+
+    cpdialog.showModal();
+
+    cpdialog.addEventListener("close", () => {
+        handleUserInput(cpdialog.returnValue);
+    });
 }
+
+function handleUserInput(returnValue) {
+    if (!returnValue) {
+      console.log(" There was no return value");
+    } else {
+      console.log("Return value: " + returnValue);
+      updateColor(returnValue);
+    }
+  }
 
 document.onload = initialize();

@@ -7,7 +7,7 @@ class xcolorPicker {
 
     constructor(event, colorCode) {
         this.color = xcolor.getXcolor('#ff0000');
-        this.htmlcolor = {name:"",value:""};
+        this.htmlcolor = { name: "", value: "" };
 
         if (colorCode !== undefined) {
             this.color = xcolor.getXcolor(colorCode);
@@ -64,7 +64,7 @@ class xcolorPicker {
         this.updateHsbPickers();
         this.updateHtmlForm()
 
-        return this.colorPickerPanel;
+        return this.colorPickerDialog;
     }
 
     openTab(evt, tab) {
@@ -212,12 +212,25 @@ class xcolorPicker {
     createColorPickerPanel(event) {
         let _self = this;
 
+        this.colorPickerDialog = document.createElement("dialog");
+        this.colorPickerDialog.id = "favDialog";
+        Object.assign(this.colorPickerDialog.style, {
+            width: '672px',
+            height: '672px',
+            padding: '0px'
+        });
+
+        this.colorPickerForm = document.createElement("form");
+        this.colorPickerForm.method = "dialog";
+
+        this.colorPickerDialog.appendChild(this.colorPickerForm);
+
         this.colorPickerPanel = document.createElement('div');
         this.colorPickerPanel.id = "colorPickerPanel";
         Object.assign(this.colorPickerPanel.style, {
             position: 'absolute',
-            left: event.clientX + 'px',
-            top: event.clientY + 'px',
+            /*left: event.clientX + 'px',
+            top: event.clientY + 'px',*/
             width: '650px',
             height: '650px',
             display: 'flex',
@@ -227,6 +240,7 @@ class xcolorPicker {
             borderRadius: '3px',
             backgroundColor: 'white',
         });
+        this.colorPickerForm.appendChild(this.colorPickerPanel);
 
         this.tabPanel = document.createElement("div");
         this.tabPanel.className = "tab";
@@ -312,7 +326,7 @@ class xcolorPicker {
         this.closeBtn.style.borderRadius = "3px";
         this.closeBtn.innerText = "X";
         this.closeBtn.onclick = function () {
-            colorPickerPanel.remove();
+            this.colorPickerDialog.close();
         }
         this.closeBtnPanel.appendChild(this.closeBtn);
 
@@ -332,13 +346,17 @@ class xcolorPicker {
 
 
         this.divCmdButtons = document.createElement("div");
-        this.divCmdButtons.style.width="100%";
-        this.divCmdButtons.style.height="50px";
-        this.divCmdButtons.style.alignContent="end";
+        this.divCmdButtons.style.width = "100%";
+        this.divCmdButtons.style.height = "50px";
+        this.divCmdButtons.style.alignContent = "end";
 
         this.acceptBtn = document.createElement("button");
-        this.acceptBtn.style.float="right";
+        this.acceptBtn.style.float = "right";
         this.acceptBtn.innerText = "Accept";
+        this.acceptBtn.onclick = function () {
+            _self.colorPickerDialog.returnValue=_self.color.getRgbString();
+            _self.colorPickerDialog.close();
+        }
         this.divCmdButtons.appendChild(this.acceptBtn);
         this.colorPickerPanel.appendChild(this.divCmdButtons);
 
@@ -493,6 +511,7 @@ class xcolorPicker {
 
         this.inputRgb = document.createElement("input");
         this.inputRgb.id = "rgbStr";
+        this.inputRgb.name = "rgbStr";
         this.inputRgb.type = "text";
         this.inputRgb.value = this.color.getRgbString();
         Object.assign(this.inputRgb.style, {
@@ -1904,7 +1923,7 @@ class xcolorPicker {
         this.labelhcHtml.for = "rgbStr";
         this.labelhcHtml.innerText = "RGB";
         Object.assign(this.labelhcHtml.style, labelsStyle);
-        this.labelhcHtml.innerText = this.htmlcolor!=null?this.htmlcolor.value:"";
+        this.labelhcHtml.innerText = this.htmlcolor != null ? this.htmlcolor.value : "";
 
         this.hcformHTML.appendChild(this.labelhcHtml);
 
@@ -1919,8 +1938,8 @@ class xcolorPicker {
         this.hcformHTML.appendChild(this.copyIconhcHtml);
 
         this.hcFormPanel.appendChild(this.hcformHTML);
-        
-        
+
+
         this.hcformRGB = document.createElement("div");
         this.hcformRGB.style.display = 'flex';
         this.hcformRGB.style.flexDirection = 'row';
@@ -2062,7 +2081,7 @@ class xcolorPicker {
             marginTop: '10px',
             marginBottom: '10px'
         });
-    
+
         this.hcformHSB.appendChild(this.inputhcHsb);
 
         this.copyIconhcHsb = document.createElement('button');
@@ -2112,7 +2131,7 @@ class xcolorPicker {
             });
             htmlBoxPanel.onclick = function () {
                 _self.color = xcolor.getXcolor(this.style.backgroundColor);
-                _self.htmlcolor = {name:this.title, color:this.style.backgroundColor};
+                _self.htmlcolor = { name: this.title, color: this.style.backgroundColor };
                 _self.updateHtmlForm();
                 _self.updateRgbForm();
                 _self.updateRgbPickers();
