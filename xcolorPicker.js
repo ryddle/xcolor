@@ -265,6 +265,7 @@ class xcolorPicker {
         }
 
         this.rgbTab = document.createElement("button");
+        this.rgbTab.type = "button";
         this.rgbTab.className = "tablinks active";
         this.rgbTab.tabPanel = "rgbPanel";
         this.rgbTab.innerText = "RGB/HEX";
@@ -273,6 +274,7 @@ class xcolorPicker {
         this.tabPanel.appendChild(this.rgbTab);
 
         this.hslTab = document.createElement("button");
+        this.hslTab.type = "button";
         this.hslTab.className = "tablinks";
         this.hslTab.tabPanel = "hslPanel";
         this.hslTab.innerText = "HSL";
@@ -285,6 +287,7 @@ class xcolorPicker {
         this.tabPanel.appendChild(this.hslTab);
 
         this.hsbTab = document.createElement("button");
+        this.hsbTab.type = "button";
         this.hsbTab.className = "tablinks";
         this.hsbTab.tabPanel = "hsbPanel";
         this.hsbTab.innerText = "HSB";
@@ -293,6 +296,7 @@ class xcolorPicker {
         this.tabPanel.appendChild(this.hsbTab);
 
         this.htmlTab = document.createElement("button");
+        this.htmlTab.type = "button";
         this.htmlTab.className = "tablinks";
         this.htmlTab.tabPanel = "htmlPanel";
         this.htmlTab.innerText = "HTML";
