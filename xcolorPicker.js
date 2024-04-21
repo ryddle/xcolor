@@ -217,7 +217,8 @@ class xcolorPicker {
         Object.assign(this.colorPickerDialog.style, {
             width: '672px',
             height: '672px',
-            padding: '0px'
+            padding: '0px',
+            border: '0px'
         });
 
         this.colorPickerForm = document.createElement("form");
@@ -358,7 +359,7 @@ class xcolorPicker {
         this.acceptBtn.style.float = "right";
         this.acceptBtn.innerText = "Accept";
         this.acceptBtn.onclick = function () {
-            _self.colorPickerDialog.returnValue=_self.color.getRgbString();
+            _self.colorPickerDialog.returnValue = _self.color.getRgbString();
             _self.colorPickerDialog.close();
         }
         this.divCmdButtons.appendChild(this.acceptBtn);
@@ -787,6 +788,14 @@ class xcolorPicker {
         this.rgbHueSlider02.style.background = "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 16.666%, rgb(0, 255, 0) 33.333%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 66.666%, rgb(255, 0, 255) 83.333%, rgb(255, 0, 0) 100%)";
         this.rgbHueSlider02.style.boxSizing = "border-box";
         this.rgbHueSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.rgbHueSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.rgbHueSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+            _self.rgbWheelPanel.style.backgroundColor = xcolor.getHsb(_self.color.hsb.h, 100, 100).getRgbString();
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
         this.rgbHueSlider01.appendChild(this.rgbHueSlider02);
 
         this.rgbHueSliderCircleOut = document.createElement("div");
@@ -857,6 +866,13 @@ class xcolorPicker {
         this.rgbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";//"linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(160, 255, 158) 100%)";
         this.rgbSaturationSlider02.style.boxSizing = "border-box";
         this.rgbSaturationSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.rgbSaturationSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.rgbSaturationSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsb.b);
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
         this.rgbSaturationSlider01.appendChild(this.rgbSaturationSlider02);
 
         this.rgbSaturationSliderCircleOut = document.createElement("div");
@@ -927,6 +943,13 @@ class xcolorPicker {
         this.rgbLightSlider02.style.background = "linear-gradient(to right, " + this.color.getRgbString() + " 0%, rgb(255, 255, 255) 100%)";//"linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(4, 255, 0) 100%)";
         this.rgbLightSlider02.style.boxSizing = "border-box";
         this.rgbLightSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.rgbLightSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.rgbLightSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.updateRgbForm();
+            _self.updateRgbPickers();
+        }
         this.rgbLightSlider01.appendChild(this.rgbLightSlider02);
 
         this.rgbLightSliderCircleOut = document.createElement("div");
@@ -1278,6 +1301,13 @@ class xcolorPicker {
         this.hslHueSlider02.style.background = "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 16.666%, rgb(0, 255, 0) 33.333%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 66.666%, rgb(255, 0, 255) 83.333%, rgb(255, 0, 0) 100%)";
         this.hslHueSlider02.style.boxSizing = "border-box";
         this.hslHueSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hslHueSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hslHueSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsl(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsl.s, _self.color.hsl.l);
+            _self.updateHslForm();
+            _self.updateHslPickers();
+        }
         this.hslHueSlider01.appendChild(this.hslHueSlider02);
 
         this.hslHueSliderCircleOut = document.createElement("div");
@@ -1327,6 +1357,13 @@ class xcolorPicker {
         this.hslSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";//"linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(160, 255, 158) 100%)";
         this.hslSaturationSlider02.style.boxSizing = "border-box";
         this.hslSaturationSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hslSaturationSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hslSaturationSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsl(_self.color.hsl.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsl.l);
+            _self.updateHslForm();
+            _self.updateHslPickers();
+        }
         this.hslSaturationSlider01.appendChild(this.hslSaturationSlider02);
 
         this.hslSaturationSliderCircleOut = document.createElement("div");
@@ -1350,7 +1387,6 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                //_self.hslSat = xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100);
                 _self.color = xcolor.getHsl(_self.color.hsl.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsl.l); //xcolor.getXcolor("hsl(" + _self.color.hsl.h + ", " + xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100) + "%, " + _self.color.hsl.l + "%)");
                 _self.updateHslForm();
             }
@@ -1396,6 +1432,13 @@ class xcolorPicker {
         this.hslLightnessSlider02.style.background = "linear-gradient(to right, " + this.color.getRgbString() + " 0%, rgb(255, 255, 255) 100%)";//"linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(4, 255, 0) 100%)";
         this.hslLightnessSlider02.style.boxSizing = "border-box";
         this.hslLightnessSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hslLightnessSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hslLightnessSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsl(_self.color.hsl.h, _self.color.hsl.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.updateHslForm();
+            _self.updateHslPickers();
+        }
         this.hslLightnessSlider01.appendChild(this.hslLightnessSlider02);
 
         this.hslLightnessSliderCircleOut = document.createElement("div");
@@ -1721,6 +1764,13 @@ class xcolorPicker {
         this.hsbHueSlider02.style.background = "linear-gradient(to right, rgb(255, 0, 0) 0%, rgb(255, 255, 0) 16.666%, rgb(0, 255, 0) 33.333%, rgb(0, 255, 255) 50%, rgb(0, 0, 255) 66.666%, rgb(255, 0, 255) 83.333%, rgb(255, 0, 0) 100%)";
         this.hsbHueSlider02.style.boxSizing = "border-box";
         this.hsbHueSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hsbHueSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hsbHueSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+            _self.updateHsbForm();
+            _self.updateHsbPickers();
+        }
         this.hsbHueSlider01.appendChild(this.hsbHueSlider02);
 
         this.hsbHueSliderCircleOut = document.createElement("div");
@@ -1770,6 +1820,13 @@ class xcolorPicker {
         this.hsbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";//"linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(160, 255, 158) 100%)";
         this.hsbSaturationSlider02.style.boxSizing = "border-box";
         this.hsbSaturationSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hsbSaturationSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hsbSaturationSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsb.b);
+            _self.updateHsbForm();
+            _self.updateHsbPickers();
+        }
         this.hsbSaturationSlider01.appendChild(this.hsbSaturationSlider02);
 
         this.hsbSaturationSliderCircleOut = document.createElement("div");
@@ -1796,6 +1853,7 @@ class xcolorPicker {
                 //_self.hsbSat = xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100);
                 _self.color = xcolor.getHsl(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b); //xcolor.getXcolor("hsb(" + _self.color.hsb.h + ", " + xcolorPickermap(parseInt(this.style.left), 0, 315, 0, 100) + "%, " + _self.color.hsb.b + "%)");
                 _self.updateHsbForm();
+                _self.updateHsbPickers();
             }
         }
         this.hsbSaturationSliderCircleOut.onmouseup = function (e) {
@@ -1839,6 +1897,13 @@ class xcolorPicker {
         this.hsbBrightnessSlider02.style.background = "linear-gradient(to right, " + this.color.getRgbString() + " 0%, rgb(255, 255, 255) 100%)";//"linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(4, 255, 0) 100%)";
         this.hsbBrightnessSlider02.style.boxSizing = "border-box";
         this.hsbBrightnessSlider02.style.border = "4px solid rgb(255, 255, 255)";
+        this.hsbBrightnessSlider02.onclick = function (e) {
+            let newleft = e.layerX - 13;
+            _self.hsbBrightnessSliderCircleOut.style.left = newleft + "px";
+            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.updateHsbForm();
+            _self.updateHsbPickers();
+        }
         this.hsbBrightnessSlider01.appendChild(this.hsbBrightnessSlider02);
 
         this.hsbBrightnessSliderCircleOut = document.createElement("div");
