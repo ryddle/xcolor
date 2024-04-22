@@ -1,4 +1,4 @@
-var htmlColors = {
+var xhtmlColors = {
     "White": "#FFFFFF",
     "Snow": "#FFFAFA",
     "Ivory": "#FFFFF0",
@@ -138,4 +138,4 @@ var htmlColors = {
     "Lightslategray": "#778899"
 };
 
-exports.htmlColors = htmlColors;
+exports.xhtmlColors = xhtmlColors;

@@ -1,7 +1,7 @@
-const xcolorPickermap = function (value, x1, y1, x2, y2) {
+/* const map = function (value, x1, y1, x2, y2) {
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
     return (x2 > y2) ? Math.min(Math.max(nv, y2), x2) : Math.max(Math.min(nv, y2), x2);
-}
+} */
 
 class xcolorPicker {
     #copyIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
@@ -111,20 +111,20 @@ class xcolorPicker {
     }
 
     updateRgbPickers() {
-        let wx = xcolorPickermap(this.color.hsb.s, 0, 100, 0, 322);
-        let wy = xcolorPickermap(this.color.hsb.b, 0, 100, 322, 0);
+        let wx = map(this.color.hsb.s, 0, 100, 0, 322);
+        let wy = map(this.color.hsb.b, 0, 100, 322, 0);
 
         this.rgbWheelSliderCircleOut.style.left = wx + "px";
         this.rgbWheelSliderCircleOut.style.top = wy + "px";
 
         this.rgbWheelPanel.style.backgroundColor = this.color.getRgbString();
 
-        this.rgbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.h, 0, 360, 8, 315))) + "px";
+        this.rgbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.h, 0, 360, 8, 315))) + "px";
 
-        this.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.s, 0, 100, 8, 315))) + "px";
+        this.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.s, 0, 100, 8, 315))) + "px";
         this.rgbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";
 
-        this.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.b, 0, 100, 8, 315))) + "px";
+        this.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.b, 0, 100, 8, 315))) + "px";
         this.rgbLightSlider02.style.background = "linear-gradient(to right, rgb(255, 255, 255) 0%, " + this.color.getRgbString() + " 100%)";
     }
 
@@ -140,7 +140,7 @@ class xcolorPicker {
 
     updateHslPickers() {
         let wangle = this.color.hsl.h;
-        let wdistance = xcolorPickermap(this.color.hsl.l, 0, 100, 0, 175);
+        let wdistance = map(this.color.hsl.l, 0, 100, 0, 175);
 
         let cos = Math.cos(wangle * Math.PI / 180);
         let sin = Math.sin(wangle * Math.PI / 180);
@@ -152,11 +152,11 @@ class xcolorPicker {
         this.hslWheelSliderCircleOut.style.left = wx + "px";
         this.hslWheelSliderCircleOut.style.top = wy + "px";
 
-        this.hslSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsl.s, 0, 100, 8, 315))) + "px";
+        this.hslSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsl.s, 0, 100, 8, 315))) + "px";
         this.hslSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";
-        this.hslLightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsl.l, 0, 100, 8, 315))) + "px";
+        this.hslLightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsl.l, 0, 100, 8, 315))) + "px";
         this.hslLightnessSlider02.style.background = "linear-gradient(to right, " + this.color.getRgbString() + " 0%, rgb(255, 255, 255) 100%)";
-        this.hslLightnessSlider02.style.border = "4px solid " + xcolor.getHsl(0, 0, xcolorPickermap(parseInt(this.hslLightnessSliderCircleOut.style.left), 8, 322, 100, 90)).getHexString();
+        this.hslLightnessSlider02.style.border = "4px solid " + xcolor.getHsl(0, 0, map(parseInt(this.hslLightnessSliderCircleOut.style.left), 8, 322, 100, 90)).getHexString();
     }
 
     updateHsbForm() {
@@ -171,7 +171,7 @@ class xcolorPicker {
 
     updateHsbPickers() {
         let wangle = this.color.hsb.h;
-        let wdistance = xcolorPickermap(this.color.hsb.b, 0, 100, 0, 175);
+        let wdistance = map(this.color.hsb.b, 0, 100, 0, 175);
 
         let cos = Math.cos(wangle * Math.PI / 180);
         let sin = Math.sin(wangle * Math.PI / 180);
@@ -183,16 +183,16 @@ class xcolorPicker {
         this.hsbWheelSliderCircleOut.style.left = wx + "px";
         this.hsbWheelSliderCircleOut.style.top = wy + "px";
 
-        this.hsbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.s, 0, 100, 8, 315))) + "px";
+        this.hsbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.s, 0, 100, 8, 315))) + "px";
         this.hsbSaturationSlider02.style.background = "linear-gradient(to right, rgb(0, 0, 0) 0%, " + this.color.getRgbString() + " 100%)";
-        this.hsbBrightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(this.color.hsb.b, 0, 100, 8, 315))) + "px";
+        this.hsbBrightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.b, 0, 100, 8, 315))) + "px";
         this.hsbBrightnessSlider02.style.background = "linear-gradient(to right, rgb(255, 255, 255) 0%, " + this.color.getRgbString() + " 100%)";
     }
 
     updateHtmlForm() {
-        let htmlcolorName = Object.keys(htmlColors).find(name => htmlColors[name] === this.color.getHexString());
+        let htmlcolorName = Object.keys(xhtmlColors).find(name => xhtmlColors[name] === this.color.getHexString());
         if (htmlcolorName) {
-            this.htmlcolor = { name: htmlcolorName, color: htmlColors[htmlcolorName] };
+            this.htmlcolor = { name: htmlcolorName, color: xhtmlColors[htmlcolorName] };
             this.hcformRgbColor.style.backgroundColor = this.htmlcolor.color;
             this.labelhcHtml.innerText = this.htmlcolor.name;
             this.copyIconhcHtml.style.display = "inherit";
@@ -714,10 +714,10 @@ class xcolorPicker {
             _self.rgbWheelSliderCircleOut.style.left = x + "px";
             _self.rgbWheelSliderCircleOut.style.top = y + "px";
 
-            _self.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, (xcolorPickermap(x, 0, 350, 8, 315)))) + "px";
-            _self.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(y, 0, 350, 315, 8))) + "px";
+            _self.rgbSaturationSliderCircleOut.style.left = Math.max(8, Math.min(315, (map(x, 0, 350, 8, 315)))) + "px";
+            _self.rgbLightSliderCircleOut.style.left = Math.max(8, Math.min(315, map(y, 0, 350, 315, 8))) + "px";
 
-            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(parseInt(_self.rgbSaturationSliderCircleOut.style.left), 8, 315, 0, 100), xcolorPickermap(parseInt(_self.rgbLightSliderCircleOut.style.left), 8, 315, 0, 100));
+            _self.color = xcolor.getHsb(_self.color.hsb.h, map(parseInt(_self.rgbSaturationSliderCircleOut.style.left), 8, 315, 0, 100), map(parseInt(_self.rgbLightSliderCircleOut.style.left), 8, 315, 0, 100));
             _self.updateRgbForm();
             _self.updateRgbPickers();
         };
@@ -796,7 +796,7 @@ class xcolorPicker {
         this.rgbHueSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.rgbHueSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+            _self.color = xcolor.getHsb(map(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
             _self.rgbWheelPanel.style.backgroundColor = xcolor.getHsb(_self.color.hsb.h, 100, 100).getRgbString();
             _self.updateRgbForm();
             _self.updateRgbPickers();
@@ -824,7 +824,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+                _self.color = xcolor.getHsb(map(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
                 _self.rgbWheelPanel.style.backgroundColor = xcolor.getHsb(_self.color.hsb.h, 100, 100).getRgbString();
                 _self.updateRgbForm();
                 _self.updateRgbPickers();
@@ -874,7 +874,7 @@ class xcolorPicker {
         this.rgbSaturationSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.rgbSaturationSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsb.b);
+            _self.color = xcolor.getHsb(_self.color.hsb.h, map(newleft, 8, 315, 0, 100), _self.color.hsb.b);
             _self.updateRgbForm();
             _self.updateRgbPickers();
         }
@@ -901,7 +901,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b);
+                _self.color = xcolor.getHsb(_self.color.hsb.h, map(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b);
                 _self.updateRgbForm();
                 _self.updateRgbPickers();
             }
@@ -950,7 +950,7 @@ class xcolorPicker {
         this.rgbLightSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.rgbLightSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, map(newleft, 8, 315, 0, 100));
             _self.updateRgbForm();
             _self.updateRgbPickers();
         }
@@ -977,7 +977,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100));
+                _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, map(parseInt(this.style.left), 8, 315, 0, 100));
                 _self.updateRgbForm();
                 _self.updateRgbPickers();
             }
@@ -1199,10 +1199,10 @@ class xcolorPicker {
             _self.hslWheelSliderCircleOut.style.left = event.layerX - 13 + "px";
             _self.hslWheelSliderCircleOut.style.top = event.layerY - 13 + "px";
 
-            _self.hslHueSliderCircleOut.style.left = Math.max(8, Math.min(315, (xcolorPickermap(data.angle, 0, 360, 8, 315)))) + "px";
-            _self.hslLightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(data.distance, 0, 175, 8, 315))) + "px";
+            _self.hslHueSliderCircleOut.style.left = Math.max(8, Math.min(315, (map(data.angle, 0, 360, 8, 315)))) + "px";
+            _self.hslLightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, map(data.distance, 0, 175, 8, 315))) + "px";
 
-            _self.color = xcolor.getHsl(data.angle, _self.color.hsl.s, xcolorPickermap(data.distance, 0, 175, 0, 100));
+            _self.color = xcolor.getHsl(data.angle, _self.color.hsl.s, map(data.distance, 0, 175, 0, 100));
             _self.updateHslForm();
             _self.updateHslPickers();
         };
@@ -1297,7 +1297,7 @@ class xcolorPicker {
         this.hslHueSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hslHueSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsl(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsl.s, _self.color.hsl.l);
+            _self.color = xcolor.getHsl(map(newleft, 8, 315, 0, 360), _self.color.hsl.s, _self.color.hsl.l);
             _self.updateHslForm();
             _self.updateHslPickers();
         }
@@ -1324,7 +1324,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsl(xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsl.s, _self.color.hsl.l);
+                _self.color = xcolor.getHsl(map(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsl.s, _self.color.hsl.l);
                 _self.updateHslForm();
                 _self.updateHslPickers();
             }
@@ -1373,7 +1373,7 @@ class xcolorPicker {
         this.hslSaturationSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hslSaturationSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsl(_self.color.hsl.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsl.l);
+            _self.color = xcolor.getHsl(_self.color.hsl.h, map(newleft, 8, 315, 0, 100), _self.color.hsl.l);
             _self.updateHslForm();
             _self.updateHslPickers();
         }
@@ -1400,7 +1400,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsl(_self.color.hsl.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsl.l);
+                _self.color = xcolor.getHsl(_self.color.hsl.h, map(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsl.l);
                 _self.updateHslForm();
                 _self.updateHslPickers();
             }
@@ -1449,7 +1449,7 @@ class xcolorPicker {
         this.hslLightnessSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hslLightnessSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsl(_self.color.hsl.h, _self.color.hsl.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.color = xcolor.getHsl(_self.color.hsl.h, _self.color.hsl.s, map(newleft, 8, 315, 0, 100));
             _self.updateHslForm();
             _self.updateHslPickers();
         }
@@ -1476,7 +1476,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsl(_self.color.hsl.h, _self.color.hsl.s, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100));
+                _self.color = xcolor.getHsl(_self.color.hsl.h, _self.color.hsl.s, map(parseInt(this.style.left), 8, 315, 0, 100));
                 _self.updateHslForm();
                 _self.updateHslPickers();
             }
@@ -1698,10 +1698,10 @@ class xcolorPicker {
             _self.hsbWheelSliderCircleOut.style.left = event.layerX - 13 + "px";
             _self.hsbWheelSliderCircleOut.style.top = event.layerY - 13 + "px";
 
-            _self.hsbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, (xcolorPickermap(data.angle, 0, 360, 8, 315)))) + "px";
-            _self.hsbBrightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, xcolorPickermap(data.distance, 0, 175, 8, 315))) + "px";
+            _self.hsbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, (map(data.angle, 0, 360, 8, 315)))) + "px";
+            _self.hsbBrightnessSliderCircleOut.style.left = Math.max(8, Math.min(315, map(data.distance, 0, 175, 8, 315))) + "px";
 
-            _self.color = xcolor.getHsl(data.angle, _self.color.hsb.s, xcolorPickermap(data.distance, 0, 175, 0, 100));
+            _self.color = xcolor.getHsl(data.angle, _self.color.hsb.s, map(data.distance, 0, 175, 0, 100));
             _self.updateHsbForm();
             _self.updateHsbPickers();
         };
@@ -1795,7 +1795,7 @@ class xcolorPicker {
         this.hsbHueSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hsbHueSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(xcolorPickermap(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+            _self.color = xcolor.getHsb(map(newleft, 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
             _self.updateHsbForm();
             _self.updateHsbPickers();
         }
@@ -1822,7 +1822,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
+                _self.color = xcolor.getHsb(map(parseInt(this.style.left), 8, 315, 0, 360), _self.color.hsb.s, _self.color.hsb.b);
                 _self.updateHsbForm();
                 _self.updateHsbPickers();
             }
@@ -1871,7 +1871,7 @@ class xcolorPicker {
         this.hsbSaturationSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hsbSaturationSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(newleft, 8, 315, 0, 100), _self.color.hsb.b);
+            _self.color = xcolor.getHsb(_self.color.hsb.h, map(newleft, 8, 315, 0, 100), _self.color.hsb.b);
             _self.updateHsbForm();
             _self.updateHsbPickers();
         }
@@ -1898,7 +1898,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(_self.color.hsb.h, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b);
+                _self.color = xcolor.getHsb(_self.color.hsb.h, map(parseInt(this.style.left), 8, 315, 0, 100), _self.color.hsb.b);
                 _self.updateHsbForm();
                 _self.updateHsbPickers();
             }
@@ -1947,7 +1947,7 @@ class xcolorPicker {
         this.hsbBrightnessSlider02.onclick = function (e) {
             let newleft = e.layerX - 13;
             _self.hsbBrightnessSliderCircleOut.style.left = newleft + "px";
-            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(newleft, 8, 315, 0, 100));
+            _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, map(newleft, 8, 315, 0, 100));
             _self.updateHsbForm();
             _self.updateHsbPickers();
         }
@@ -1974,7 +1974,7 @@ class xcolorPicker {
                 newleft = Math.max(8, Math.min(315, newleft));
                 this.style.left = newleft + "px";
 
-                _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, xcolorPickermap(parseInt(this.style.left), 8, 315, 0, 100));
+                _self.color = xcolor.getHsb(_self.color.hsb.h, _self.color.hsb.s, map(parseInt(this.style.left), 8, 315, 0, 100));
                 _self.updateHsbForm();
                 _self.updateHsbPickers();
             }
@@ -2084,13 +2084,13 @@ class xcolorPicker {
         this.hcFormPanel.appendChild(this.hcformRGB);
 
         this.labelhcRgb = document.createElement("label");
-        this.labelhcRgb.for = "rgbStr";
+        this.labelhcRgb.for = "rgbhcStr";
         this.labelhcRgb.innerText = "RGB";
         Object.assign(this.labelhcRgb.style, labelsStyle);
         this.hcformRGB.appendChild(this.labelhcRgb);
 
         this.inputhcRgb = document.createElement("input");
-        this.inputhcRgb.id = "rgbStr";
+        this.inputhcRgb.id = "rgbhcStr";
         this.inputhcRgb.type = "text";
         this.inputhcRgb.disabled = true;
         this.inputhcRgb.value = this.color.getRgbString();
@@ -2255,11 +2255,11 @@ class xcolorPicker {
 
         this.htmlBoardPanel.appendChild(this.htmlSectionPanel);
 
-        for (let i = 0; i < Object.keys(htmlColors).length; i++) {
+        for (let i = 0; i < Object.keys(xhtmlColors).length; i++) {
             let htmlBoxPanel = document.createElement("div");
-            htmlBoxPanel.title = (Object.keys(htmlColors)[i]);
+            htmlBoxPanel.title = (Object.keys(xhtmlColors)[i]);
             Object.assign(htmlBoxPanel.style, {
-                backgroundColor: htmlColors[(Object.keys(htmlColors)[i])],
+                backgroundColor: xhtmlColors[(Object.keys(xhtmlColors)[i])],
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

@@ -1,7 +1,10 @@
-const map = function(value, x1, y1, x2, y2) { 
+/* const { map } = require('./xutils');
+const { xhtmlColors } = require('./xhtmlColors'); */
+
+/* const map = function(value, x1, y1, x2, y2) { 
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
     return (x2 > y2) ? Math.min(Math.max(nv, y2), x2) : Math.max(Math.min(nv, y2), x2);
-}
+} */
 
 /*
  * xcolor.js is a simple class to manipulate colors in JavaScript
@@ -25,7 +28,7 @@ class xcolor {
     static #hslaRegex = /^hsla\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
     static #hsbRegex = /^hsb\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
     static #hsbaRegex = /^hsba\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
-    static #htmlColorRegex = new RegExp('^(' + Object.keys(htmlColors).join('|') + ')$', 'i');
+    static #htmlColorRegex = new RegExp('^(' + Object.keys(xhtmlColors).join('|') + ')$', 'i');
 
     static colorSpaces = ['RGB', 'HSB', 'HSL'];
 
@@ -70,10 +73,10 @@ class xcolor {
 
         let matches;
         if (matches = colorCode.match(xcolor.#htmlColorRegex)) {
-            this.#parseHex(htmlColors[matches[0]]);
-            this.#parseRgb(xcolor.hex2rgb(htmlColors[matches[0]]));
-            this.#parseHsb(xcolor.hex2hsb(htmlColors[matches[0]]));
-            this.#parseHsl(xcolor.hex2hsl(htmlColors[matches[0]]));
+            this.#parseHex(xhtmlColors[matches[0]]);
+            this.#parseRgb(xcolor.hex2rgb(xhtmlColors[matches[0]]));
+            this.#parseHsb(xcolor.hex2hsb(xhtmlColors[matches[0]]));
+            this.#parseHsl(xcolor.hex2hsl(xhtmlColors[matches[0]]));
         }else if (matches = colorCode.match(xcolor.#rgbRegex)) {
             this.#parseRgb(colorCode);
             this.#parseHex(xcolor.rgb2hex(colorCode));

@@ -22,6 +22,7 @@
   },
   "exports": {
     ".": "./xcolor.js",
-    "./htmlColors": "./htmlColors.js"
+    "./xutils": "./xutils/xutils.js",
+    "./xhtmlColors": "./xhtmlColors.js"
   }
 }

@@ -1,9 +1,10 @@
-const { htmlColors } = require('./htmlColors');
+const { map } = require('./xutils/xutils');
+const { xhtmlColors } = require('./xhtmlColors');
 
-const map = function(value, x1, y1, x2, y2) { 
+/* const map = function(value, x1, y1, x2, y2) { 
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
     return (x2 > y2) ? Math.min(Math.max(nv, y2), x2) : Math.max(Math.min(nv, y2), x2);
-}
+} */
 
 /*
  * xcolor.js is a simple class to manipulate colors in JavaScript
@@ -27,7 +28,7 @@ class xcolor {
     static #hslaRegex = /^hsla\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
     static #hsbRegex = /^hsb\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%\)$/;
     static #hsbaRegex = /^hsba\((\d{1,3}),\s?(0?\d?\d|100)%,\s?(0?\d?\d|100)%,\s?(0?(\.\d+)?|1(\.0)?)\)$/;
-    static #htmlColorRegex = new RegExp('^(' + Object.keys(htmlColors).join('|') + ')$', 'i');
+    static #htmlColorRegex = new RegExp('^(' + Object.keys(xhtmlColors).join('|') + ')$', 'i');
 
     static colorSpaces = ['RGB', 'HSB', 'HSL'];
 
@@ -72,10 +73,10 @@ class xcolor {
 
         let matches;
         if (matches = colorCode.match(xcolor.#htmlColorRegex)) {
-            this.#parseHex(htmlColors[matches[0]]);
-            this.#parseRgb(xcolor.hex2rgb(htmlColors[matches[0]]));
-            this.#parseHsb(xcolor.hex2hsb(htmlColors[matches[0]]));
-            this.#parseHsl(xcolor.hex2hsl(htmlColors[matches[0]]));
+            this.#parseHex(xhtmlColors[matches[0]]);
+            this.#parseRgb(xcolor.hex2rgb(xhtmlColors[matches[0]]));
+            this.#parseHsb(xcolor.hex2hsb(xhtmlColors[matches[0]]));
+            this.#parseHsl(xcolor.hex2hsl(xhtmlColors[matches[0]]));
         }else if (matches = colorCode.match(xcolor.#rgbRegex)) {
             this.#parseRgb(colorCode);
             this.#parseHex(xcolor.rgb2hex(colorCode));
@@ -85,7 +86,7 @@ class xcolor {
             this.#parseRgba(colorCode);
             this.#parseHexa(xcolor.rgba2hexa(colorCode));
             this.#parseHsba(xcolor.rgba2hsba(colorCode));
-            this.parseHsla(xcolor.rgba2hsla(colorCode));
+            this.#parseHsla(xcolor.rgba2hsla(colorCode));
         } else if (matches = colorCode.match(xcolor.#hexRegex)) {
             this.#parseHex(colorCode);
             this.#parseRgb(xcolor.hex2rgb(colorCode));
@@ -95,14 +96,14 @@ class xcolor {
             this.#parseHexa(colorCode);
             this.#parseRgba(xcolor.hexa2rgba(colorCode));
             this.#parseHsba(xcolor.hexa2hsba(colorCode));
-            this.parseHsla(xcolor.hexa2hsla(colorCode));
+            this.#parseHsla(xcolor.hexa2hsla(colorCode));
         } else if (matches = colorCode.match(xcolor.#hslRegex)) {
             this.#parseHsl(colorCode);
             this.#parseRgb(xcolor.hsl2rgb(colorCode));
             this.#parseHsb(xcolor.hsl2hsb(colorCode));
             this.#parseHex(xcolor.hsl2hex(colorCode));
         } else if (matches = colorCode.match(xcolor.#hslaRegex)) {
-            this.parseHsla(colorCode);
+            this.#parseHsla(colorCode);
             this.#parseRgba(xcolor.hsla2rgba(colorCode));
             this.#parseHsba(xcolor.hsla2hsba(colorCode));
             this.#parseHexa(xcolor.hsla2hexa(colorCode));
@@ -114,7 +115,7 @@ class xcolor {
         } else if (matches = colorCode.match(xcolor.#hsbaRegex)) {
             this.#parseHsba(colorCode);
             this.#parseRgba(xcolor.hsba2rgba(colorCode));
-            this.parseHsla(xcolor.hsba2hsla(colorCode));
+            this.#parseHsla(xcolor.hsba2hsla(colorCode));
             this.#parseHexa(xcolor.hsba2hexa(colorCode));
         }
     }
@@ -154,7 +155,7 @@ class xcolor {
      * @return {type} description of return value
      */
     getHexaString() {
-        return `#${this.#hex.r}${this.#hex.g}${this.#hex.h}${this.#hex.a}`.toUpperCase();
+        return `#${this.#hex.r}${this.#hex.g}${this.#hex.b}${this.#hex.a}`.toUpperCase();
     }
     /**
      * Returns the hexadecimal representation of the color.

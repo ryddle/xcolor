@@ -1,4 +1,4 @@
-var htmlColors = {
+var xhtmlColors = {
     "White": "#FFFFFF",
     "Snow": "#FFFAFA",
     "Ivory": "#FFFFF0",

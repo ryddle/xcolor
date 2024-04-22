@@ -9,53 +9,53 @@ describe('xcolor', () => {
   }); */
 
   it('shows color in html named colors list', () => {
-    const c = new xcolor('darkolivegreen');
-    expect(c.getHex()).toBe('#556b2f');
+    const c = new xcolor('Darkolivegreen');
+    expect(c.getHexString()).toBe('#556B2F');
   });
 
   it('shows color in hex', () => {
     const c = new xcolor('#ff0000');
-    expect(c.getHex()).toBe('#ff0000');
+    expect(c.getHexString()).toBe('#FF0000');
   });
 
   it('shows color in rgba', () => {
     const c = new xcolor('rgba(255,0,0,0.5)');
-    expect(c.getRgba()).toBe('rgba(255,0,0,0.5)');
+    expect(c.getRgbaString()).toBe('rgba(255,0,0,0.5)');
   });
 
   it('shows color in rgb', () => {
     const c = new xcolor('rgba(255,0,0,0.5)');
-    expect(c.getRgb()).toBe('rgb(255,0,0)');
+    expect(c.getRgbString()).toBe('rgb(255,0,0)');
   });
 
   it('shows color in hex', () => {
     const c = new xcolor('#ff0000');
-    expect(c.getHex()).toBe('#ff0000');
+    expect(c.getHexString()).toBe('#FF0000');
   });
 
   it('shows color in hexa', () => {
     const c = new xcolor('#ff000080');
-    expect(c.getHexa()).toBe('#ff000080');
+    expect(c.getHexaString()).toBe('#FF000080');
   });
 
   it('shows color in hsl', () => {
     const c = new xcolor('hsl(0,100%,50%)');
-    expect(c.getHsl()).toBe('hsl(0,100%,50%)');
+    expect(c.getHslString()).toBe('hsl(0,100%,50%)');
   });
 
   it('shows color in hsla', () => {
     const c = new xcolor('hsla(0,100%,50%,0.5)');
-    expect(c.getHsla()).toBe('hsla(0,100%,50%,0.5)');
+    expect(c.getHslaString()).toBe('hsla(0,100%,50%,0.5)');
   });
 
   it('shows color in hsb', () => {
     const c = new xcolor('hsb(0,100%,50%)');
-    expect(c.getHsb()).toBe('hsb(0,100%,50%)');
+    expect(c.getHsbString()).toBe('hsb(0,100%,50%)');
   });
 
   it('shows color in hsba', () => {
     const c = new xcolor('hsba(0,100%,50%,0.5)');
-    expect(c.getHsba()).toBe('hsba(0,100%,50%,0.5)');
+    expect(c.getHsbaString()).toBe('hsba(0,100%,50%,0.5)');
     console.log(c);
   });
 
