@@ -4,16 +4,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        h2{
+            color: #fff;
+            margin-left: 5px;
+        }
+
+        h3{
+            color: #fff;
+            margin-left: 15px;
+        }
+
+        h4{
+            color: #fff;
+            margin-left: 20px;
+        }
+
+        .column_menu {
+            float: left;
+            width: 200px;
+            padding: 10px;
+        }
+
+        .column_main {
+            float: left;
+            width: calc(100% - 200px);
+            padding: 10px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 60px;
+            padding-left: 5px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            left: 5px;
+            background-color: white;
+            padding: 2px;
+            width: 24px;
+            height: 26px;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+    </style>
+    <script>
+        function openPage(page) {
+            document.getElementById("iframe").src = page;
+        }
+    </script>
     <title>xcolor</title>
 </head>
 
 <body>
-    <a href="https://github.com/ryddle/xcolor" target="_blank" style="position:absolute; top:10px; right:10px;">
-        <img style="border: 0; width: 20px; height: 20px;" src="assets/github-mark.png" alt="GitHub"
-            data-recalc-dims="1">
-    </a>
-
-    <iframe src="color_palette_demo/testcolor001.html" style="border:none; width: 100%; height: 100vh;"></iframe>
+    <div class="row">
+        <div class="column_menu">
+            <div id="mySidenav" class="sidenav">
+                <a href="https://github.com/ryddle/xcolor" target="_blank" class="closebtn">
+                    <img style="border: 0; width: 20px; height: 20px;" src="assets/github-mark.png" alt="GitHub"
+                        data-recalc-dims="1">
+                </a>
+                <h2 style="color: white;">xcolor</h2>
+                <h4>Examples</h4>
+                <a href="javascript:void(0)" onclick="openPage('color_palette_demo/testcolor001.html')">Color Palette</a>
+                <a href="javascript:void(0)" onclick="openPage('../xcolorPickerButton/xcolorPickerButton.html')">Color Picker Button</a>
+                <h4>Classes</h4>
+                <a href="https://github.com/ryddle/xcolor/blob/main/xcolor.js" target="_blank">xcolor</a>
+                <a href="https://github.com/ryddle/xcolor/blob/main/xhtmlColors.js" target="_blank">xhtmlColors</a>
+                <a href="https://github.com/ryddle/xcolor/blob/main/xutils/xutils.js" target="_blank">xutils</a>
+                <a href="https://github.com/ryddle/xcolor/blob/main/xcolorPicker.js" target="_blank">xcolorPicker</a>
+                <a href="https://github.com/ryddle/xcolor/blob/main/xcolorpickerbutton/xcolorPickerButton.js" target="_blank">xcolorPickerButton</a>
+            </div>
+        </div>
+        <div class="column_main">
+            <iframe id="iframe" src="color_palette_demo/testcolor001.html"
+                style="border:none; width: 100%; height: 100vh;"></iframe>
+        </div>
+    </div>
 </body>
 
 </html>

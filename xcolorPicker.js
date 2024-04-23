@@ -1,3 +1,9 @@
+export { xcolorPicker };
+
+import { map } from './xutils/xutils.js';
+import { xhtmlColors } from './xhtmlColors.js';
+import { xcolor } from './xcolor.js';
+
 class xcolorPicker {
     #copyIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
 
@@ -65,7 +71,7 @@ class xcolorPicker {
         return this.colorPickerDialog;
     }
 
-    #createInputColorElm(id, type, label, value, style) {
+    #createInputColorElm(id, type, label, value, params = {}) {
         const labelsStyle = {
             fontFamily: 'monospace',
             fontSize: '1.2em'
@@ -94,11 +100,11 @@ class xcolorPicker {
         inputColorElm.id = id;
         inputColorElm.type = type;
         inputColorElm.value = value;
-        inputColorElm.min = "0";
-        inputColorElm.max = "100";
+        inputColorElm.min = params.min || "0";
+        inputColorElm.max = params.max || "100";
         Object.assign(inputColorElm.style, inputsStyle);
-        if (style !== undefined && typeof style === 'object') {
-            Object.assign(inputColorElm.style, style);
+        if (params.style !== undefined && typeof params.style === 'object') {
+            Object.assign(inputColorElm.style, params.style);
         }
 
         return { form: inputColorElmForm, label: inputColorElmLabel, input: inputColorElm };
@@ -213,7 +219,7 @@ class xcolorPicker {
         let _self = this;
         /// rgb form
         // red
-        let _rgbRedForm = this.#createInputColorElm("rgbRed", "number", "Red", this.color.rgb.r);
+        let _rgbRedForm = this.#createInputColorElm("rgbRed", "number", "Red", this.color.rgb.r, { min: 0, max: 255 });
         this.rgbRedForm = _rgbRedForm.form;
         this.rgbRedLabel = _rgbRedForm.label;
         this.rgbRedInput = _rgbRedForm.input;
@@ -226,7 +232,7 @@ class xcolorPicker {
         this.rgbRedForm.appendChild(this.rgbRedLabel);
         this.rgbRedForm.appendChild(this.rgbRedInput);
         // green
-        let _rgbGreenForm = this.#createInputColorElm("rgbGreen", "number", "Green", this.color.rgb.g);
+        let _rgbGreenForm = this.#createInputColorElm("rgbGreen", "number", "Green", this.color.rgb.g, { min: 0, max: 255 });
         this.rgbGreenForm = _rgbGreenForm.form;
         this.rgbGreenLabel = _rgbGreenForm.label;
         this.rgbGreenInput = _rgbGreenForm.input;
@@ -239,7 +245,7 @@ class xcolorPicker {
         this.rgbGreenForm.appendChild(this.rgbGreenLabel);
         this.rgbGreenForm.appendChild(this.rgbGreenInput);
         // blue
-        let _rgbBlueForm = this.#createInputColorElm("rgbBlue", "number", "Blue", this.color.rgb.b);
+        let _rgbBlueForm = this.#createInputColorElm("rgbBlue", "number", "Blue", this.color.rgb.b, { min: 0, max: 255 });
         this.rgbBlueForm = _rgbBlueForm.form;
         this.rgbBlueLabel = _rgbBlueForm.label;
         this.rgbBlueInput = _rgbBlueForm.input;
@@ -252,7 +258,7 @@ class xcolorPicker {
         this.rgbBlueForm.appendChild(this.rgbBlueLabel);
         this.rgbBlueForm.appendChild(this.rgbBlueInput);
         // rgb
-        let _rgbRgbForm = this.#createInputColorElm("rgbRgb", "text", "RGB", this.color.getRgbString(), { width: '160px', marginTop: '10px', textAlign: 'left' });
+        let _rgbRgbForm = this.#createInputColorElm("rgbRgb", "text", "RGB", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
         this.rgbRgbForm = _rgbRgbForm.form;
         this.rgbRgbLabel = _rgbRgbForm.label;
         this.rgbRgbInput = _rgbRgbForm.input;
@@ -309,7 +315,7 @@ class xcolorPicker {
         this.hexBlueForm.appendChild(this.hexBlueLabel);
         this.hexBlueForm.appendChild(this.hexBlueInput);
         // hex
-        let _hexHexForm = this.#createInputColorElm("hexHex", "text", "HEX", this.color.getRgbString(), { width: '160px', marginTop: '10px', textAlign: 'left' });
+        let _hexHexForm = this.#createInputColorElm("hexHex", "text", "HEX", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
         this.hexHexForm = _hexHexForm.form;
         this.hexHexLabel = _hexHexForm.label;
         this.hexHexInput = _hexHexForm.input;
@@ -327,7 +333,7 @@ class xcolorPicker {
         ////////////////////////////////////////////////////////////////////////////////////////
         /// hsl form
         // hue
-        let _hslHueForm = this.#createInputColorElm("hslHue", "number", "Hue", this.color.hsl.h);
+        let _hslHueForm = this.#createInputColorElm("hslHue", "number", "Hue", this.color.hsl.h, {min: 0, max: 360});
         this.hslHueForm = _hslHueForm.form;
         this.hslHueLabel = _hslHueForm.label;
         this.hslHueInput = _hslHueForm.input;
@@ -366,7 +372,7 @@ class xcolorPicker {
         this.hslLightForm.appendChild(this.hslLightLabel);
         this.hslLightForm.appendChild(this.hslLightInput);
         // hsl
-        let _hslHslForm = this.#createInputColorElm("hslHsl", "text", "HSL", this.color.getRgbString(), { width: '160px', marginTop: '10px', textAlign: 'left' });
+        let _hslHslForm = this.#createInputColorElm("hslHsl", "text", "HSL", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
         this.hslHslForm = _hslHslForm.form;
         this.hslHslLabel = _hslHslForm.label;
         this.hslHslInput = _hslHslForm.input;
@@ -384,7 +390,7 @@ class xcolorPicker {
         ////////////////////////////////////////////////////////////////////////////////////////
         /// hsb form
         // hue
-        let _hsbHueForm = this.#createInputColorElm("hsbHue", "number", "Hue", this.color.hsb.h);
+        let _hsbHueForm = this.#createInputColorElm("hsbHue", "number", "Hue", this.color.hsb.h, {min: 0, max: 360});
         this.hsbHueForm = _hsbHueForm.form;
         this.hsbHueLabel = _hsbHueForm.label;
         this.hsbHueInput = _hsbHueForm.input;
@@ -423,7 +429,7 @@ class xcolorPicker {
         this.hsbBrightForm.appendChild(this.hsbBrightLabel);
         this.hsbBrightForm.appendChild(this.hsbBrightInput);
         // hsb
-        let _hsbHsbForm = this.#createInputColorElm("hsbHsb", "text", "HSB", this.color.getRgbString(), { width: '160px', marginTop: '10px', textAlign: 'left' });
+        let _hsbHsbForm = this.#createInputColorElm("hsbHsb", "text", "HSB", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
         this.hsbHsbForm = _hsbHsbForm.form;
         this.hsbHsbLabel = _hsbHsbForm.label;
         this.hsbHsbInput = _hsbHsbForm.input;
@@ -490,7 +496,7 @@ class xcolorPicker {
         this.rgbWheelSliderCircleOut.style.left = wx + "px";
         this.rgbWheelSliderCircleOut.style.top = wy + "px";
 
-        this.rgbWheelPanel.style.backgroundColor = this.color.getRgbString();
+        //this.rgbWheelPanel.style.backgroundColor = this.color.getRgbString();
 
         this.rgbHueSliderCircleOut.style.left = Math.max(8, Math.min(315, map(this.color.hsb.h, 0, 360, 8, 315))) + "px";
 
@@ -710,7 +716,7 @@ class xcolorPicker {
         });
         this.closeBtn.innerText = "X";
         this.closeBtn.onclick = function () {
-            _self.colorPickerDialog.close();
+            //_self.colorPickerDialog.close();
         }
         this.closeBtnPanel.appendChild(this.closeBtn);
 
@@ -736,6 +742,7 @@ class xcolorPicker {
         this.acceptBtn.style.float = "right";
         this.acceptBtn.innerText = "Accept";
         this.acceptBtn.onclick = function () {
+            this.focus();
             _self.colorPickerDialog.returnValue = _self.color.getHexString();
             _self.colorPickerDialog.close();
         }
@@ -1563,4 +1570,6 @@ class xcolorPicker {
 
 }
 
-module.exports = xcolorPicker;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = xcolorPicker;
+}

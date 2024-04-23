@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xcolorPickerButton test</title>
+    <script type="module" src="../xutils/xutils.js"></script>
+    <script type="module" src="../xhtmlColors.js"></script>
+    <script type="module" src="../xcolor.js"></script>
+    <script type="module" src="../xcolorPicker.js"></script>
+    <script type="module" src="xcolorPickerButton.js"></script>
+    <script>
+
+        function updateColor1(colorCode) {
+            document.getElementById("colorPanel1").style.backgroundColor = colorCode;
+        }
+
+        function updateColor2() {
+            document.getElementById("colorPanel2").style.backgroundColor = document.getElementById("inputcolor_bigger").value;
+        }
+    </script>
+</head>
+
+<body>
+    <div><xcolor-picker-btn id="inputcolor_default" onchange="updateColor1(this.value)"></xcolor-picker-btn>default</div>
+    <xcolor-picker-btn id="inputcolor_bigger" value="#00ff00" style="width: 100px; height: 30px; background-color: aqua;" onchange="updateColor1(this.value)"></xcolor-picker-btn>bigger
+    <xcolor-picker-btn id="inputcolor_tiniest" value="#0000ff" style="width: 10px; height: 10px;" onchange="updateColor1(this.value)"></xcolor-picker-btn>the tiniest
+    <div id="colorPanel1" style="width: 200px; height: 200px; border: 1px solid #000;"></div>
+
+    <button onclick="updateColor2()">Change panel color</button>
+    <div id="colorPanel2" style="width: 200px; height: 200px; border: 1px solid #000;"></div>
+    <button onclick="document.getElementById('inputcolor_bigger').value = '#8535ff'">Set picker color</button>
+</body>
+
+</html>

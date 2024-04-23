@@ -8,7 +8,8 @@ function initialize() {
     Palette.genColorPallete(xcolor.randomXcolor("hsb"));
 
     document.getElementById("inputcolor").value = Palette.baseColor.getHexString();
-    document.getElementById("inputcolor2").style.backgroundColor = Palette.baseColor.getHexString();
+    //document.getElementById("inputcolor2").style.backgroundColor = Palette.baseColor.getHexString();
+    document.getElementById("inputcolor2").value = Palette.baseColor.getHexString();
 
     document.getElementById("mainPanel").appendChild(genColorPanel(Palette.baseColor));
 
@@ -30,7 +31,7 @@ function initialize() {
     mixpalettecontainer.style.display = "inline-flex";
     document.body.appendChild(mixpalettecontainer);
 
-    genMixPalette(); 
+    genMixPalette();
 
     document.body.appendChild(genPaletteLabel("Shades"));
     shadescontainer = document.createElement("div");
@@ -91,12 +92,12 @@ function genColorLabel(color) {
     let label = document.createElement("span");
     label.style.display = "block";
     label.style.color = color.hsb.b > 60 ? "black" : "white";
-    label.style.fontWeight="bold";
-    label.style.display="table-cell";
-    label.style.width="100px";
-    label.style.height="100px";
-    label.style.textAlign="center";
-    label.style.verticalAlign="middle";
+    label.style.fontWeight = "bold";
+    label.style.display = "table-cell";
+    label.style.width = "100px";
+    label.style.height = "100px";
+    label.style.textAlign = "center";
+    label.style.verticalAlign = "middle";
     label.innerText = color.getHexString().toUpperCase();
     return label;
 }
@@ -136,7 +137,7 @@ function createColorPickerBtn(color) {
 
 function genColorPanel(color) {
     let colorPanel = document.createElement("div");
-    colorPanel.id="colorPanel";
+    colorPanel.id = "colorPanel";
     colorPanel.style.display = "flex";
     colorPanel.style.flexWrap = "wrap";
 
@@ -231,7 +232,7 @@ var Palette = {
 
         this.pallete.push(this.baseColor, this.analogous1, this.analogous3, this.complementary, this.splitComplementary2, this.splitComplementary3, this.triadic2, this.triadic3, this.tetradic2, this.square2, this.square4);
 
-        this.pallete.sort((a,b) => a.hsb.h - b.hsb.h);
+        this.pallete.sort((a, b) => a.hsb.h - b.hsb.h);
     },
 
     genShadesTintTones: function () {
@@ -253,7 +254,8 @@ function updateColor(_color) {
     color = xcolor.getXcolor(_color);
 
     document.getElementById("inputcolor").value = color.getHexString();
-    document.getElementById("inputcolor2").style.backgroundColor = color.getHexString();
+    //document.getElementById("inputcolor2").style.backgroundColor = color.getHexString();
+    document.getElementById("inputcolor2").value = color.getHexString();
 
     while (mixpalettecontainer.firstChild) { mixpalettecontainer.removeChild(mixpalettecontainer.firstChild); };
     while (palettescontainer01.firstChild) { palettescontainer01.removeChild(palettescontainer01.firstChild); };
@@ -274,7 +276,7 @@ function updateColor(_color) {
     updateColorPanel(color);
 }
 
-function genMixPalette(){
+function genMixPalette() {
     Palette.pallete.forEach(color => {
 
         let colordiv = createColorDiv(color);
@@ -486,9 +488,9 @@ function genGreysPalette() {
     });
 }
 
-
-function genColorPickerPanel(event, colorCode){
-    let cpdialog = new xcolorPicker(event, colorCode);//.createColorPickerPanel(Palette.baseColor);
+let cpdialog = null;
+function genColorPickerPanel(event, colorCode) {
+    cpdialog = new xcolorPicker(event, colorCode);
     document.body.appendChild(cpdialog);
 
     cpdialog.showModal();
@@ -496,15 +498,21 @@ function genColorPickerPanel(event, colorCode){
     cpdialog.addEventListener("close", () => {
         handleUserInput(cpdialog.returnValue);
     });
+
+    cpdialog.addEventListener("click", function(event) {
+        if (event.target === cpdialog) {
+            cpdialog.close();
+        }
+    });
 }
 
 function handleUserInput(returnValue) {
     if (!returnValue) {
-      console.log(" There was no return value");
+        console.log(" There was no return value");
     } else {
-      console.log("Return value: " + returnValue);
-      updateColor(returnValue);
+        console.log("Return value: " + returnValue);
+        updateColor(returnValue);
     }
-  }
+}
 
 document.onload = initialize();

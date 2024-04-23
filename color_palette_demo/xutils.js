@@ -1,8 +1,3 @@
-export {
-    angle, angleAndModule, mod, map, mapFloat, clamp, clamp01, truncFloat, lerp, lerp01, inverseLerp, inverseLerp01, 
-    random, randomInt, randomRange, randomRangeInt, randomSign, randomBool, randomChoice, randomArray
-}
-
 const angleAndModule = function (x1, y1, x2, y2) {
     var x = x2 - x1,
         y = y2 - y1,

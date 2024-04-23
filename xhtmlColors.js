@@ -1,3 +1,5 @@
+export { xhtmlColors};
+
 var xhtmlColors = {
     "White": "#FFFFFF",
     "Snow": "#FFFAFA",
@@ -138,4 +140,6 @@ var xhtmlColors = {
     "Lightslategray": "#778899"
 };
 
-exports.xhtmlColors = xhtmlColors;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports.xhtmlColors = xhtmlColors;
+}

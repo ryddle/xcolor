@@ -1,5 +1,9 @@
-const { map } = require('./xutils/xutils');
-const { xhtmlColors } = require('./xhtmlColors');
+export { xcolor };
+
+//const { map } = require('./xutils/xutils');
+import { map } from './xutils/xutils.js';
+//const { xhtmlColors } = require('./xhtmlColors');
+import { xhtmlColors } from './xhtmlColors.js';
 
 /* const map = function(value, x1, y1, x2, y2) { 
     const nv = Math.round((value - x1) * (y2 - x2) / (y1 - x1) + x2);
@@ -1181,4 +1185,6 @@ class xcolor {
 
 }
 
-module.exports = xcolor;
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = xcolor;
+}
