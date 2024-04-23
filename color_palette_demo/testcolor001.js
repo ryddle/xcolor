@@ -91,7 +91,7 @@ function genPaletteLabel(_label) {
 function genColorLabel(color) {
     let label = document.createElement("span");
     label.style.display = "block";
-    label.style.color = color.hsb.b > 60 ? "black" : "white";
+    label.style.color = (color.hsb.b > 60) ? (((color.hsb.h < 200 || color.hsb.h > 300) || color.hsb.s < 60)?"black": "white") : "white";
     label.style.fontWeight = "bold";
     label.style.display = "table-cell";
     label.style.width = "100px";
@@ -120,7 +120,7 @@ function createColorDiv(color) {
 
 function createColorPickerBtn(color) {
     let btn = document.createElement("button");
-    btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + (color.hsb.b > 60 ? "black" : "white") + '"></i>';
+    btn.innerHTML = '<i class="fa fa-solid fa-eye-dropper" style="color:' + ((color.hsb.b > 60) ? (((color.hsb.h < 200 || color.hsb.h > 300) || color.hsb.s < 60)?"black": "white") : "white") + '"></i>';
     btn.style.padding = "5px";
     btn.style.background = "transparent";
     btn.style.border = "none";
@@ -488,7 +488,7 @@ function genGreysPalette() {
     });
 }
 
-let cpdialog = null;
+/* let cpdialog = null;
 function genColorPickerPanel(event, colorCode) {
     cpdialog = new xcolorPicker(event, colorCode);
     document.body.appendChild(cpdialog);
@@ -513,6 +513,6 @@ function handleUserInput(returnValue) {
         console.log("Return value: " + returnValue);
         updateColor(returnValue);
     }
-}
+} */
 
 document.onload = initialize();
