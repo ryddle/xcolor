@@ -263,7 +263,7 @@ class xcolorPicker {
         this.rgbRgbLabel = _rgbRgbForm.label;
         this.rgbRgbInput = _rgbRgbForm.input;
         this.rgbRgbInput.onchange = function () {
-            _self.color = xcolor.getRgbColor(this.value);
+            _self.color = xcolor.getXcolor(this.value);
             _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateRgbForm();
             _self.#updateRgbPickers();
@@ -281,10 +281,10 @@ class xcolorPicker {
         this.hexRedLabel = _hexRedForm.label;
         this.hexRedInput = _hexRedForm.input;
         this.hexRedInput.onchange = function () {
-            _self.color = xcolor.getHex(this.value, _self.color.hex.g, _self.color.hex.b);
-            _self.hexWheelPanel.style.backgroundColor = _self.color.getRgbString();
-            _self.updateHexForm();
-            _self.updateHexPickers();
+            _self.color = xcolor.getXcolor('#'+this.value+_self.color.hex.g+_self.color.hex.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.#updateRgbForm();
+            _self.#updateRgbPickers();
         };
         this.hexRedForm.appendChild(this.hexRedLabel);
         this.hexRedForm.appendChild(this.hexRedInput);
@@ -294,10 +294,10 @@ class xcolorPicker {
         this.hexGreenLabel = _hexGreenForm.label;
         this.hexGreenInput = _hexGreenForm.input;
         this.hexGreenInput.onchange = function () {
-            _self.color = xcolor.getHex(_self.color.hex.r, this.value, _self.color.hex.b);
-            _self.hexWheelPanel.style.backgroundColor = _self.color.getRgbString();
-            _self.updateHexForm();
-            _self.updateHexPickers();
+            _self.color = xcolor.getXcolor('#'+_self.color.hex.r+this.value+_self.color.hex.b);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.#updateRgbForm();
+            _self.#updateRgbPickers();
         };
         this.hexGreenForm.appendChild(this.hexGreenLabel);
         this.hexGreenForm.appendChild(this.hexGreenInput);
@@ -307,10 +307,10 @@ class xcolorPicker {
         this.hexBlueLabel = _hexBlueForm.label;
         this.hexBlueInput = _hexBlueForm.input;
         this.hexBlueInput.onchange = function () {
-            _self.color = xcolor.getHex(_self.color.hex.r, _self.color.hex.g, this.value);
-            _self.hexWheelPanel.style.backgroundColor = _self.color.getRgbString();
-            _self.updateHexForm();
-            _self.updateHexPickers();
+            _self.color = xcolor.getXcolor('#'+_self.color.hex.r+_self.color.hex.g+this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.#updateRgbForm();
+            _self.#updateRgbPickers();
         };
         this.hexBlueForm.appendChild(this.hexBlueLabel);
         this.hexBlueForm.appendChild(this.hexBlueInput);
@@ -320,10 +320,10 @@ class xcolorPicker {
         this.hexHexLabel = _hexHexForm.label;
         this.hexHexInput = _hexHexForm.input;
         this.hexHexInput.onchange = function () {
-            _self.color = xcolor.getHexColor(this.value);
-            _self.hexWheelPanel.style.backgroundColor = _self.color.getRgbString();
-            _self.updateHexForm();
-            _self.updateHexPickers();
+            _self.color = xcolor.getXcolor(this.value);
+            _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
+            _self.#updateRgbForm();
+            _self.#updateRgbPickers();
         }
         this.copyIconHex = this.#createCopyButton(this.hexHexInput);
 
@@ -377,7 +377,7 @@ class xcolorPicker {
         this.hslHslLabel = _hslHslForm.label;
         this.hslHslInput = _hslHslForm.input;
         this.hslHslInput.onchange = function () {
-            _self.color = xcolor.getHslColor(this.value);
+            _self.color = xcolor.getXcolor(this.value);
             _self.hslWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateHslForm();
             _self.#updateHslPickers();
@@ -434,7 +434,7 @@ class xcolorPicker {
         this.hsbHsbLabel = _hsbHsbForm.label;
         this.hsbHsbInput = _hsbHsbForm.input;
         this.hsbHsbInput.onchange = function () {
-            _self.color = xcolor.getHsbColor(this.value);
+            _self.color = xcolor.getXcolor(this.value);
             _self.hsbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateHsbForm();
             _self.#updateHsbPickers();
