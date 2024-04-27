@@ -1538,6 +1538,7 @@ class xcolorPicker {
         this.htmlInputSearch = document.createElement("input");
         this.htmlInputSearch.type = "text";
         this.htmlInputSearch.value = "";
+        this.htmlInputSearch.placeholder="search color";
         this.htmlInputSearch.onkeyup = function () {
             let search = this.value.toLowerCase();
             if (_self.htmlBtnResetLayout.mode == "box") {
