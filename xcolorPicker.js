@@ -6,6 +6,8 @@ import { xcolor } from './xcolor.js';
 
 class xcolorPicker {
     #copyIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#454545"></path> </g></svg>';
+    #gridIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C9.65685 1 11 2.34315 11 4V8C11 9.65685 9.65685 11 8 11H4C2.34315 11 1 9.65685 1 8V4C1 2.34315 2.34315 1 4 1H8ZM8 3C8.55228 3 9 3.44772 9 4V8C9 8.55228 8.55228 9 8 9H4C3.44772 9 3 8.55228 3 8V4C3 3.44772 3.44772 3 4 3H8Z" fill="#0F0F0F"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8 13C9.65685 13 11 14.3431 11 16V20C11 21.6569 9.65685 23 8 23H4C2.34315 23 1 21.6569 1 20V16C1 14.3431 2.34315 13 4 13H8ZM8 15C8.55228 15 9 15.4477 9 16V20C9 20.5523 8.55228 21 8 21H4C3.44772 21 3 20.5523 3 20V16C3 15.4477 3.44772 15 4 15H8Z" fill="#0F0F0F"/><path fill-rule="evenodd" clip-rule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H16C14.3431 1 13 2.34315 13 4V8C13 9.65685 14.3431 11 16 11H20C21.6569 11 23 9.65685 23 8V4ZM21 4C21 3.44772 20.5523 3 20 3H16C15.4477 3 15 3.44772 15 4V8C15 8.55228 15.4477 9 16 9H20C20.5523 9 21 8.55228 21 8V4Z" fill="#0F0F0F"/><path fill-rule="evenodd" clip-rule="evenodd" d="M20 13C21.6569 13 23 14.3431 23 16V20C23 21.6569 21.6569 23 20 23H16C14.3431 23 13 21.6569 13 20V16C13 14.3431 14.3431 13 16 13H20ZM20 15C20.5523 15 21 15.4477 21 16V20C21 20.5523 20.5523 21 20 21H16C15.4477 21 15 20.5523 15 20V16C15 15.4477 15.4477 15 16 15H20Z" fill="#0F0F0F"/></svg>'
+    #listIcon = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 4.34315 7.65685 3 6 3H4C2.34315 3 1 4.34315 1 6V8C1 9.65685 2.34315 11 4 11H6C7.65685 11 9 9.65685 9 8V6ZM7 6C7 5.44772 6.55228 5 6 5H4C3.44772 5 3 5.44772 3 6V8C3 8.55228 3.44772 9 4 9H6C6.55228 9 7 8.55228 7 8V6Z" fill="#0F0F0F"/><path fill-rule="evenodd" clip-rule="evenodd" d="M9 16C9 14.3431 7.65685 13 6 13H4C2.34315 13 1 14.3431 1 16V18C1 19.6569 2.34315 21 4 21H6C7.65685 21 9 19.6569 9 18V16ZM7 16C7 15.4477 6.55228 15 6 15H4C3.44772 15 3 15.4477 3 16V18C3 18.5523 3.44772 19 4 19H6C6.55228 19 7 18.5523 7 18V16Z" fill="#0F0F0F"/><path d="M11 7C11 6.44772 11.4477 6 12 6H22C22.5523 6 23 6.44772 23 7C23 7.55228 22.5523 8 22 8H12C11.4477 8 11 7.55228 11 7Z" fill="#0F0F0F"/><path d="M11 17C11 16.4477 11.4477 16 12 16H22C22.5523 16 23 16.4477 23 17C23 17.5523 22.5523 18 22 18H12C11.4477 18 11 17.5523 11 17Z" fill="#0F0F0F"/></svg>'
 
     constructor(event, colorCode) {
         this.color = xcolor.getXcolor('#ff0000');
@@ -139,7 +141,7 @@ class xcolorPicker {
         return { slider01: slider01, slider02: slider02 };
     }
 
-    #createCircle(left, top){
+    #createCircle(left, top) {
         let _circleOut = document.createElement("div");
         Object.assign(_circleOut.style, {
             border: '2px solid #444',
@@ -258,7 +260,7 @@ class xcolorPicker {
         this.rgbBlueForm.appendChild(this.rgbBlueLabel);
         this.rgbBlueForm.appendChild(this.rgbBlueInput);
         // rgb
-        let _rgbRgbForm = this.#createInputColorElm("rgbRgb", "text", "RGB", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
+        let _rgbRgbForm = this.#createInputColorElm("rgbRgb", "text", "RGB", this.color.getRgbString(), { style: { width: '160px', marginTop: '10px', textAlign: 'left' } });
         this.rgbRgbForm = _rgbRgbForm.form;
         this.rgbRgbLabel = _rgbRgbForm.label;
         this.rgbRgbInput = _rgbRgbForm.input;
@@ -281,7 +283,7 @@ class xcolorPicker {
         this.hexRedLabel = _hexRedForm.label;
         this.hexRedInput = _hexRedForm.input;
         this.hexRedInput.onchange = function () {
-            _self.color = xcolor.getXcolor('#'+this.value+_self.color.hex.g+_self.color.hex.b);
+            _self.color = xcolor.getXcolor('#' + this.value + _self.color.hex.g + _self.color.hex.b);
             _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateRgbForm();
             _self.#updateRgbPickers();
@@ -294,7 +296,7 @@ class xcolorPicker {
         this.hexGreenLabel = _hexGreenForm.label;
         this.hexGreenInput = _hexGreenForm.input;
         this.hexGreenInput.onchange = function () {
-            _self.color = xcolor.getXcolor('#'+_self.color.hex.r+this.value+_self.color.hex.b);
+            _self.color = xcolor.getXcolor('#' + _self.color.hex.r + this.value + _self.color.hex.b);
             _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateRgbForm();
             _self.#updateRgbPickers();
@@ -307,7 +309,7 @@ class xcolorPicker {
         this.hexBlueLabel = _hexBlueForm.label;
         this.hexBlueInput = _hexBlueForm.input;
         this.hexBlueInput.onchange = function () {
-            _self.color = xcolor.getXcolor('#'+_self.color.hex.r+_self.color.hex.g+this.value);
+            _self.color = xcolor.getXcolor('#' + _self.color.hex.r + _self.color.hex.g + this.value);
             _self.rgbWheelPanel.style.backgroundColor = _self.color.getRgbString();
             _self.#updateRgbForm();
             _self.#updateRgbPickers();
@@ -315,7 +317,7 @@ class xcolorPicker {
         this.hexBlueForm.appendChild(this.hexBlueLabel);
         this.hexBlueForm.appendChild(this.hexBlueInput);
         // hex
-        let _hexHexForm = this.#createInputColorElm("hexHex", "text", "HEX", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
+        let _hexHexForm = this.#createInputColorElm("hexHex", "text", "HEX", this.color.getRgbString(), { style: { width: '160px', marginTop: '10px', textAlign: 'left' } });
         this.hexHexForm = _hexHexForm.form;
         this.hexHexLabel = _hexHexForm.label;
         this.hexHexInput = _hexHexForm.input;
@@ -333,7 +335,7 @@ class xcolorPicker {
         ////////////////////////////////////////////////////////////////////////////////////////
         /// hsl form
         // hue
-        let _hslHueForm = this.#createInputColorElm("hslHue", "number", "Hue", this.color.hsl.h, {min: 0, max: 360});
+        let _hslHueForm = this.#createInputColorElm("hslHue", "number", "Hue", this.color.hsl.h, { min: 0, max: 360 });
         this.hslHueForm = _hslHueForm.form;
         this.hslHueLabel = _hslHueForm.label;
         this.hslHueInput = _hslHueForm.input;
@@ -372,7 +374,7 @@ class xcolorPicker {
         this.hslLightForm.appendChild(this.hslLightLabel);
         this.hslLightForm.appendChild(this.hslLightInput);
         // hsl
-        let _hslHslForm = this.#createInputColorElm("hslHsl", "text", "HSL", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
+        let _hslHslForm = this.#createInputColorElm("hslHsl", "text", "HSL", this.color.getRgbString(), { style: { width: '160px', marginTop: '10px', textAlign: 'left' } });
         this.hslHslForm = _hslHslForm.form;
         this.hslHslLabel = _hslHslForm.label;
         this.hslHslInput = _hslHslForm.input;
@@ -390,7 +392,7 @@ class xcolorPicker {
         ////////////////////////////////////////////////////////////////////////////////////////
         /// hsb form
         // hue
-        let _hsbHueForm = this.#createInputColorElm("hsbHue", "number", "Hue", this.color.hsb.h, {min: 0, max: 360});
+        let _hsbHueForm = this.#createInputColorElm("hsbHue", "number", "Hue", this.color.hsb.h, { min: 0, max: 360 });
         this.hsbHueForm = _hsbHueForm.form;
         this.hsbHueLabel = _hsbHueForm.label;
         this.hsbHueInput = _hsbHueForm.input;
@@ -429,7 +431,7 @@ class xcolorPicker {
         this.hsbBrightForm.appendChild(this.hsbBrightLabel);
         this.hsbBrightForm.appendChild(this.hsbBrightInput);
         // hsb
-        let _hsbHsbForm = this.#createInputColorElm("hsbHsb", "text", "HSB", this.color.getRgbString(), {style:{ width: '160px', marginTop: '10px', textAlign: 'left' }});
+        let _hsbHsbForm = this.#createInputColorElm("hsbHsb", "text", "HSB", this.color.getRgbString(), { style: { width: '160px', marginTop: '10px', textAlign: 'left' } });
         this.hsbHsbForm = _hsbHsbForm.form;
         this.hsbHsbLabel = _hsbHsbForm.label;
         this.hsbHsbInput = _hsbHsbForm.input;
@@ -1498,10 +1500,10 @@ class xcolorPicker {
 
         this.hcFormPanel.appendChild(this.hcformHTML);
 
-        this.hcRgbForm = (function(){let _rgbRgbForm = this.rgbRgbForm.cloneNode(true); _rgbRgbForm.childNodes[1].disabled = true; _rgbRgbForm.childNodes[1].style.backgroundColor='white'; return _rgbRgbForm;}).call(this);
-        this.hcHexForm = (function(){let _hexHexForm = this.hexHexForm.cloneNode(true); _hexHexForm.childNodes[1].disabled = true; _hexHexForm.childNodes[1].style.backgroundColor='white'; return _hexHexForm;}).call(this);
-        this.hcHslForm = (function(){let _hslHslForm = this.hslHslForm.cloneNode(true); _hslHslForm.childNodes[1].disabled = true; _hslHslForm.childNodes[1].style.backgroundColor='white'; return _hslHslForm;}).call(this);
-        this.hcHsbForm = (function(){let _hsbHsbForm = this.hsbHsbForm.cloneNode(true); _hsbHsbForm.childNodes[1].disabled = true; _hsbHsbForm.childNodes[1].style.backgroundColor='white'; return _hsbHsbForm;}).call(this);
+        this.hcRgbForm = (function () { let _rgbRgbForm = this.rgbRgbForm.cloneNode(true); _rgbRgbForm.childNodes[1].disabled = true; _rgbRgbForm.childNodes[1].style.backgroundColor = 'white'; return _rgbRgbForm; }).call(this);
+        this.hcHexForm = (function () { let _hexHexForm = this.hexHexForm.cloneNode(true); _hexHexForm.childNodes[1].disabled = true; _hexHexForm.childNodes[1].style.backgroundColor = 'white'; return _hexHexForm; }).call(this);
+        this.hcHslForm = (function () { let _hslHslForm = this.hslHslForm.cloneNode(true); _hslHslForm.childNodes[1].disabled = true; _hslHslForm.childNodes[1].style.backgroundColor = 'white'; return _hslHslForm; }).call(this);
+        this.hcHsbForm = (function () { let _hsbHsbForm = this.hsbHsbForm.cloneNode(true); _hsbHsbForm.childNodes[1].disabled = true; _hsbHsbForm.childNodes[1].style.backgroundColor = 'white'; return _hsbHsbForm; }).call(this);
 
         this.hcRgbInput = this.hcRgbForm.childNodes[1];
         this.hcHexInput = this.hcHexForm.childNodes[1];
@@ -1521,12 +1523,163 @@ class xcolorPicker {
         Object.assign(this.htmlBoardPanel.style, {
             padding: '5px',
             float: "left",
-            width: "300px",
+            width: "360px",
             height: "520px",
             backgroundColor: "rgb(241, 241, 241)",
             border: "1px solid #ccc",
             borderRadius: "4px"
         });
+
+        this.htmlSearchPanel = document.createElement("div");
+        Object.assign(this.htmlSearchPanel.style, {
+            marginBottom: "10px"
+        });
+
+        this.htmlInputSearch = document.createElement("input");
+        this.htmlInputSearch.type = "text";
+        this.htmlInputSearch.value = "";
+        this.htmlInputSearch.onkeyup = function () {
+            let search = this.value.toLowerCase();
+            if (_self.htmlBtnResetLayout.mode == "box") {
+                let boxes = document.getElementsByClassName("htmlBoxColor");
+                for (let i = 0; i < boxes.length; i++) {
+                    let title = boxes[i].title.toLowerCase();
+                    if (title.includes(search)) {
+                        boxes[i].style.visibility = "visible";
+                    } else {
+                        boxes[i].style.visibility = "hidden";
+                    }
+                }
+            } else if (_self.htmlBtnResetLayout.mode == "list") {
+                let lists = document.getElementsByClassName("htmlListColor");
+                for (let i = 0; i < lists.length; i++) {
+                    let title = lists[i].title.toLowerCase();
+                    if (title.includes(search)) {
+                        lists[i].style.display = "";
+                    } else {
+                        lists[i].style.display = "none";
+                    }
+                }
+            }
+        };
+        this.htmlSearchPanel.appendChild(this.htmlInputSearch);
+
+        this.htmlBtnResetSearch = document.createElement("button");
+        this.htmlBtnResetSearch.type = "button";
+        this.htmlBtnResetSearch.innerText = "Reset";
+        this.htmlBtnResetSearch.onclick = function () {
+            _self.htmlInputSearch.value = "";
+            _self.htmlInputSearch.onkeyup();
+        }
+        this.htmlSearchPanel.appendChild(this.htmlBtnResetSearch);
+
+        this.htmlBtnResetLayout = document.createElement("button");
+        this.htmlBtnResetLayout.type = "button";
+        this.htmlBtnResetLayout.modes = "box,list";
+        this.htmlBtnResetLayout.mode = "box";
+        this.htmlBtnResetLayout.innerHTML = this.#listIcon;
+        Object.assign(this.htmlBtnResetLayout.style, {
+            float: 'right',
+            width: '24px',
+            height: '24px',
+            padding: '0px'
+        });
+        this.htmlBtnResetLayout.onclick = function () {
+            if (this.mode === "box") {
+                _self.htmlBoxPanel.style.display = "none";
+                _self.htmlListPanel.style.display = "block";
+                this.mode = "list";
+                this.innerHTML = _self.#gridIcon;
+            } else if (this.mode === "list") {
+                _self.htmlBoxPanel.style.display = "block";
+                _self.htmlListPanel.style.display = "none";
+                this.mode = "box";
+                this.innerHTML = _self.#listIcon;
+            }
+            _self.htmlInputSearch.value = "";
+            _self.htmlInputSearch.onkeyup();
+        }
+        this.htmlSearchPanel.appendChild(this.htmlBtnResetLayout);
+
+        this.htmlBoardPanel.appendChild(this.htmlSearchPanel);
+
+        /////////List panel
+
+        this.htmlListPanel = document.createElement("div");
+        Object.assign(this.htmlListPanel.style, {
+            overflow: "scroll",
+            height: "490px",
+            display: 'none'
+        });
+
+        this.htmlListColors = document.createElement("ul");
+        Object.assign(this.htmlListColors.style, {
+            listStyle: 'none',
+            padding: '0px',
+            float: "left",
+            width: "341px",
+            height: "520px",
+            backgroundColor: "rgb(241, 241, 241)",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            marginBottom: '50px'
+        });
+        this.htmlListPanel.appendChild(this.htmlListColors);
+        this.htmlBoardPanel.appendChild(this.htmlListPanel);
+
+        for (let i = 0; i < Object.keys(xhtmlColors).length; i++) {
+            let htmlListColor = document.createElement("li");
+            htmlListColor.className = "htmlListColor";
+            htmlListColor.title = (Object.keys(xhtmlColors)[i]);
+
+            let htmlListBtn = document.createElement("button");
+            htmlListBtn.type = "button";
+            htmlListBtn.title = (Object.keys(xhtmlColors)[i]);
+            Object.assign(htmlListBtn.style, {
+                width: "341px",
+                height: "30px",
+                display: "flex",
+                alignItems: "center"
+            });
+            htmlListBtn.onclick = function () {
+                _self.color = xcolor.getXcolor(this.querySelector(".htmlListBoxColor").style.backgroundColor);
+                _self.htmlcolor = { name: this.title, color: this.querySelector(".htmlListBoxColor").style.backgroundColor };
+                _self.#updateHtmlForm();
+                _self.#updateRgbForm();
+                _self.#updateRgbPickers();
+                _self.#updateHslForm();
+                _self.#updateHslPickers();
+                _self.#updateHsbForm();
+                _self.#updateHsbPickers();
+            };
+
+            let htmlBoxColor = document.createElement("div");
+            htmlBoxColor.className = "htmlListBoxColor";
+            Object.assign(htmlBoxColor.style, {
+                backgroundColor: xhtmlColors[(Object.keys(xhtmlColors)[i])],
+                height: "20px",
+                width: "20px",
+                marginRight: "10px"
+            });
+
+            htmlListBtn.appendChild(htmlBoxColor);
+
+            let htmlColorName = document.createElement("div");
+            htmlColorName.className = "htmlColorName";
+            htmlColorName.innerText = Object.keys(xhtmlColors)[i];
+            Object.assign(htmlColorName.style, {
+                fontFamily: "monospace"
+            });
+            htmlListBtn.appendChild(htmlColorName);
+
+            htmlListColor.appendChild(htmlListBtn);
+
+            this.htmlListColors.appendChild(htmlListColor);
+        }
+
+
+        /////Box panel
+        this.htmlBoxPanel = document.createElement("div");
 
         this.htmlSectionPanel = document.createElement("section");
         Object.assign(this.htmlSectionPanel.style, {
@@ -1535,10 +1688,13 @@ class xcolorPicker {
             gridTemplateRows: 'repeat(14, 1fr)'
         });
 
-        this.htmlBoardPanel.appendChild(this.htmlSectionPanel);
+        this.htmlBoxPanel.appendChild(this.htmlSectionPanel);
+
+        this.htmlBoardPanel.appendChild(this.htmlBoxPanel);
 
         for (let i = 0; i < Object.keys(xhtmlColors).length; i++) {
             let htmlBoxPanel = document.createElement("div");
+            htmlBoxPanel.className = "htmlBoxColor";
             htmlBoxPanel.title = (Object.keys(xhtmlColors)[i]);
             Object.assign(htmlBoxPanel.style, {
                 backgroundColor: xhtmlColors[(Object.keys(xhtmlColors)[i])],
