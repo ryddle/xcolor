@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Cool Color Picker</title>
+    <script src="xutils/xutils.js"></script>
+    <script src="xhtmlColors.js"></script>
+    <script src="xcolor.js"></script>
+    <script src="xcolorcpicker.js"></script>
+</head>
+
+<body>
+    <button id="pickerButton" onclick="showColorPicker(event)">Show Color Picker</button>
+</body>
+
+</html>
+<script>
+    var colorPicker = new xcolorcpicker();
+
+    function setColor(color) {
+        document.getElementById("pickerButton").style.backgroundColor = color;
+
+    }
+    function showColorPicker(event) {
+        colorPicker.show(event.clientX, event.clientY, setColor);
+    }
+</script>

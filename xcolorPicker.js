@@ -1054,7 +1054,7 @@ class xcolorPicker {
             borderRadius: "50%",
             boxSizing: "border-box",
             transform: "rotateZ(90deg)",
-            background: "conic-gradient(red, yellow, lime, aqua, blue, magenta, red)",
+            background: "conic-gradient(red, yellow, lime, aqua, blue, magenta, red)"
         });
         this.hslWheelPanel.appendChild(this.hslWheelHue);
 
@@ -1068,7 +1068,7 @@ class xcolorPicker {
             height: "100%",
             borderRadius: "50%",
             boxSizing: "border-box",
-            background: "radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 10%, transparent 20%, transparent 40%, rgba(255,255,255,0.9) 80%, rgba(255,255,255,1) 100%)",
+            background: "radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 10%, transparent 20%, transparent 40%, rgba(255,255,255,0.9) 80%, rgba(255,255,255,1) 100%)"
         });
         this.hslWheelPanel.appendChild(this.hslWheelSat);
 
@@ -1082,7 +1082,7 @@ class xcolorPicker {
             height: "100%",
             borderRadius: "50%",
             boxSizing: "border-box",
-            border: "4px solid rgb(255, 255, 255)",
+            border: "4px solid rgb(255, 255, 255)"
         });
         this.hslWheelPanel.appendChild(this.hslWheelBorder);
 
