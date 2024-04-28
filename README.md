@@ -1,6 +1,12 @@
 # xcolor
 **WARNING:** this library is at early development
 
+[<img src="assets/colorpicker101.png">](https://ryddle.github.io/xcolor/)
+[<img src="assets/colorpicker102.png">](https://ryddle.github.io/xcolor/)
+[<img src="assets/colorpicker103.png">](https://ryddle.github.io/xcolor/)
+[<img src="assets/colorpicker201.png">](https://ryddle.github.io/xcolor/)
+[<img src="assets/colorpicker202.png">](https://ryddle.github.io/xcolor/)
+
 The `xcolor.js` library provides a collection of JavaScript functions for working with colors in various formats. It offers methods for:
 
 - Generating random colors
