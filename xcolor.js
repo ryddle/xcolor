@@ -37,17 +37,17 @@ class xcolor {
     static colorSpaces = ['RGB', 'HSB', 'HSL'];
 
     //private mutable fields
-    #rgb={r:0, g:0, b:0, a:1};
-    #hex={r:0, g:0, b:0, a:1};
-    #hsl={h:0, s:0, l:0, a:1};
-    #hsb={h:0, s:0, b:0, a:1};
+    #rgb = { r: 0, g: 0, b: 0, a: 1 };
+    #hex = { r: 0, g: 0, b: 0, a: 1 };
+    #hsl = { h: 0, s: 0, l: 0, a: 1 };
+    #hsb = { h: 0, s: 0, b: 0, a: 1 };
 
     //readonly fields
-    rgb={r:0, g:0, b:0, a:1};
-    hex={r:0, g:0, b:0, a:1};
-    hsl={h:0, s:0, l:0, a:1};
-    hsb={h:0, s:0, b:0, a:1};
-    
+    rgb = { r: 0, g: 0, b: 0, a: 1 };
+    hex = { r: 0, g: 0, b: 0, a: 1 };
+    hsl = { h: 0, s: 0, l: 0, a: 1 };
+    hsb = { h: 0, s: 0, b: 0, a: 1 };
+
     /**
      * Initializes a new instance of the Color class with the specified color code.
      * By default, the alpha channel is set to 1.
@@ -81,7 +81,7 @@ class xcolor {
             this.#parseRgb(xcolor.hex2rgb(xhtmlColors[matches[0]]));
             this.#parseHsb(xcolor.hex2hsb(xhtmlColors[matches[0]]));
             this.#parseHsl(xcolor.hex2hsl(xhtmlColors[matches[0]]));
-        }else if (matches = colorCode.match(xcolor.#rgbRegex)) {
+        } else if (matches = colorCode.match(xcolor.#rgbRegex)) {
             this.#parseRgb(colorCode);
             this.#parseHex(xcolor.rgb2hex(colorCode));
             this.#parseHsb(xcolor.rgb2hsb(colorCode));
@@ -92,11 +92,17 @@ class xcolor {
             this.#parseHsba(xcolor.rgba2hsba(colorCode));
             this.#parseHsla(xcolor.rgba2hsla(colorCode));
         } else if (matches = colorCode.match(xcolor.#hexRegex)) {
+            if (colorCode.length === 4) {
+                colorCode = '#' + colorCode.slice(1).split('').map(c => c + c).join('');
+            }
             this.#parseHex(colorCode);
             this.#parseRgb(xcolor.hex2rgb(colorCode));
             this.#parseHsb(xcolor.hex2hsb(colorCode));
             this.#parseHsl(xcolor.hex2hsl(colorCode));
         } else if (matches = colorCode.match(xcolor.#hexaRegex)) {
+            if (colorCode.length === 5) {
+                colorCode = '#' + colorCode.slice(1).split('').map(c => c + c).join('');
+            }
             this.#parseHexa(colorCode);
             this.#parseRgba(xcolor.hexa2rgba(colorCode));
             this.#parseHsba(xcolor.hexa2hsba(colorCode));
@@ -216,7 +222,7 @@ class xcolor {
             this.#rgb.g = parseInt(matches[2]);
             this.#rgb.b = parseInt(matches[3]);
             this.#rgb.a = 1;
-            Object.assign(this.rgb,this.#rgb);
+            Object.assign(this.rgb, this.#rgb);
         } else {
             throw new Error(`${colorCode} has not a valid rgb format`);
         }
@@ -235,7 +241,7 @@ class xcolor {
             this.#rgb.g = parseInt(matches[2]);
             this.#rgb.b = parseInt(matches[3]);
             this.#rgb.a = parseFloat(matches[4]);
-            Object.assign(this.rgb,this.#rgb);
+            Object.assign(this.rgb, this.#rgb);
         } else {
             throw new Error(`${colorCode} has not a valid rgba format`);
         }
@@ -258,7 +264,7 @@ class xcolor {
             this.#hex.g = hex.substring(2, 4);
             this.#hex.b = hex.substring(4, 6);
             this.#hex.a = 1;
-            Object.assign(this.hex,this.#hex);
+            Object.assign(this.hex, this.#hex);
         } else {
             throw new Error(`${colorCode} has not a valid hex format`);
         }
@@ -281,7 +287,7 @@ class xcolor {
             this.#hex.g = hexa.substring(2, 4);
             this.#hex.b = hexa.substring(4, 6);
             this.#hex.a = hexa.substring(6, 8);
-            Object.assign(this.hex,this.#hex);
+            Object.assign(this.hex, this.#hex);
         } else {
             throw new Error(`${colorCode} has not a valid hexa format`);
         }
@@ -301,7 +307,7 @@ class xcolor {
             this.#hsl.s = s;
             this.#hsl.l = l;
             this.#hsl.a = a;
-            Object.assign(this.hsl,this.#hsl);
+            Object.assign(this.hsl, this.#hsl);
         } else {
             throw new Error(`${colorCode} has not a valid hsla format`);
         }
@@ -321,7 +327,7 @@ class xcolor {
             this.#hsl.s = s;
             this.#hsl.l = l;
             this.#hsl.a = 1;
-            Object.assign(this.hsl,this.#hsl);
+            Object.assign(this.hsl, this.#hsl);
         } else {
             throw new Error(`${colorCode} has not a valid hsl format`);
         }
@@ -341,7 +347,7 @@ class xcolor {
             this.#hsb.s = s;
             this.#hsb.b = b;
             this.#hsb.a = 1;
-            Object.assign(this.hsb,this.#hsb);
+            Object.assign(this.hsb, this.#hsb);
         } else {
             throw new Error(`${colorCode} has not a valid hsb format`);
         }
@@ -361,7 +367,7 @@ class xcolor {
             this.#hsb.s = s;
             this.#hsb.b = b;
             this.#hsb.a = a;
-            Object.assign(this.hsb,this.#hsb);
+            Object.assign(this.hsb, this.#hsb);
         } else {
             throw new Error(`${colorCode} has not a valid hsba format`);
         }
@@ -557,8 +563,8 @@ class xcolor {
      * @return {string} The RGBA color code.
      */
     static hex2rgba(color) {
-        let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
-        return `rgba(${r},${g},${b},${a})`;
+        let [r, g, b, a] = (color.length === 4) ? color.match(/\w/g).map(x => +`0x${x+x}`) : color.match(/\w\w/g).map(x => +`0x${x}`);
+        return `rgba(${r},${g},${b},1)`;
     }
     /**
      * Converts a hexadecimal color code to an RGB color code.
@@ -567,7 +573,7 @@ class xcolor {
      * @return {string} The RGB color code equivalent to the input hexadecimal color code.
      */
     static hex2rgb(color) {
-        let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
+        let [r, g, b] = (color.length === 4) ? color.match(/\w/g).map(x => +`0x${x+x}`) : color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgb(${r},${g},${b})`;
     }
     /**
@@ -577,18 +583,8 @@ class xcolor {
      * @return {string} the rgba formatted color
      */
     static hexa2rgba(color) {
-        let [r, g, b, a] = color.match(/\w\w/g).map(x => +`0x${x}`);
+        let [r, g, b, a] = (color.length === 5) ? color.match(/\w/g).map(x => +`0x${x+x}`) : color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgba(${r},${g},${b},${Math.round((a / 255) * 10) / 10})`;
-    }
-    /**
-     * Converts a hexadecimal color code to an RGB color code.
-     *
-     * @param {string} color - The hexadecimal color code to convert.
-     * @return {string} The RGB color code equivalent to the input hexadecimal color code.
-     */
-    static hex2rgb(color) {
-        let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
-        return `rgb(${r},${g},${b})`;
     }
     /**
      * Converts a hexadecimal color code to its corresponding hue, saturation, and brightness values.

@@ -643,11 +643,16 @@ class xcolorPicker {
         this.rgbTab.tabPanel = "rgbPanel";
         this.rgbTab.innerText = "RGB/HEX";
         Object.assign(this.rgbTab.style, this.tabActiveStyle);
-        this.rgbTab.onclick = function (event) {
+        /* this.rgbTab.onclick = function (event) {
             _self.#updateRgbForm();
             _self.#updateRgbPickers();
             _self.#openTab(event, this);
-        };
+        }; */
+        this.rgbTab.onclick = function (event) {
+            this.#updateRgbForm();
+            this.#updateRgbPickers();
+            this.#openTab(event, this);
+        }.bind(this);
         this.tabPanel.appendChild(this.rgbTab);
 
         this.hslTab = document.createElement("button");

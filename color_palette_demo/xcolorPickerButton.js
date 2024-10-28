@@ -92,12 +92,24 @@ class xcolorPickerButton extends HTMLElement {
                     this.pickerButton.style.backgroundColor = _self.dialog.returnValue;
                 }
             });
+            /* this.dialog.bindEvent("close", this, () => {
+                if (this.dialog.returnValue != "") {
+                    this._value = this.dialog.returnValue;
+                    this.onchange();
+                    this.pickerButton.style.backgroundColor = this.dialog.returnValue;
+                }
+            }); */
 
             this.dialog.addEventListener("click", function (event) {
                 if (event.target === _self.dialog) {
                     _self.dialog.close();
                 }
             });
+            /* this.dialog.bindEvent("click", this.dialog, function (event) {
+                if (event.target === this) {
+                    this.close();
+                }
+            }); */
         };
 
     }
