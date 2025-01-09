@@ -131,6 +131,17 @@ class xcolor {
     }
 
     /**
+     * Compares two color objects for equality based on their RGBA string representation.
+     * 
+     * @param {xcolor} color1 - The first color object to compare.
+     * @param {xcolor} color2 - The second color object to compare.
+     * @return {boolean} True if both color objects have the same RGBA string; otherwise, false.
+     */
+    equals(color) {
+        return this.getRgbaString() === color.getRgbaString();
+    }
+
+    /**
      * @description Returns the RGBA value of the color object.
      * @name getRgba
      * @method

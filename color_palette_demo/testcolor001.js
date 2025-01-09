@@ -1,3 +1,4 @@
+let customPaletteContainer;
 let mixpalettecontainer, palettescontainer01, palettescontainer02;
 let shadescontainer;
 let tintscontainer;
@@ -12,6 +13,12 @@ function initialize() {
     document.getElementById("inputcolor2").value = Palette.baseColor.getHexString();
 
     document.getElementById("mainPanel").appendChild(genColorPanel(Palette.baseColor));
+
+    customPaletteContainer = document.createElement("div");
+    customPaletteContainer.style.display = "inline-flex";
+    customPaletteContainer.style.marginBottom = "20px";
+    customPaletteContainer.style.width = "100%";
+    document.body.appendChild(customPaletteContainer);
 
     palettescontainer01 = document.createElement("div");
     palettescontainer01.style.display = "inline-flex";
@@ -131,6 +138,24 @@ function createColorPickerBtn(color) {
     btn.onclick = function () {
         document.getElementById("inputcolor").value = color.getHexString();
         updateColor(color.getHexString());
+    }
+    return btn;
+}
+
+function createRemoveColorBtn(color) {
+    let btn = document.createElement("button");
+    btn.innerHTML = '<i class="fa fa-solid fa-trash" style="color:' + ((color.hsb.b > 60) ? (((color.hsb.h < 200 || color.hsb.h > 300) || color.hsb.s < 60)?"black": "white") : "white") + '"></i>';
+    btn.style.padding = "5px";
+    btn.style.background = "transparent";
+    btn.style.border = "none";
+    btn.style.cursor = "pointer";
+    btn.style.float = "left";
+    btn.style.position = "absolute";
+    btn.style.left = "5px";
+    btn.onclick = function () {
+        let index = customPalette.findIndex((c) => c.equals(color));
+        customPalette.splice(index, 1);
+        this.parentElement.remove();
     }
     return btn;
 }
@@ -514,5 +539,34 @@ function handleUserInput(returnValue) {
         updateColor(returnValue);
     }
 } */
+
+
+var customPalette = [];
+function addToCustomPalette(event) {
+    let colorCode = document.getElementById("inputcolor2").value;
+    if(customPalette.length >= 15) return;
+    if (colorCode == "") return;
+    var color = xcolor.getXcolor(colorCode);
+    if (customPalette.find((c) => c.equals(color))) return;    
+    customPalette.push(color);
+    updateCustomPalette();
+}
+
+function updateCustomPalette() {
+    customPaletteContainer.innerHTML = "";
+    customPalette.forEach(color => {
+        let colordiv = createColorDiv(color);
+
+        let cpbtn = createColorPickerBtn(color);
+        colordiv.appendChild(cpbtn);
+
+        let removebtn = createRemoveColorBtn(color);
+        colordiv.appendChild(removebtn);
+
+        let colorLabel = genColorLabel(color);
+        colordiv.appendChild(colorLabel);
+        customPaletteContainer.appendChild(colordiv);
+    });
+}
 
 document.onload = initialize();
