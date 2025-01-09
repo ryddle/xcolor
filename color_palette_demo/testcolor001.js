@@ -142,6 +142,22 @@ function createColorPickerBtn(color) {
     return btn;
 }
 
+function createSaveColorBtn(color) {
+    let btn = document.createElement("button");
+    btn.innerHTML = '<i class="fa fa-solid fa-save" style="color:' + ((color.hsb.b > 60) ? (((color.hsb.h < 200 || color.hsb.h > 300) || color.hsb.s < 60)?"black": "white") : "white") + '"></i>';
+    btn.style.padding = "5px";
+    btn.style.background = "transparent";
+    btn.style.border = "none";
+    btn.style.cursor = "pointer";
+    btn.style.float = "left";
+    btn.style.position = "absolute";
+    btn.style.left = "5px";
+    btn.onclick = function () {
+        addToCustomPalette(color.getHexString());
+    }
+    return btn;
+}
+
 function createRemoveColorBtn(color) {
     let btn = document.createElement("button");
     btn.innerHTML = '<i class="fa fa-solid fa-trash" style="color:' + ((color.hsb.b > 60) ? (((color.hsb.h < 200 || color.hsb.h > 300) || color.hsb.s < 60)?"black": "white") : "white") + '"></i>';
@@ -309,6 +325,9 @@ function genMixPalette() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
 
@@ -328,6 +347,9 @@ function genBasePalettes() {
 
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
+
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -350,6 +372,9 @@ function genBasePalettes() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         complementarycontainer.appendChild(colordiv);
@@ -370,6 +395,9 @@ function genBasePalettes() {
 
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
+
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -393,6 +421,9 @@ function genBasePalettes() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         triadiccontainer.appendChild(colordiv);
@@ -413,6 +444,9 @@ function genBasePalettes() {
 
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
+
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -435,6 +469,9 @@ function genBasePalettes() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         squarecontainer.appendChild(colordiv);
@@ -454,6 +491,9 @@ function genShadesTintsTones() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
 
@@ -466,6 +506,9 @@ function genShadesTintsTones() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         tintscontainer.appendChild(colordiv);
@@ -476,6 +519,9 @@ function genShadesTintsTones() {
 
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
+
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -492,6 +538,9 @@ function genMonochromaticPalette() {
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
 
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
+
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
         monochromaticPaletteContainer.appendChild(colordiv);
@@ -506,6 +555,9 @@ function genGreysPalette() {
 
         let cpbtn = createColorPickerBtn(color);
         colordiv.appendChild(cpbtn);
+
+        let savebtn = createSaveColorBtn(color);
+        colordiv.appendChild(savebtn);
 
         let colorLabel = genColorLabel(color);
         colordiv.appendChild(colorLabel);
@@ -542,8 +594,8 @@ function handleUserInput(returnValue) {
 
 
 var customPalette = [];
-function addToCustomPalette(event) {
-    let colorCode = document.getElementById("inputcolor2").value;
+function addToCustomPalette(_colorCode) {
+    let colorCode = _colorCode || document.getElementById("inputcolor2").value;
     if(customPalette.length >= 15) return;
     if (colorCode == "") return;
     var color = xcolor.getXcolor(colorCode);
