@@ -10,6 +10,7 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="gradients.css">
     <style>
         span {
             font-family: monospace;
@@ -18,22 +19,104 @@
         input[type=text] {
             width: 120px;
         }
+
+        .tab-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 2rem;
+            padding: 5px 0 0 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid;
+        }
+
+        .tab {
+            font-family: monospace;
+            padding: 5px 10px 5px 10px;
+            border: 1px solid;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+
+        .active {
+            background-color: #fff;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
 
 </body>
-<div id="mainPanel" style="display: flex;border: 1px solid #888; border-radius: 4px; width: 1500px; margin-bottom: 10px; padding-left: 10px;">
-    <div style="margin: 30px;margin-left: 0px;">
-        <input type="color" id="inputcolor" name="inputcolor" value="#000000" onchange="updateColor(this.value)" />
-        <label for="inputcolor" style="font-family: monospace;">Select color or refresh</label>
+<div class="tab-container"><span class="tab active" onclick="tabChange(event, 'xcolor')">color palette</span><span class="tab" onclick="tabChange(event, 'gradients')">linear gradients (beta)</span></div>
+<div id="xcolor" class="tabContent">
+    <div id="mainPanel" style="display: flex;border: 1px solid #888; border-radius: 4px; width: 1500px; margin-bottom: 10px; padding-left: 10px;">
+        <div style="margin: 30px;margin-left: 0px;">
+            <input type="color" id="inputcolor" name="inputcolor" value="#000000" onchange="updateColor(this.value)" />
+            <label for="inputcolor" style="font-family: monospace;">Select color or refresh</label>
+        </div>
+        <div style="width: 200px; margin: 30px;"><xcolor-picker-btn id="inputcolor2" onchange="updateColor(this.value)"></xcolor-picker-btn><label for="inputcolor2" style="font-family: monospace;">custom picker test</label></div>
+        <div>
+            <button onclick="addToCustomPalette()" style="margin: 30px; height: 25px;">Add to custom palette</button>
+        </div>
     </div>
-    <div style="width: 200px; margin: 30px;"><xcolor-picker-btn id="inputcolor2" onchange="updateColor(this.value)"></xcolor-picker-btn><label for="inputcolor2" style="font-family: monospace;">custom picker test</label></div>
-    <div>
-        <button onclick="addToCustomPalette()" style="margin: 30px; height: 25px;">Add to custom palette</button>
+</div>
+<div id="gradients" class="tabContent" style="display: none; border-radius: 4px; width: 1500px; margin-bottom: 10px; padding: 10px;">
+    <div id="gradientContainer" class="gradientContainer" style="display: flex; flex-wrap: wrap;">
+        <div class="preview-section">
+            <div id="gradient-preview" class="preview-container"></div>
+            <div id="angle-display" style="display: flex;
+                align-items: center;
+                justify-content: left;
+                gap: 3rem;">
+                angle <input id="angle-range" name="angle-range" type="range" min="0" max="360" step="1" value="0" style="width: 200px;"/>
+                <output id="angle-output" for="angle-range">0</output>
+                <input type="hidden" id="angle-input" value="0deg">
+            </div>
+            <div id="css-display" style="margin-top: 2rem;">
+                <textarea style="
+                    resize: none;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    width: calc(100% - 2rem);
+                    height: 15rem;
+                    color: #444;
+                    padding: 1rem;
+                ">linear-gradient(to bottom, #000000 0%, #ffffff 100%)</textarea>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <h2>linear gradient</h2>
+
+            <div class="control-group" style="display: flex;">
+                <label for="stripes">stripes</label>
+                <input id="stripes" type="checkbox" style="accent-color: #bd0a61;"/>
+            </div>
+
+            <div class="control-group" style="display: flex;">
+                <label for="greyscale">greyscale</label>
+                <input id="greyscale" type="checkbox" style="accent-color: #bd0a61;"/>
+            </div>
+
+            <div class="control-group">
+                <label for="auto-stops-count">number of stops</label>
+                <input type="number" id="auto-stops-count" min="1" max="20" value="5">
+                <button id="add-auto-stops-btn">create stops</button>
+            </div>
+
+            <h2>gradient stops</h2>
+            <div class="stops-list" id="stops-list"></div>
+
+            <button id="add-stop-btn">+ add stop</button>
+        </div>
     </div>
 </div>
 <script src="testcolor001.js"></script>
+<script src="linearGradient.js"></script>
+<script src="gradient-ui.js"></script>
 
 </html>

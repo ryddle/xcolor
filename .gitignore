@@ -139,3 +139,6 @@ dist
 documentation.yml
 jsdoc2Test/app.js
 jsdoc2Test/jsdoc2Test.js
+
+# backsup
+*.bak

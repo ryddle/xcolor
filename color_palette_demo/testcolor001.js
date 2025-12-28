@@ -1,3 +1,4 @@
+let xcolorTabContainer = document.getElementById("xcolor");
 let customPaletteContainer;
 let mixpalettecontainer, palettescontainer01, palettescontainer02;
 let shadescontainer;
@@ -18,71 +19,71 @@ function initialize() {
     customPaletteContainer.style.display = "inline-flex";
     customPaletteContainer.style.marginBottom = "20px";
     customPaletteContainer.style.width = "100%";
-    document.body.appendChild(customPaletteContainer);
+    xcolorTabContainer.appendChild(customPaletteContainer);
 
     palettescontainer01 = document.createElement("div");
     palettescontainer01.style.display = "inline-flex";
     palettescontainer01.style.marginBottom = "20px";
     palettescontainer01.style.width = "100%";
-    document.body.appendChild(palettescontainer01);
+    xcolorTabContainer.appendChild(palettescontainer01);
 
     palettescontainer02 = document.createElement("div");
     palettescontainer02.style.display = "inline-flex";
     palettescontainer02.style.marginBottom = "20px";
-    document.body.appendChild(palettescontainer02);
+    xcolorTabContainer.appendChild(palettescontainer02);
 
     genBasePalettes();
 
-    document.body.appendChild(genPaletteLabel("Mix palette"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Mix palette"));
     mixpalettecontainer = document.createElement("div");
     mixpalettecontainer.style.display = "inline-flex";
-    document.body.appendChild(mixpalettecontainer);
+    xcolorTabContainer.appendChild(mixpalettecontainer);
 
     genMixPalette();
 
-    document.body.appendChild(genPaletteLabel("Shades"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Shades"));
     shadescontainer = document.createElement("div");
     shadescontainer.style.display = "inline-flex";
     shadescontainer.style.borderWidth = "1px";
     shadescontainer.style.borderStyle = "solid";
     shadescontainer.style.borderColor = "#ccc";
-    document.body.appendChild(shadescontainer);
+    xcolorTabContainer.appendChild(shadescontainer);
 
-    document.body.appendChild(genPaletteLabel("Tints"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Tints"));
     tintscontainer = document.createElement("div");
     tintscontainer.style.display = "inline-flex";
     tintscontainer.style.borderWidth = "1px";
     tintscontainer.style.borderStyle = "solid";
     tintscontainer.style.borderColor = "#ccc";
-    document.body.appendChild(tintscontainer);
+    xcolorTabContainer.appendChild(tintscontainer);
 
-    document.body.appendChild(genPaletteLabel("Tones"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Tones"));
     tonescontainer = document.createElement("div");
     tonescontainer.style.display = "inline-flex";
     tonescontainer.style.borderWidth = "1px";
     tonescontainer.style.borderStyle = "solid";
     tonescontainer.style.borderColor = "#ccc";
-    document.body.appendChild(tonescontainer);
+    xcolorTabContainer.appendChild(tonescontainer);
 
     genShadesTintsTones();
 
-    document.body.appendChild(genPaletteLabel("Monochromatic Palette"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Monochromatic Palette"));
     monochromaticPaletteContainer = document.createElement("div");
     monochromaticPaletteContainer.style.display = "inline-flex";
     monochromaticPaletteContainer.style.borderWidth = "1px";
     monochromaticPaletteContainer.style.borderStyle = "solid";
     monochromaticPaletteContainer.style.borderColor = "#ccc";
-    document.body.appendChild(monochromaticPaletteContainer);
+    xcolorTabContainer.appendChild(monochromaticPaletteContainer);
 
     genMonochromaticPalette();
 
-    document.body.appendChild(genPaletteLabel("Greys Palette"));
+    xcolorTabContainer.appendChild(genPaletteLabel("Greys Palette"));
     greysPaletteContainer = document.createElement("div");
     greysPaletteContainer.style.display = "inline-flex";
     greysPaletteContainer.style.borderWidth = "1px";
     greysPaletteContainer.style.borderStyle = "solid";
     greysPaletteContainer.style.borderColor = "#ccc";
-    document.body.appendChild(greysPaletteContainer);
+    xcolorTabContainer.appendChild(greysPaletteContainer);
 
     genGreysPalette();
 
@@ -448,7 +449,7 @@ function genGreysPalette() {
 /* let cpdialog = null;
 function genColorPickerPanel(event, colorCode) {
     cpdialog = new xcolorPicker(event, colorCode);
-    document.body.appendChild(cpdialog);
+    xcolorTabContainer.appendChild(cpdialog);
 
     cpdialog.showModal();
 
@@ -487,6 +488,22 @@ function addToCustomPalette(_colorCode) {
 function updateCustomPalette() {
     customPaletteContainer.innerHTML = "";
     genColorDiv(customPalette, customPaletteContainer, {saveButton: false, removeButton: true});
+}
+
+/******************** page functions **************************/
+function tabChange(event, tabName) {
+    let tabContent = document.getElementById(tabName);
+    let tabContents = document.getElementsByClassName("tabContent");
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+    tabContent.style.display = "";
+
+    let tabs = document.getElementsByClassName("tab");
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+    }
+    event.currentTarget.classList.add("active");
 }
 
 document.onload = initialize();

@@ -169,6 +169,31 @@ class xcolor {
     getRgbString() {
         return `rgb(${this.#rgb.r},${this.#rgb.g},${this.#rgb.b})`;
     }
+
+    /**
+     * Returns the RGBA value of the color as an array of [r, g, b, a] values.
+     *
+     * @return {number[]} An array of 4 numbers representing the RGBA value of the color.
+     * @example
+     *  //return [255, 0, 0, 1]
+     * var color = new xcolor('red');
+     * color.getRgbaArray();
+     */
+    getRgbaArray() {
+        return [this.#rgb.r, this.#rgb.g, this.#rgb.b, this.#rgb.a];
+    }
+    /**
+     * Returns the RGB value of the color as an array of [r, g, b] values.
+     *
+     * @return {number[]} An array of 3 numbers representing the RGB value of the color.
+     * @example
+     *  //return [255, 255, 255]
+     * var color = new xcolor('white');
+     * color.getRgbArray();
+     */
+    getRgbArray() {
+        return [this.#rgb.r, this.#rgb.g, this.#rgb.b];
+    }
     /**
      * A description of the entire function.
      *
@@ -187,12 +212,28 @@ class xcolor {
         return `#${this.#hex.r}${this.#hex.g}${this.#hex.b}`.toUpperCase();
     }
     /**
-     * Returns a string representation of the HSBA color value in the format "hsba(H,S%,B%,A)".
+     * Returns the hexadecimal representation of the color as an array of [r, g, b] values.
      *
-     * @return {string} The HSBA color value as a string.
+     * @return {number[]} An array of 3 numbers representing the hexadecimal color value.
+     * @example
+     *  //return [255, 0, 0]
+     * var color = new xcolor('red');
+     * color.getHexArray();
      */
-    getHsbaString() {
-        return `hsba(${this.#hsb.h},${this.#hsb.s}%,${this.#hsb.b}%,${this.#hsb.a})`;
+    getHexArray() {
+        return [this.#hex.r, this.#hex.g, this.#hex.b];
+    }
+    /**
+     * Returns the hexadecimal representation of the color in the format [r, g, b, a].
+     *
+     * @return {number[]} An array of 4 numbers representing the hexadecimal color value.
+     * @example
+     *  //return [255, 0, 0, 255]
+     * var color = new xcolor('red');
+     * color.getHexaArray();
+     */
+    getHexaArray() {
+        return [this.#hex.r, this.#hex.g, this.#hex.b, this.#hex.a];
     }
     /**
      * A method to get the HSB color format.
@@ -203,12 +244,36 @@ class xcolor {
         return `hsb(${this.#hsb.h},${this.#hsb.s}%,${this.#hsb.b}%)`;
     }
     /**
-     * Get the HSLA color value.
+     * Returns a string representation of the HSBA color value in the format "hsba(H,S%,B%,A)".
      *
-     * @return {string} HSLA color string
+     * @return {string} The HSBA color value as a string.
      */
-    getHslaString() {
-        return `hsla(${this.#hsl.h},${this.#hsl.s}%,${this.#hsl.l}%,${this.#hsl.a})`;
+    getHsbaString() {
+        return `hsba(${this.#hsb.h},${this.#hsb.s}%,${this.#hsb.b}%,${this.#hsb.a})`;
+    }
+    /**
+     * Returns the HSB color value as an array of [h, s, b] values.
+     *
+     * @return {number[]} An array of 3 numbers representing the HSB color value.
+     * @example
+     *  //return [0, 100, 50]
+     * var color = new xcolor('red');
+     * color.getHsbArray();
+     */
+    getHsbArray() {
+        return [this.#hsb.h, this.#hsb.s, this.#hsb.b];
+    }
+    /**
+     * Returns the HSBA color value as an array of [h, s, b, a] values.
+     *
+     * @return {number[]} An array of 4 numbers representing the HSBA color value.
+     * @example
+     *  //return [0, 100, 50, 255]
+     * var color = new xcolor('red');
+     * color.getHsbaArray();
+     */
+    getHsbaArray() {
+        return [this.#hsb.h, this.#hsb.s, this.#hsb.b, this.#hsb.a];
     }
     /**
      * Return the HSL color string.
@@ -218,7 +283,38 @@ class xcolor {
     getHslString() {
         return `hsl(${this.#hsl.h},${this.#hsl.s}%,${this.#hsl.l}%)`;
     }
-
+    /**
+     * Get the HSLA color value.
+     *
+     * @return {string} HSLA color string
+     */
+    getHslaString() {
+        return `hsla(${this.#hsl.h},${this.#hsl.s}%,${this.#hsl.l}%,${this.#hsl.a})`;
+    }
+    /**
+     * Returns the HSL color value as an array of [h, s, l] values.
+     *
+     * @return {number[]} An array of 3 numbers representing the HSL color value.
+     * @example
+     *  //return [0, 100, 50]
+     * var color = new xcolor('red');
+     * color.getHslArray();
+     */
+    getHslArray() {
+        return [this.#hsl.h, this.#hsl.s, this.#hsl.l];
+    }
+    /**
+     * Returns the HSLA color value as an array of [h, s, l, a] values.
+     *
+     * @return {number[]} An array of 4 numbers representing the HSLA color value.
+     * @example
+     *  //return [0, 100, 50, 1]
+     * var color = new xcolor('red');
+     * color.getHslaArray();
+     */
+    getHslaArray() {
+        return [this.#hsl.h, this.#hsl.s, this.#hsl.l, this.#hsl.a];
+    }
     /**
      * A function to parse an RGB color code.
      *
@@ -382,6 +478,11 @@ class xcolor {
         } else {
             throw new Error(`${colorCode} has not a valid hsba format`);
         }
+    }
+
+    toGreyscale() {
+        this.#hsl.s = 0;
+        return new xcolor(this.getHslString());
     }
 
     // Static instance methods
@@ -597,6 +698,16 @@ class xcolor {
         let [r, g, b, a] = (color.length === 5) ? color.match(/\w/g).map(x => +`0x${x+x}`) : color.match(/\w\w/g).map(x => +`0x${x}`);
         return `rgba(${r},${g},${b},${Math.round((a / 255) * 10) / 10})`;
     }
+        /**
+         * Converts a hexadecimal color code to an RGB color code.
+         *
+         * @param {string} color - The hexadecimal color code to convert.
+         * @return {string} The RGB color code equivalent to the input hexadecimal color code.
+         */
+    static hex2rgb(color) {
+        let [r, g, b] = color.match(/\w\w/g).map(x => +`0x${x}`);
+        return `rgb(${r},${g},${b})`;
+    }
     /**
      * Converts a hexadecimal color code to its corresponding hue, saturation, and brightness values.
      *
@@ -722,7 +833,7 @@ class xcolor {
             let k = (n + h / 30) % 12;
             let color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
             return Math.round(255 * color);
-        }
+        };
         let red = Math.round(f(0) / 100);
         let green = Math.round(f(8) / 100);
         let blue = Math.round(f(4) / 100);
@@ -744,7 +855,7 @@ class xcolor {
             let k = (n + h / 30) % 12;
             let color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
             return Math.round(255 * color);
-        }
+        };
         let red = Math.round(f(0) / 100);
         let green = Math.round(f(8) / 100);
         let blue = Math.round(f(4) / 100);
@@ -805,7 +916,7 @@ class xcolor {
         let [_h, _s, _b] = colorCode.match(/\d+/g).map(Number);
         let h = _h, s = _s / 100, b = _b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        return `rgb(${map(f(5), 0, 1, 0, 255)},${map(f(3), 0, 1, 0, 255)},${map(f(1), 0, 1, 0, 255)})`;
+        return `rgb(${Math.round(map(f(5), 0, 1, 0, 255))},${Math.round(map(f(3), 0, 1, 0, 255))},${Math.round(map(f(1), 0, 1, 0, 255))})`;
     }
     /**
      * Converts a color code in HSBA format to RGBA format.
@@ -821,7 +932,7 @@ class xcolor {
         s = s / 100;
         b = b / 100;
         let f = (n, k = (n + h / 60) % 6) => b - b * s * Math.max(Math.min(k, 4 - k, 1), 0);
-        return `rgba(${map(f(5), 0, 1, 0, 255)},${map(f(3), 0, 1, 0, 255)},${map(f(1), 0, 1, 0, 255)},${a})`;
+        return `rgba(${Math.round(map(f(5), 0, 1, 0, 255))},${Math.round(map(f(3), 0, 1, 0, 255))},${Math.round(map(f(1), 0, 1, 0, 255))},${a})`;
     }
     /**
      * Converts an RGB color code to an HSB color code.
@@ -1190,6 +1301,37 @@ class xcolor {
         return tones;
     }
 
+
+    /*********************************/
+    /**
+     * @param {from} - the object from must get the pixel, window or img (window by default)
+     */
+    static getPixelColor(from=window,x,y){
+        // Get the canvas element and its 2D drawing context
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set the canvas dimensions to match the screen
+        canvas.width = from.innerWidth;
+        canvas.height = from.innerHeight;
+
+        // Draw the current screen into the canvas
+        ctx.drawImage(from, 0, 0);
+
+        // Get the pixel data at the specified coordinates
+        const imageData = ctx.getImageData(x, y, 1, 1);
+        const pixelData = imageData.data;
+
+        // Get the RGBA values of the pixel
+        const red = pixelData[0];
+        const green = pixelData[1];
+        const blue = pixelData[2];
+        const alpha = pixelData[3];
+
+        // Convert the RGBA values to a hex color string
+        const hexColor = `#${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}${alpha.toString(16).padStart(2, '0')}`;
+        return xcolor.getXcolor(hexColor);
+    }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

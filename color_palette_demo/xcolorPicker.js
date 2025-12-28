@@ -703,6 +703,18 @@ class xcolorPicker {
             }
         }
 
+        this.pickerBtn = document.createElement("button");
+        this.pickerBtn.type = "button";
+        this.pickerBtn.innerHTML = "<i class='fa fa-solid fa-eye-dropper'>";
+        Object.assign(this.pickerBtn.style, this.tabStyle);
+        this.pickerBtn.onclick = function (event) {
+            window.onclick= function (event) {
+                _self.color = xcolor.getPixelColor(window,event.pageX, event.pageY);
+                return false;
+            }
+        };
+        this.tabPanel.appendChild(this.pickerBtn);
+
         this.closeBtnPanel = document.createElement("div");
         Object.assign(this.closeBtnPanel.style, {
             float: "right",

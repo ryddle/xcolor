@@ -1187,6 +1187,37 @@ class xcolor {
         return tones;
     }
 
+
+    /*********************************/
+    /**
+     * @param {from} - the object from must get the pixel, window or img (window by default)
+     */
+    static getPixelColor(from=window,x,y){
+        // Get the canvas element and its 2D drawing context
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set the canvas dimensions to match the screen
+        canvas.width = from.innerWidth;
+        canvas.height = from.innerHeight;
+
+        // Draw the current screen into the canvas
+        ctx.drawImage(from, 0, 0);
+
+        // Get the pixel data at the specified coordinates
+        const imageData = ctx.getImageData(x, y, 1, 1);
+        const pixelData = imageData.data;
+
+        // Get the RGBA values of the pixel
+        const red = pixelData[0];
+        const green = pixelData[1];
+        const blue = pixelData[2];
+        const alpha = pixelData[3];
+
+        // Convert the RGBA values to a hex color string
+        const hexColor = `#${red.toString(16).padStart(2, '0')}${green.toString(16).padStart(2, '0')}${blue.toString(16).padStart(2, '0')}${alpha.toString(16).padStart(2, '0')}`;
+        return xcolor.getXcolor(hexColor);
+    }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
